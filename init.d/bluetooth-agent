@@ -1,0 +1,33 @@
+#!/bin/sh -e
+### BEGIN INIT INFO
+# Provides: bluetooth-agent
+# Required-Start: $remote_fs $syslog bluetooth pulseaudio
+# Required-Stop: $remote_fs $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Makes Bluetooth discoverable and connectable to 0000
+# Description: Start Bluetooth-Agent at boot time.
+### END INIT INFO
+#! /bin/sh
+# /etc/init.d/bluetooth-agent
+USER=root
+HOME=/root
+export USER HOME
+case "$1" in
+    start)
+        echo "setting bluetooth discoverable"
+	sleep 1
+        sudo hciconfig hci0 piscan
+        start-stop-daemon -S -x /usr/local/bin/simple-agent.autotrust &
+        echo "bluetooth-agent started"
+        ;;
+    stop)
+        echo "Stopping bluetooth-agent"
+        start-stop-daemon -K -x /usr/local/bin/simple-agent.autotrust
+        ;;
+    *)
+        echo "Usage: /etc/init.d/bluetooth-agent {start|stop}"
+        exit 1
+        ;;
+esac
+exit 0

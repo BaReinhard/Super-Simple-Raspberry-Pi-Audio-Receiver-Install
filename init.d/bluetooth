@@ -1,0 +1,52 @@
+#!/bin/sh -e
+### BEGIN INIT INFO
+# Provides:            bluetooth
+# Required-Start:      $local_fs $syslog dbus
+# Required-Stop:       $local_fs $syslog
+# Default-Start:       2 3 4 5
+# Default-Stop:        0 1 6
+# Short-Description:   Starts bluetooth daemons
+### END INIT INFO
+
+. /lib/lsb/init-functions
+
+DESC=bluetoothd
+DAEMON=/usr/libexec/bluetooth/bluetoothd
+#SSD_OPTIONS="--oknodo --quiet --exec $DAEMON --plugin=a2dp"
+SSD_OPTIONS="--oknodo --quiet --exec $DAEMON" #Change to this if you want media control using DBus at the expense of volume control 
+HCI=hci0
+
+case "${1}" in
+    start)
+       log_daemon_msg "Starting Bluetooth daemon bluetoothd..."
+       start-stop-daemon --start --background $SSD_OPTIONS
+       log_progress_msg "${DAEMON}"
+
+       hciconfig $HCI up > /dev/null 2>&1
+       log_end_msg 0
+       ;;
+
+    stop)
+        log_daemon_msg "Stopping Bluetooth daemon bluetoothd..."
+        start-stop-daemon --stop $SSD_OPTIONS
+        log_progress_msg "${DAEMON}"
+        log_end_msg 0
+       ;;
+
+    restart)
+       ${0} stop
+       sleep 1
+       ${0} start
+       ;;
+
+    status)
+        status_of_proc "$DAEMON" "$DESC" && exit 0 || exit $?
+       ;;
+
+    *)
+         echo "Usage: ${0} {start|stop|restart|status}"
+         exit 1
+       ;;
+esac
+
+exit 0
