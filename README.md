@@ -31,7 +31,20 @@ pi@raspberrypi:~/ $ sudo apt-get install git
 pi@raspberrypi:~/ $ git clone https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install.git
 pi@raspberrypi:~/ $ cd Super-Simple-Raspberry-Pi-Audio-Receiver-Install
 pi@raspberrypi:~/Super-Simple-Raspberry-Pi-Audio-Receiver-Install $ sudo ./install.sh
+1. Install the Raspberry Pi Audio Receiver Car Installation
+2. Install the Raspberry Pi Audio Receiver Home Installation
+3. Install a Custom Raspberry Pi Audio Receiver
+Which installation would you like to choose? (1/2/3) : Choose 1, 2, or 3
+Do you want all the Devices to use the same name? (y/n) : Choose y or n
+
+# When Choosing 'y'
 Device name: Choose Device Name
-Device WiFi Password: Choose Password Name
+Device WiFi Password: Choose Password
+
+# When Choosing 'n'
+Bluetooth Device Name: Choose Device Name
+AirPlay Device Name: Choose Device Name
+Access Point Device Name: Choose Device Name
+Device WiFi Password: Choose Password
 ```
 
