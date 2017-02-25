@@ -60,7 +60,23 @@ else
 	echo "Please choose a valid choice"
 fi
 done
-read -p "Device name: " MYNAME
+SameName="SameName"
+while [ $SameName != "y" ] && [ $SameName != "n" ];
+do
+	read -p "Do you want all the Devices to use the same name? (y/n) : " SameName
+done
+if [ $SameName = "y" ]
+then
+	read -p "Device name: " MYNAME
+	APName=$MYNAME
+	BluetoothName=$MYNAME
+	AirPlayName=$MYNAME
+elif [ $SameName = "n" ]
+then
+	read -p "Bluetooth Device Name: " BluetoothName
+	read -p "AirPlay Device Name: " AirPlayName
+	read -p "Access Point Device Name: " APName
+fi
 if [ $AP = "y" ]
 then
 read -p "Device WiFi Password: " WIFIPASS
@@ -84,7 +100,7 @@ if [ $Bluetooth = "y" ]
 then
 tst ./bt_pa_install.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
-echo "${MYNAME}" | tst ./bt_pa_config.sh | tee -a $log
+echo "${BluetoothName}" | tst ./bt_pa_config.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 tst ./sound_card_install.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
@@ -93,14 +109,14 @@ if [ $AirPlay = "y" ]
 then
 tst ./airplay_install.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
-echo "${MYNAME}" | tst ./airplay_config.sh | tee -a $log
+echo "${AirPlayName}" | tst ./airplay_config.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 fi
 if [ $AP = "y" ]
 then
 tst ./ap_install.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
-{ echo "${MYNAME}"; echo "${WIFIPASS}";} | tst ./ap_config.sh | tee -a $log
+{ echo "${APName}"; echo "${WIFIPASS}";} | tst ./ap_config.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 fi
 if [ $Kodi = "y" ]
