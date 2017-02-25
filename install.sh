@@ -73,9 +73,18 @@ then
 	AirPlayName=$MYNAME
 elif [ $SameName = "n" ]
 then
-	read -p "Bluetooth Device Name: " BluetoothName
-	read -p "AirPlay Device Name: " AirPlayName
-	read -p "Access Point Device Name: " APName
+	if [ $Bluetooth = "y" ]
+	then
+		read -p "Bluetooth Device Name: " BluetoothName
+	fi
+	if [ $AirPlay = "y" ]
+	then
+		read -p "AirPlay Device Name: " AirPlayName
+	fi
+	if [ $AP = "y" ]
+	then
+		read -p "Access Point Device Name: " APName
+	fi
 fi
 if [ $AP = "y" ]
 then
