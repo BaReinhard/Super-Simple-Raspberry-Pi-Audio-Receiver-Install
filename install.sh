@@ -1,6 +1,8 @@
 #!/bin/bash
 # Prompt User for Installation
-log="./runall.log"
+# Sets Log File
+log="./install.log"
+# Begins Logging
 echo "" > $log
 echo "1. Install the Raspberry Pi Audio Receiver Car Installation"
 echo "2. Install the Raspberry Pi Audio Receiver Home Installation"
@@ -26,7 +28,7 @@ then
         AP="n"
         Kodi="y"
         Lirc="y"
-# New Feature - Allows Users to Choose Installation of various features. Further allowing the use of this project with other ideas aside from Audio Receivers.
+# Access Point Install - Previously Network Without Internet
 elif [ $Install = "3" ]
 then
 	AirPlay="n"
@@ -34,30 +36,35 @@ then
         AP="y"
         Kodi="n"
         Lirc="n"
+# Custom Install - Allows Users to Choose Installation of various features. Further allowing the use of this project with other ideas aside from Audio Receivers.
 elif [ $Install = "4" ]
 then
-
+	# Prompts the User to use AirPlay for Streaming (aka shairport-sync)
 	AirPlay="AirPlay"
 	while [ $AirPlay != "y" ] && [ $AirPlay != "n" ];
 	do
 		read -p "Do you want AirPlay Enabled? (y/n) : " AirPlay
 	done
+	# Prompts the User to use Bluetooth for Streaming (aka A2DP)
 	Bluetooth="Bluetooth"
 	while [ $Bluetooth != "y" ] && [ $Bluetooth != "n" ];
 	do
 		read -p "Do you want Bluetooth A2DP Enabled? (y/n) : " Bluetooth
 
 	done
+	# Prompts the User to use the Raspberry Pi as an Access Point to create a network (needed for AirPlay when no existing network exists)
 	AP="AP"
 	while [ $AP != "y" ] && [ $AP != "n" ];
 	do
 		read -p "Do you want to setup as an Access Point? (Necessary for AirPlay, in location without a Wireless Network) (y/n) : " AP
 	done
+	# Prompts the User to use Kodi as a GUI for a Media Center
 	Kodi="Kodi"
 	while [ $Kodi != "y" ] && [ $Kodi != "n" ];
 	do
 		read -p "Do you want Kodi installed? (y/n) : " Kodi
 	done
+	# Prompts the User to use Lirc for Infrared Remote Support (matricom IR remote already setup for use with Kodi)
 	Lirc="Lirc"
 	while [ $Lirc != "y" ] && [ $Lirc != "n" ];
 	do
@@ -68,6 +75,7 @@ else
 	echo "Please choose a valid choice"
 fi
 done
+# Prompts the User to check whether or not to use individual names for the chosen devices
 SameName="SameName"
 while [ $SameName != "y" ] && [ $SameName != "n" ];
 do
@@ -75,20 +83,24 @@ do
 done
 if [ $SameName = "y" ]
 then
+	# Asks for All Devices Identical Name
 	read -p "Device name: " MYNAME
 	APName=$MYNAME
 	BluetoothName=$MYNAME
 	AirPlayName=$MYNAME
 elif [ $SameName = "n" ]
-then
+then	
+	# Asks for Bluetooth Device Name
 	if [ $Bluetooth = "y" ]
 	then
 		read -p "Bluetooth Device Name: " BluetoothName
 	fi
+	# Asks for AirPlay Device Name
 	if [ $AirPlay = "y" ]
 	then
 		read -p "AirPlay Device Name: " AirPlayName
 	fi
+	# Asks for Access Point Device Name
 	if [ $AP = "y" ]
 	then
 		read -p "Access Point Device Name: " APName
@@ -96,6 +108,7 @@ then
 fi
 if [ $AP = "y" ]
 then
+# Asks for the Access Point Password
 read -p "Device WiFi Password: " WIFIPASS
 fi
 #--------------------------------------------------------------------
@@ -109,10 +122,11 @@ function tst {
 #--------------------------------------------------------------------
 chmod +x ./*
 echo "Starting @ `date`" | tee -a $log
-
+# Updates and Upgrades the Raspberry Pi
 echo "--------------------------------------------" | tee -a $log
 tst ./bt_pa_prep.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
+# If Bluetooth is Chosen, it installs Bluetooth Dependencies and issues commands for proper configuration
 if [ $Bluetooth = "y" ]
 then
 tst ./bt_pa_install.sh | tee -a $log
@@ -122,6 +136,7 @@ echo "--------------------------------------------" | tee -a $log
 tst ./sound_card_install.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 fi
+# If AirPlay is Chosen, it installs AirPlay Dependencies and issues commands for proper configuration
 if [ $AirPlay = "y" ]
 then
 tst ./airplay_install.sh | tee -a $log
@@ -129,6 +144,7 @@ echo "--------------------------------------------" | tee -a $log
 echo "${AirPlayName}" | tst ./airplay_config.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 fi
+# If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
 if [ $AP = "y" ]
 then
 tst ./ap_install.sh | tee -a $log
@@ -136,6 +152,7 @@ echo "--------------------------------------------" | tee -a $log
 { echo "${APName}"; echo "${WIFIPASS}";} | tst ./ap_config.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 fi
+# If Kodi is Chosen, it installs Kodi Dependencies and issues commands for proper configuration
 if [ $Kodi = "y" ]
 then
 tst ./kodi_install.sh | tee -a $log
@@ -143,6 +160,7 @@ echo "--------------------------------------------" | tee -a $log
 tst ./kodi_config.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 fi
+# If Lirc is Chosen, it installs Lirc Dependencies and issues commands for proper configuration
 if [ $Lirc = "y" ]
 then
 tst ./lirc_install.sh | tee -a $log
