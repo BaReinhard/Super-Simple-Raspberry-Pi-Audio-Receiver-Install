@@ -197,10 +197,7 @@ _IP=$(hostname -I) || true
 if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
-# Disable Console Sleep
-setterm -powerdown 0
-# Faster boot
-dmseg --console-off
+
 /home/pi/shScripts/firstrun.sh&
 exit 0
 EOT
