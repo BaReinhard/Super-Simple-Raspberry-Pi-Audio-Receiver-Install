@@ -9,7 +9,7 @@ echo "4. Install a Custom Raspberry Pi Audio Receiver"
 Install="5"
 while [ $Install != "1" ] && [ $Install != "2" ] && [ $Install != "3" ] && [ $Install != "4" ];
 do
-read -p "Which installation would you like to choose? (1/2/3) : " Install
+read -p "Which installation would you like to choose? (1/2/3/4) : " Install
 # Car Installation - Previously Raspberry Pi Audio Receiver Install Car Install
 if [ $Install = "1" ]
 then
