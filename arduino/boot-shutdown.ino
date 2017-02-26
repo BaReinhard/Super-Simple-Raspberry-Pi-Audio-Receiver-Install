@@ -22,7 +22,7 @@ void wakeUp()
 
 void setup()
 {
-    // Configure wake up pin as input.
+    // Configure Ignition pin as input.
     // This will consumes few uA of current.
     pinMode(accPin, INPUT);
     pinMode(shutDownPin,OUTPUT);
