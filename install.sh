@@ -1,15 +1,16 @@
 #!/bin/bash
-
+# Prompt User for Installation
 log="./runall.log"
 echo "" > $log
 echo "1. Install the Raspberry Pi Audio Receiver Car Installation"
 echo "2. Install the Raspberry Pi Audio Receiver Home Installation"
-echo "3. Install a Custom Raspberry Pi Audio Receiver"
-Install="4"
-while [ $Install != "1" ] && [ $Install != "2" ] && [ $Install != "3" ];
+echo "3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)"
+echo "4. Install a Custom Raspberry Pi Audio Receiver"
+Install="5"
+while [ $Install != "1" ] && [ $Install != "2" ] && [ $Install != "3" ] && [ $Install != "4" ];
 do
 read -p "Which installation would you like to choose? (1/2/3) : " Install
-
+# Car Installation - Previously Raspberry Pi Audio Receiver Install Car Install
 if [ $Install = "1" ]
 then
 	AirPlay="y"
@@ -17,7 +18,7 @@ then
 	AP="y"
 	Kodi="y"
 	Lirc="y"
-
+# Home Installation - Previously Raspberry Pi Audio Receiver Install
 elif [ $Install = "2" ]
 then
         AirPlay="y"
@@ -25,8 +26,15 @@ then
         AP="n"
         Kodi="y"
         Lirc="y"
-
+# New Feature - Allows Users to Choose Installation of various features. Further allowing the use of this project with other ideas aside from Audio Receivers.
 elif [ $Install = "3" ]
+then
+	AirPlay="n"
+        Bluetooth="n"
+        AP="y"
+        Kodi="n"
+        Lirc="n"
+elif [ $Install = "4" ]
 then
 
 	AirPlay="AirPlay"
