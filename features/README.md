@@ -1,1 +1,1 @@
-### This directory is used solely as a reference to what is being altereted/installed for the given features. The files located in these subdirectories are copies of the files being used. 
+### This directory is used solely as a reference to what is being altereted/installed for the given features. The files located in these subdirectories are copies of the files being used. For more information on any given feature, please look at the {feature}_config or {feature}_install files.
