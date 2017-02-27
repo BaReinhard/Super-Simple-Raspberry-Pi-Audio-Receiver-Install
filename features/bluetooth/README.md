@@ -1,1 +1,1 @@
-### These files are being installed when the Bluetooth Option is chosen for custom installation or When using options 1 and 2.
+### These files are being installed when the Bluetooth Option is chosen for custom installation or When using options 1 and 2. For more information about what is being altered you can find them here [Bluetooth Install](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/blob/master/bt_pa_config.sh)
