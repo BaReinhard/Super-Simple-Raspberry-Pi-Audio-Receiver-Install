@@ -13,20 +13,7 @@ function tst {
 
 
 # setup the config files
-cat <<EOT >/etc/network/interfaces
-source-directory /etc/network/interfaces.d
-auto lo
-iface lo inet loopback
-iface eth0 inet dhcp
-allow-hotplug wlan0
-iface wlan0 inet static
-    address 10.0.0.1
-    netmask 255.255.255.0
-#allow-hotplug wlan0
-#iface wlan0 inet manual
-# wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
-EOT
-
+cp etc/network/interfaces /etc/network/interfaces
 patch /etc/dhcpcd.conf <<EOT
 @@ -39,3 +39,4 @@
  # A hook script is provided to lookup the hostname if not set by the DHCP
@@ -34,9 +21,6 @@ patch /etc/dhcpcd.conf <<EOT
  nohook lookup-hostname
 +denyinterfaces wlan0
 EOT
-
-
-
 # Add patch for /etc/default/hostapd 
 patch /etc/default/hostapd <<EOT
 @@ -7,7 +7,7 @@
@@ -63,24 +47,7 @@ patch /etc/init.d/hostapd <<EOT
 EOT
 
 # Setup AP
-cat <<EOT >/etc/hostapd/hostapd.conf
-interface=wlan0
-driver=nl80211
-ssid=$MYNAME
-hw_mode=g
-channel=6
-macaddr_acl=0
-auth_algs=1
-ignore_broadcast_ssid=0
-wpa=2
-wpa_passphrase=$WIFIPASS
-wpa_key_mgmt=WPA-PSK
-#wpa_pairwise=TKIP      # You better do not use this weak encryption (only used by old client devices
-rsn_pairwise=CCMP
-ieee80211n=1          # 802.11n support
-wmm_enabled=1         # QoS support
-ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]
-EOT
+tst cp etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf
 
 # Setup dhcp server
 
