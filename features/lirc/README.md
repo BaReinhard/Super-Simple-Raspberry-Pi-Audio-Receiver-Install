@@ -1,1 +1,1 @@
-### Files that are being used when installing lirc (these files are not actually used, but are shown as a references to what is being installed)
+### Files that are being used when Choosing Lirc during custom installation, or when using options 1 and 2. For more information on what is being altered you can find them here [Lirc Install](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/blob/master/lirc_config.sh)
