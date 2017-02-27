@@ -1,0 +1,1 @@
+### These files are used when choosing AirPlay during the custom installation, or when choose options 1 and 2. More information about what is being altered you can find here [AirPlay Install](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/blob/master/airplay_config.sh)
