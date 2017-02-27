@@ -9,14 +9,13 @@ function tst {
     fi	
 }
 #--------------------------------------------------------------------
-tst cp lirc/lircd.conf /etc/lirc/lircd.conf
-tst cp lirc/hardware.conf /etc/lirc/hardware.conf
-tst cp lirc/Lircmap.xml /home/pi/Lircmap.xml
-tst cp lirc/rc.local /etc/rc.local
-tst chmod +x /etc/rc.local
-tst cp lirc/firstrun.sh /home/pi/shScripts/firstrun.sh
+tst cp etc/lirc/lircd.conf /etc/lirc/lircd.conf
+tst cp etc/lirc/hardware.conf /etc/lirc/hardware.conf
+tst cp home/pi/Lircmap.xml /home/pi/Lircmap.xml
+tst cp etc/rc.local /etc/rc.local
+tst cp shScripts/firstrun.sh /home/pi/shScripts/firstrun.sh
 tst chmod +x /home/pi/shScripts/firstrun.sh
-
+tst chmod +x /etc/rc.local
 cat << EOT >>/boot/config.txt
 # Enabled Lirc
 dtoverlay=lirc-rpi
