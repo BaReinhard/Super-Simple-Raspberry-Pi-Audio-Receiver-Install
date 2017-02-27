@@ -26,9 +26,7 @@ EOT
 # Add gpu_mem=256 to config.txt for use with Kodi
 echo gpu_mem=256 >> /boot/config.txt
 # Faster Boot
-cat <<EOT >/boot/cmdline.txt
-dwc_otg.lpm_enable=0 console=serial0,115200 console=tty3 loglevel=0 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait logo.nologo quiet splash vt.global_cursor_default=0 consoleblank=0
-EOT
+tst cp boot/cmdline.txt /boot/cmdline.txt
 tst touch /home/pi/.hushlogin
 
 
