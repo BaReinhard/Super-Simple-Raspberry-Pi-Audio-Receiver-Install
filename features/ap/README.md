@@ -1,0 +1,1 @@
+### These files are being used when Choosing Access Point in custom installation, or when using options 1 and 3. For more information on what is being used look here [AP Install](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/blob/master/ap_config.sh)
