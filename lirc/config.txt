@@ -1,0 +1,6 @@
+# Files added to the end of /boot/config.txt
+
+# Enabled Lirc
+dtoverlay=lirc-rpi
+dtparam=gpio_in_pin=24
+dtparam=gpio_out_pin=17
