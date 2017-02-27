@@ -108,23 +108,16 @@ ao =
 };
 
 // Static latency settings are deprecated and the settings have been removed. 
+EOT
 
+tst mkdir /home/pi/shScripts
 
-EOT
-cd /home/pi
-mkdir shScripts
-cd shScripts
-cat <<EOT > shairportstart.sh
-#!/bin/sh
-amixer cset numid=3 90%
-exit 0
-EOT
-cat <<EOT > shairportend.sh
-#!/bin/sh
-amixer cset numid=3 90%
-exit 0
-EOT
-chmod +x *
+tst cp shScripts/shairportstart.sh /home/pi/shScripts/shairportstart.sh
+tst cp shScripts/shairportend.sh /home/pi/shScripts/shairportend.sh
+
+tst chmod +x /home/pi/shScripts/shairportstart.sh
+tst chmod +x /home/pi/shScripts/shairportend.sh
+
 tst echo "It is suggested you reboot your pi."
 
 
