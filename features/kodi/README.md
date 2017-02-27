@@ -1,0 +1,1 @@
+### These files are being used and installed when choosing Kodi in custom installation, or when options 1 and 2 are selected. More information on what is being altered please check here [Kodi Install](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/blob/master/kodi_config.sh)
