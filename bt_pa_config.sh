@@ -47,16 +47,16 @@ tst sudo cp init.d/bluetooth-agent /etc/init.d
 tst sudo chmod +x /etc/init.d/bluetooth-agent
 tst sudo update-rc.d bluetooth-agent defaults
 
-tst sudo cp usr_local_bin/bluez-udev /usr/local/bin
+tst sudo cp usr/local/bin/bluez-udev /usr/local/bin
 tst sudo chmod 755 /usr/local/bin/bluez-udev
 
-tst sudo cp usr_local_bin/simple-agent.autotrust /usr/local/bin
+tst sudo cp usr/local/bin/simple-agent.autotrust /usr/local/bin
 tst sudo chmod 755 /usr/local/bin/simple-agent.autotrust
 
-tst sudo cp usr_local_bin/say.sh /usr/local/bin
+tst sudo cp usr/local/bin/say.sh /usr/local/bin
 tst sudo chmod 755 /usr/local/bin/say.sh
 
-tst sudo cp usr_local_bin/bluezutils.py /usr/local/bin
+tst sudo cp usr/local/bin/bluezutils.py /usr/local/bin
 
 tst sudo cp misc_setup/daemon.conf /etc/pulse
 
