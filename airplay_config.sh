@@ -14,7 +14,7 @@ function tst {
 #--------------------------------------------------------------------
 
 # Configure shairplay
-if [ $SoundCard != "8" ]
+if [ $SoundCard != "10" ]
 then
 cat <<EOT > /etc/shairport-sync.conf
 // Sample Configuration File for Shairport Sync
@@ -113,7 +113,7 @@ ao =
 // Static latency settings are deprecated and the settings have been removed. 
 EOT
 
-elif [ $SoundCard = "8" ]
+elif [ $SoundCard = "10" ]
 then
 	cat <<EOT > /etc/shairport-sync.conf
 // Sample Configuration File for Shairport Sync
