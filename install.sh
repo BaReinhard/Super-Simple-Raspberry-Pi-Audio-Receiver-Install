@@ -111,6 +111,22 @@ then
 # Asks for the Access Point Password
 read -p "Device WiFi Password: " WIFIPASS
 fi
+if [ $AirPlay = "y" ] || [ $Bluetooth = "y" ]
+then
+	echo "1. HifiBerry DAC Light"
+	echo "2. HifiBerry DAC Standard/Pro"
+	echo "3. HifiBerry Digi+"
+	echo "4. Hifiberry Amp+"
+	echo "5. IQaudIO DAC"
+	echo "6. IQaudIO DAC+"
+	echo "7. USB Sound Card"
+	echo "8. No Sound Card"
+	SoundCard="SoundCard"
+	while [ $SoundCard != "1" ] && [ $SoundCard != "2" ] && [ $SoundCard != "3" ] && [ $SoundCard != "4" ] && [ $SoundCard != "5" ] && [ $SoundCard != "6" ] && [ $SoundCard != "7" ] && [ $SoundCard != "8" ];
+	do
+		read -p "Which Sound Card are you using? : " SoundCard
+	done
+fi
 #--------------------------------------------------------------------
 function tst {
     echo "===> Executing: $*"
@@ -133,7 +149,10 @@ tst ./bt_pa_install.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 echo "${BluetoothName}" | tst ./bt_pa_config.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
-tst ./sound_card_install.sh | tee -a $log
+fi
+if [ $Bluetooth = "y" ] || [ $AirPlay = "y" ]
+then
+echo "${SoundCard}" | tst ./sound_card_install.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 fi
 # If AirPlay is Chosen, it installs AirPlay Dependencies and issues commands for proper configuration
