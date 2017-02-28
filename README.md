@@ -51,5 +51,19 @@ Bluetooth Device Name: Choose Device Name (Depending on Install)
 AirPlay Device Name: Choose Device Name (Depending on Install)
 Access Point Device Name: Choose Device Name (Depending on Install)
 Device WiFi Password: Choose Password (Depending on Install)
-```
 
+1. HifiBerry DAC Light
+2. HifiBerry DAC Standard/Pro
+3. HifiBerry Digi+
+4. Hifiberry Amp+
+5. Pi-IQaudIO DAC
+6. Pi-IQaudIO DAC+, Pi-IQaudIO DACZero, Pi-IQaudIO DAC PRO
+7. Pi-IQaudIO DigiAMP
+8. Pi-IQaudIO Digi+
+9. USB Sound Card
+10. JustBoom DAC and AMP Cards
+11. JustBoom Digi Cards
+12. No Sound Card
+	
+Which Sound Card are you using? :  Sound Card Choice (1/2/3/4/5/6/7/8/9/10/11/12)
+```
