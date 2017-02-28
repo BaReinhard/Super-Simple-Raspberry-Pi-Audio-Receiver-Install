@@ -119,10 +119,14 @@ then
 	echo "4. Hifiberry Amp+"
 	echo "5. IQaudIO DAC"
 	echo "6. IQaudIO DAC+"
-	echo "7. USB Sound Card"
-	echo "8. No Sound Card"
+	echo "7. IQaudIO DigiAMP"
+	echo "8. IQaudIO Digi+"
+	echo "9. USB Sound Card"
+	echo "10. JustBoom DAC and AMP Cards"
+	echo "11. JustBoom Digi Cards"
+	echo "12. No Sound Card"
 	SoundCard="SoundCard"
-	while [ $SoundCard != "1" ] && [ $SoundCard != "2" ] && [ $SoundCard != "3" ] && [ $SoundCard != "4" ] && [ $SoundCard != "5" ] && [ $SoundCard != "6" ] && [ $SoundCard != "7" ] && [ $SoundCard != "8" ];
+	while [ $SoundCard != "1" ] && [ $SoundCard != "2" ] && [ $SoundCard != "3" ] && [ $SoundCard != "4" ] && [ $SoundCard != "5" ] && [ $SoundCard != "6" ] && [ $SoundCard != "7" ] && [ $SoundCard != "8" ] && [ $SoundCard != "9" ] && [ $SoundCard != "10" ] && [ $SoundCard != "11" ] && [ $SoundCard != "12" ];
 	do
 		read -p "Which Sound Card are you using? : " SoundCard
 	done
