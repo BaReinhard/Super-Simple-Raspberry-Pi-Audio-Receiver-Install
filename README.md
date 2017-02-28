@@ -12,6 +12,7 @@ This project has combined several different projects into one, culminating into 
 * Supports Infrared remotes, currently setup for the [Matricom IR Remote.](https://www.amazon.com/Quality-Replacement-Controller-Android-Matricom/dp/B018K0GR12)
 * Uses custom GPIO In and Out pins for Infrared to be used with the HifiBerry Amp.
 * Includes module names for sound cards in `/etc/modules` and includes boot configurations in the `/boot/config.txt` that just need to simply be uncommented.
+* Supports All Hifiberry DAC Boards, IQaudIO, JustBoom, and USB sound cards.
 
 
 #### This is a further fixed version with the addition of being able to Deploy the project in car without a Wireless Network from my original Raspberry Pi Audio Receive Install repo which was forked from adenbeckitt, with a few changes made for shairport-sync dependencies and configuration files, which is a general fix from ehsmaes' version. This now works with Raspbian Jessie.
@@ -21,7 +22,8 @@ This project has combined several different projects into one, culminating into 
 
 * For the time being, I have not been able to get espeak to work with a soundcard. I will be working to get this working either with espeak or another program.
 * Unsure how Android will act on a wireless network without internet, iOS doesn't display the WiFi signals and will use Cellular Data for data requirements. However, iOS devices still can play local music to the Pi without any cellular data.
-* Raspberry Pi Zero will need a WiFi card to use the new Access Point feature, some cards are not compatible with hostapd right out of the box and may require a forked repo of hostapd. If you are using a tp-link usb adapter you can follow the guide here to fix how the current install feature has set this up. I will post the model of the TP-Link usb adapter as soon as I get home. GUIDE: [Pi Zero hostapd Fix](https://bareinhard.github.io/2017/02/15/Fix-hostapd-Raspberry-Pi-Zero.html)
+* Raspberry Pi Zero will need a WiFi card to use the new Access Point feature, some cards are not compatible with hostapd right out of the box and may require a forked repo of hostapd. If you are using a tp-link usb adapter you can follow the guide here to fix how the current install feature has set this up. GUIDE: [Pi Zero hostapd Fix](https://bareinhard.github.io/2017/02/15/Fix-hostapd-Raspberry-Pi-Zero.html)
+* Raspberry Pi Zero W (new Model with Bluetooth and Wireless built-in) is likely supported and will work, testing will begin once I receive the new board (Should arrive this week). However, since the Raspberry Pi Foundation has stated that: >It uses the same Cypress CYW43438 wireless chip as Raspberry Pi 3 Model B to provide 802.11n wireless LAN and Bluetooth 4.0 connectivity.> I see no reason why it wouldn't work with hostapd as expected.
 
 ## Install
 #### This will install on the latest Raspbian Jessie, with just the following commands.
