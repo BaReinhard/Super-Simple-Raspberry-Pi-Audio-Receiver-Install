@@ -134,7 +134,7 @@ then
 	SoundCard="SoundCard"
 	while [ $SoundCard != "1" ] && [ $SoundCard != "2" ] && [ $SoundCard != "3" ] && [ $SoundCard != "4" ] && [ $SoundCard != "5" ] && [ $SoundCard != "6" ] && [ $SoundCard != "7" ] && [ $SoundCard != "8" ] && [ $SoundCard != "9" ] && [ $SoundCard != "10" ] && [ $SoundCard != "11" ] && [ $SoundCard != "12" ];
 	do
-		read -p "Which Sound Card are you using? : " SoundCard
+		read -p "Which Sound Card are you using? (1/2/3/4/5/6/7/8/9/10/11/12) : " SoundCard
 	done
 fi
 #--------------------------------------------------------------------
