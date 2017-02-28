@@ -20,6 +20,7 @@ then
 	AP="y"
 	Kodi="y"
 	Lirc="y"
+	SoundCardInstall="y"
 # Home Installation - Previously Raspberry Pi Audio Receiver Install
 elif [ $Install = "2" ]
 then
@@ -28,6 +29,7 @@ then
         AP="n"
         Kodi="y"
         Lirc="y"
+	SoundCardInstall="y"	
 # Access Point Install - Previously Network Without Internet
 elif [ $Install = "3" ]
 then
@@ -70,7 +72,11 @@ then
 	do
 		read -p "Do you want to use infrared remotes? (y/n) : " Lirc
 	done
-
+	SoundCardInstall="SoundCardInstall"
+	while [ $SoundCardInstall != "y" ] && [ $SoundCardInstall != "n" ];
+	do
+		read -p "Do you want to use a Sound Card? (y/n) : " SoundCardInstall
+	done
 else
 	echo "Please choose a valid choice"
 fi
@@ -111,7 +117,7 @@ then
 # Asks for the Access Point Password
 read -p "Device WiFi Password: " WIFIPASS
 fi
-if [ $AirPlay = "y" ] || [ $Bluetooth = "y" ]
+if [ $SoundCardInstall = "y" ]
 then
 	echo "1. HifiBerry DAC Light"
 	echo "2. HifiBerry DAC Standard/Pro"
@@ -154,7 +160,7 @@ echo "--------------------------------------------" | tee -a $log
 echo "${BluetoothName}" | tst ./bt_pa_config.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 fi
-if [ $Bluetooth = "y" ] || [ $AirPlay = "y" ]
+if [ $SoundCardInstall = "y" ]
 then
 echo "${SoundCard}" | tst ./sound_card_install.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
