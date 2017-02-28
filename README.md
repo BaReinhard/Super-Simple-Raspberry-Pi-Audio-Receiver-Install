@@ -65,5 +65,5 @@ Device WiFi Password: Choose Password (Depending on Install)
 11. JustBoom Digi Cards
 12. No Sound Card
 	
-Which Sound Card are you using? :  Sound Card Choice (1/2/3/4/5/6/7/8/9/10/11/12)
+Which Sound Card are you using? (1/2/3/4/5/6/7/8/9/10/11/12) :  Sound Card Choice 
 ```
