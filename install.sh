@@ -170,7 +170,7 @@ if [ $AirPlay = "y" ]
 then
 tst ./airplay_install.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
-echo { echo "${AirPlayName}"; echo "${SoundCard}";} | tst ./airplay_config.sh | tee -a $log
+{ echo "${AirPlayName}"; echo "${SoundCard}";} | tst ./airplay_config.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 fi
 # If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
