@@ -1,6 +1,7 @@
 #!/bin/bash
 
 read -p "Airplay device name: " MYNAME
+read -p "Sound Card" SoundCard
 
 #--------------------------------------------------------------------
 function tst {
@@ -13,6 +14,8 @@ function tst {
 #--------------------------------------------------------------------
 
 # Configure shairplay
+if [ $SoundCard != "12" ]
+then
 cat <<EOT > /etc/shairport-sync.conf
 // Sample Configuration File for Shairport Sync
 // Commented out settings are generally the defaults, except where noted.
@@ -109,6 +112,107 @@ ao =
 
 // Static latency settings are deprecated and the settings have been removed. 
 EOT
+
+elif [ $SoundCard = "12" ]
+then
+	cat <<EOT > /etc/shairport-sync.conf
+// Sample Configuration File for Shairport Sync
+// Commented out settings are generally the defaults, except where noted.
+
+// General Settings
+general =
+{
+	name = "$MYNAME"; // This means "Hostname" -- see below. This is the name the service will advertise to iTunes.
+    interpolation = "soxr";
+//	The default is "Hostname" -- i.e. the machine's hostname with the first letter capitalised (ASCII only.)
+//	You can use the following substitutions:
+//	%h for the hostname,
+//	%H for the Hostname (i.e. with first letter capitalised (ASCII only)),
+//	%v for the version number, e.g. 2.8.5 and
+//	%V for the full version string, e.g. 2.8.5-OpenSSL-Avahi-ALSA-soxr-metadata-sysconfdir:/etc
+//	Overall length can not exceed 50 characters. Example: "Shairport Sync %v on %H".
+//	password = "secret"; // leave this commented out if you don't want to require a password
+//	interpolation = "basic"; // aka "stuffing". Default is "basic", alternative is "soxr". Use "soxr" only if you have a reasonably fast processor.
+//	output_backend = "alsa"; // Run "shairport-sync -h" to get a list of all output_backends, e.g. "alsa", "pipe", "stdout". The default is the first one.
+//	mdns_backend = "avahi"; // Run "shairport-sync -h" to get a list of all mdns_backends. The default is the first one.
+//	port = 5000; // Listen for service requests on this port
+// 	udp_port_base = 6001; // start allocating UDP ports from this port number when needed
+//	udp_port_range = 100; // look for free ports in this number of places, starting at the UDP port base (only three are needed).
+//	statistics = "no"; // set to "yes" to print statistics in the log
+//	drift = 88; // allow this number of frames of drift away from exact synchronisation before attempting to correct it
+//	resync_threshold = 2205; // a synchronisation error greater than this will cause resynchronisation; 0 disables it
+//	log_verbosity = 0; // "0" means no debug verbosity, "3" is most verbose.
+//	ignore_volume_control = "no"; // set this to "yes" if you want the volume to be at 100% no matter what the source's volume control is set to.
+//	volume_range_db = 60 ; // use this to set the range, in dB, you want between the maximum volume and the minimum volume. Range is 30 to 150 dB. Leave it commented out to use mixer's native range.
+//	regtype = "_raop._tcp"; // Use this advanced setting to set the service type and transport to be advertised by Zeroconf/Bonjour. Default is "_raop._tcp".
+//	playback_mode = "stereo"; // This can be "stereo" or "mono". Default is "stereo".
+};
+
+// How to deal with metadata, including artwork
+metadata =
+{
+//	enabled = "no"; // et to yes to get Shairport Sync to solicit metadata from the source and to pass it on via a pipe
+//	include_cover_art = "no"; // set to "yes" to get Shairport Sync to solicit cover art from the source and pass it via the pipe. You must also set "enabled" to "yes".
+//	pipe_name = "/tmp/shairport-sync-metadata";
+//	pipe_timeout = 5000; // wait for this number of milliseconds for a blocked pipe to unblock before giving up
+//      socket_address = "226.0.0.1"; // if set to a host name or IP address, UDP packets containing metadata will be sent to this address. May be a multicast address. "socket-port" must be non-zero and "enabled" must be set to yes"
+//      socket_port = 5555; // if socket_address is set, the port to send UDP packets to
+//      socket_msglength = 65000; // the maximum packet size for any UDP metadata. This will be clipped to be between 500 or 65000. The default is 500.
+};
+
+// Advanced parameters for controlling how a Shairport Sync runs
+sessioncontrol = 
+{
+//	Uncomment "run_this_before_play_begins" and "run_this_after_play_ends" for Audio Line Input
+
+//	run_this_before_play_begins = "/home/pi/shScripts/shairportstart.sh"; // make sure the application has executable permission. It it's a script, include the #!... stuff on the first line
+//	run_this_after_play_ends = "/home/pi/shScripts/shairportend.sh"; // make sure the application has executable permission. It it's a script, include the #!... stuff on the first line
+//	wait_for_completion = "no"; // set to "yes" to get Shairport Sync to wait until the "run_this..." applications have terminated before continuing
+//	allow_session_interruption = "no"; // set to "yes" to allow another device to interrupt Shairport Sync while it's playing from an existing audio source
+//	session_timeout = 120; // wait for this number of seconds after a source disappears before terminating the session and becoming available again.
+};
+
+// Back End Settings
+
+// These are parameters for the "alsa" audio back end, the only back end that supports synchronised audio.
+alsa =
+{
+output_device = "hw:0,0"; // the name of the alsa output device. Use "alsamixer" or "aplay" to find out the names of devices, mixers, etc.
+//  mixer_control_name = "PCM"; // the name of the mixer to use to adjust output volume. If not specified, volume in adjusted in software.
+//  mixer_device = "default"; // the mixer_device default is whatever the output_device is. Normally you wouldn't have to use this.
+//  audio_backend_latency_offset = 0; // Set this offset to compensate for a fixed delay in the audio back end. E.g. if the output device delays by 100 ms, set this to -4410.
+//  audio_backend_buffer_desired_length = 6615; // If set too small, buffer underflow occurs on low-powered machines. Too long and the response times with software mixer become annoying.
+//  disable_synchronization = "no"; // Set to "yes" to disable synchronization. Default is "no".
+//  period_size = <number>; // Use this optional advanced setting to set the alsa period size near to this value
+//  use_mmap_if_available = "yes"; // Use this optional advanced setting to control whether MMAP-based output is used to communicate  with the DAC. Default is "yes"
+};
+
+// These are parameters for the "pipe" audio back end, a back end that directs raw CD-style audio output to a pipe. No interpolation is done.
+pipe =
+{
+//  name = "/path/to/pipe"; // there is no default pipe name for the output
+//  audio_backend_latency_offset = 0; // Set this offset to compensate for a fixed delay in the audio back end. E.g. if the output device delays by 100 ms, set this to -4410.
+//  audio_backend_buffer_desired_length = 44100; // Having started to send audio at the right time, send all subsequent audio this many frames ahead of time, creating a buffer this size.
+};
+
+// These are parameters for the "stdout" audio back end, a back end that directs raw CD-style audio output to stdout. No interpolation is done.
+stdout =
+{
+//  audio_backend_latency_offset = 0; // Set this offset to compensate for a fixed delay in the audio back end. E.g. if the output device delays by 100 ms, set this to -4410.
+//  audio_backend_buffer_desired_length = 44100; // Having started to send audio at the right time, send all subsequent audio this many frames ahead of time, creating a buffer this size.
+};
+
+// These are parameters for the "ao" audio back end. No interpolation is done.
+ao =
+{
+//  audio_backend_latency_offset = 0; // Set this offset to compensate for a fixed delay in the audio back end. E.g. if the output device delays by 100 ms, set this to -4410.
+//  audio_backend_buffer_desired_length = 44100; // Having started to send audio at the right time, send all subsequent audio this many frames ahead of time, creating a buffer this size.
+};
+
+// Static latency settings are deprecated and the settings have been removed. 
+EOT
+
+fi
 
 tst mkdir /home/pi/shScripts
 

@@ -20,6 +20,7 @@ then
 	AP="y"
 	Kodi="y"
 	Lirc="y"
+	SoundCardInstall="y"
 # Home Installation - Previously Raspberry Pi Audio Receiver Install
 elif [ $Install = "2" ]
 then
@@ -28,6 +29,7 @@ then
         AP="n"
         Kodi="y"
         Lirc="y"
+	SoundCardInstall="y"	
 # Access Point Install - Previously Network Without Internet
 elif [ $Install = "3" ]
 then
@@ -70,7 +72,11 @@ then
 	do
 		read -p "Do you want to use infrared remotes? (y/n) : " Lirc
 	done
-
+	SoundCardInstall="SoundCardInstall"
+	while [ $SoundCardInstall != "y" ] && [ $SoundCardInstall != "n" ];
+	do
+		read -p "Do you want to use a Sound Card? (y/n) : " SoundCardInstall
+	done
 else
 	echo "Please choose a valid choice"
 fi
@@ -111,6 +117,26 @@ then
 # Asks for the Access Point Password
 read -p "Device WiFi Password: " WIFIPASS
 fi
+if [ $SoundCardInstall = "y" ]
+then
+	echo "1. HifiBerry DAC Light"
+	echo "2. HifiBerry DAC Standard/Pro"
+	echo "3. HifiBerry Digi+"
+	echo "4. Hifiberry Amp+"
+	echo "5. Pi-IQaudIO DAC"
+	echo "6. Pi-IQaudIO DAC+, Pi-IQaudIO DACZero, Pi-IQaudIO DAC PRO"
+	echo "7. Pi-IQaudIO DigiAMP"
+	echo "8. Pi-IQaudIO Digi+"
+	echo "9. USB Sound Card"
+	echo "10. JustBoom DAC and AMP Cards"
+	echo "11. JustBoom Digi Cards"
+	echo "12. No Sound Card"
+	SoundCard="SoundCard"
+	while [ $SoundCard != "1" ] && [ $SoundCard != "2" ] && [ $SoundCard != "3" ] && [ $SoundCard != "4" ] && [ $SoundCard != "5" ] && [ $SoundCard != "6" ] && [ $SoundCard != "7" ] && [ $SoundCard != "8" ] && [ $SoundCard != "9" ] && [ $SoundCard != "10" ] && [ $SoundCard != "11" ] && [ $SoundCard != "12" ];
+	do
+		read -p "Which Sound Card are you using? (1/2/3/4/5/6/7/8/9/10/11/12) : " SoundCard
+	done
+fi
 #--------------------------------------------------------------------
 function tst {
     echo "===> Executing: $*"
@@ -133,7 +159,10 @@ tst ./bt_pa_install.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 echo "${BluetoothName}" | tst ./bt_pa_config.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
-tst ./sound_card_install.sh | tee -a $log
+fi
+if [ $SoundCardInstall = "y" ]
+then
+echo "${SoundCard}" | tst ./sound_card_install.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 fi
 # If AirPlay is Chosen, it installs AirPlay Dependencies and issues commands for proper configuration
@@ -141,7 +170,7 @@ if [ $AirPlay = "y" ]
 then
 tst ./airplay_install.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
-echo "${AirPlayName}" | tst ./airplay_config.sh | tee -a $log
+{ echo "${AirPlayName}"; echo "${SoundCard}";} | tst ./airplay_config.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 fi
 # If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
