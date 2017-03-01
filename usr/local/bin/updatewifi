@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Proper usage of this file is to update wifi network and password easily in the CLI
+# updatewifi "SSID" "PASSWORD"
+# eg:
+# updatewifi "MY NETWORK" "this!$@Pas$word"
+
+
+
+if [ ${#2} -ge "8" ]
+then
+SSID=$1
+PSK=$2
+sudo bash -c "cat << EOT > /etc/wpa_supplicant/wpa_supplicant.conf
+country=US
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+network={
+ssid=\"$SSID\"
+psk=\"$PSK\"
+}
+EOT"
+else
+  echo "Password must be 8 characters long"
+fi
+exit 0
