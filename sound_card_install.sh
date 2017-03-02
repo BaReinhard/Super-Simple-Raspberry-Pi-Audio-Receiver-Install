@@ -3,7 +3,7 @@
 # I am unsure whether or not you need pulse and pulse_connect, but will be testing if its absolutely necessary.
 # If you are not using any sound card please change all the following line of "card 1" to "card 0"
 read -p "Which sound card are you using" SoundCard
-if [ $SoundCard = "12" ]
+if [ $SoundCard = "0" ]
 then
 sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
