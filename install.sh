@@ -119,6 +119,7 @@ read -p "Device WiFi Password: " WIFIPASS
 fi
 if [ $SoundCardInstall = "y" ]
 then
+	echo "0. No Sound Card"
 	echo "1. HifiBerry DAC Light"
 	echo "2. HifiBerry DAC Standard/Pro"
 	echo "3. HifiBerry Digi+"
@@ -130,11 +131,10 @@ then
 	echo "9. USB Sound Card"
 	echo "10. JustBoom DAC and AMP Cards"
 	echo "11. JustBoom Digi Cards"
-	echo "12. No Sound Card"
 	SoundCard="SoundCard"
-	while [ $SoundCard != "1" ] && [ $SoundCard != "2" ] && [ $SoundCard != "3" ] && [ $SoundCard != "4" ] && [ $SoundCard != "5" ] && [ $SoundCard != "6" ] && [ $SoundCard != "7" ] && [ $SoundCard != "8" ] && [ $SoundCard != "9" ] && [ $SoundCard != "10" ] && [ $SoundCard != "11" ] && [ $SoundCard != "12" ];
+	while [ $SoundCard != "0" ] && [ $SoundCard != "1" ] && [ $SoundCard != "2" ] && [ $SoundCard != "3" ] && [ $SoundCard != "4" ] && [ $SoundCard != "5" ] && [ $SoundCard != "6" ] && [ $SoundCard != "7" ] && [ $SoundCard != "8" ] && [ $SoundCard != "9" ] && [ $SoundCard != "10" ] && [ $SoundCard != "11" ];
 	do
-		read -p "Which Sound Card are you using? (1/2/3/4/5/6/7/8/9/10/11/12) : " SoundCard
+		read -p "Which Sound Card are you using? (0/1/2/3/4/5/6/7/8/9/10/11) : " SoundCard
 	done
 fi
 #--------------------------------------------------------------------
