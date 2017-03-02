@@ -19,8 +19,7 @@ tst chmod +x /etc/rc.local
 cat << EOT >>/boot/config.txt
 # Enabled Lirc
 dtoverlay=lirc-rpi
-dtparam=gpio_in_pin=24
-dtparam=gpio_out_pin=17
+dtparam=gpio_in_pin=25
 
 EOT
 
