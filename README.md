@@ -52,6 +52,7 @@ AirPlay Device Name: Choose Device Name (Depending on Install)
 Access Point Device Name: Choose Device Name (Depending on Install)
 Device WiFi Password: Choose Password (Depending on Install)
 
+0. No Sound Card
 1. HifiBerry DAC Light
 2. HifiBerry DAC Standard/Pro
 3. HifiBerry Digi+
@@ -63,7 +64,6 @@ Device WiFi Password: Choose Password (Depending on Install)
 9. USB Sound Card
 10. JustBoom DAC and AMP Cards
 11. JustBoom Digi Cards
-12. No Sound Card
 	
-Which Sound Card are you using? (1/2/3/4/5/6/7/8/9/10/11/12) :  Sound Card Choice 
+Which Sound Card are you using? (0/1/2/3/4/5/6/7/8/9/10/11) :  Sound Card Choice 
 ```
