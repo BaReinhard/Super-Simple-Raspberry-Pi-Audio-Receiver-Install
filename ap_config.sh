@@ -47,7 +47,7 @@ patch /etc/init.d/hostapd <<EOT
 EOT
 
 # Setup AP
-cat <<EOT >> /etc/hostapd/hostapd.conf
+cat <<EOT > /etc/hostapd/hostapd.conf
 interface=wlan0
 driver=nl80211
 ssid=$MYNAME
