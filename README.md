@@ -10,8 +10,8 @@ This project has combined several different projects into one, culminating into 
 * Allows for Bluetooth A2DP, AirPlay, and local files played through Kodi.
 * Uses kodi as a GUI, and supports the use of sound cards.
 * Supports Infrared remotes, currently setup for the [Matricom IR Remote.](https://www.amazon.com/Quality-Replacement-Controller-Android-Matricom/dp/B018K0GR12)
-* Uses custom GPIO In and Out pins for Infrared to be used with the HifiBerry Amp.
-* Includes module names for sound cards in `/etc/modules` and includes boot configurations in the `/boot/config.txt` that just need to simply be uncommented.
+* Uses custom GPIO pins for Infrared to be used with HifiBerry boards, IQaudIO boards, and JustBoom boards.
+* Includes boot configurations in the `/boot/config.txt`.
 * Supports All Hifiberry DAC Boards, IQaudIO, JustBoom, and USB sound cards.
 
 
