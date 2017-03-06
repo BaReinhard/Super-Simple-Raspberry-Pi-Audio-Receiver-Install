@@ -21,10 +21,10 @@ EOT
     amixer cset numid=3 50%
     #espeak -s 160 -k 1 "Device, $bt_name Connected"
     /usr/local/bin/say.sh "Device, $bt_name Connected"
-    amixer cset numid=3 50%
+    amixer cset numid=3 90%
     sleep 1
     pactl set-sink-volume 0 65537
-    pactl set-source-volume $audio_source 50%
+    pactl set-source-volume $audio_source 90%
     	
 	
 
