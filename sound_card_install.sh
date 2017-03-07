@@ -9,23 +9,38 @@ sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
 sudo cat <<EOT >> /etc/asound.conf
+
+pcm.!default {
+    type plug
+    slave.pcm "dmixer"
+}
+pcm.dmixer{
+    type dmix
+       ipc_key 1024
+       slave {
+                pcm "hw:0,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+       }
+       bindings {
+               0 0
+               1 1
+       }
+}
+ct.dmixer{
+    type hw
+    card 0
+}
 pcm.pulse {
     type pulse
-    card 0
 }
 ctl.pulse {
     type pulse
-    card 0
 }
 
-pcm.!default {
-    type hw
-    card 0
-}
-ctl.!default {
-    type hw
-    card 0
-}
+
 EOT
 sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Amp
@@ -66,22 +81,34 @@ sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
 sudo cat <<EOT >> /etc/asound.conf
+pcm.!default {
+    type plug
+    slave.pcm "dmixer"
+}
+pcm.dmixer{
+    type dmix
+       ipc_key 1024
+       slave {
+                pcm "hw:1,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+       }
+       bindings {
+               0 0
+               1 1
+       }
+}
+ct.dmixer{
+    type hw
+    card 1
+}
 pcm.pulse {
     type pulse
-    card 1
 }
 ctl.pulse {
     type pulse
-    card 1
-}
-
-pcm.!default {
-    type hw
-    card 1
-}
-ctl.!default {
-    type hw
-    card 1
 }
 EOT
 sudo cat <<EOT >>/boot/config.txt
@@ -122,22 +149,34 @@ sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
 sudo cat <<EOT >> /etc/asound.conf
+pcm.!default {
+    type plug
+    slave.pcm "dmixer"
+}
+pcm.dmixer{
+    type dmix
+       ipc_key 1024
+       slave {
+                pcm "hw:1,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+       }
+       bindings {
+               0 0
+               1 1
+       }
+}
+ct.dmixer{
+    type hw
+    card 1
+}
 pcm.pulse {
     type pulse
-    card 1
 }
 ctl.pulse {
     type pulse
-    card 1
-}
-
-pcm.!default {
-    type hw
-    card 1
-}
-ctl.!default {
-    type hw
-    card 1
 }
 EOT
 sudo cat <<EOT >>/boot/config.txt
@@ -178,22 +217,34 @@ sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
 sudo cat <<EOT >> /etc/asound.conf
+pcm.!default {
+    type plug
+    slave.pcm "dmixer"
+}
+pcm.dmixer{
+    type dmix
+       ipc_key 1024
+       slave {
+                pcm "hw:1,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+       }
+       bindings {
+               0 0
+               1 1
+       }
+}
+ct.dmixer{
+    type hw
+    card 1
+}
 pcm.pulse {
     type pulse
-    card 1
 }
 ctl.pulse {
     type pulse
-    card 1
-}
-
-pcm.!default {
-    type hw
-    card 1
-}
-ctl.!default {
-    type hw
-    card 1
 }
 EOT
 sudo cat <<EOT >>/boot/config.txt
@@ -234,22 +285,34 @@ sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
 sudo cat <<EOT >> /etc/asound.conf
+pcm.!default {
+    type plug
+    slave.pcm "dmixer"
+}
+pcm.dmixer{
+    type dmix
+       ipc_key 1024
+       slave {
+                pcm "hw:1,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+       }
+       bindings {
+               0 0
+               1 1
+       }
+}
+ct.dmixer{
+    type hw
+    card 1
+}
 pcm.pulse {
     type pulse
-    card 1
 }
 ctl.pulse {
     type pulse
-    card 1
-}
-
-pcm.!default {
-    type hw
-    card 1
-}
-ctl.!default {
-    type hw
-    card 1
 }
 EOT
 sudo cat <<EOT >>/boot/config.txt
@@ -290,22 +353,34 @@ sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
 sudo cat <<EOT >> /etc/asound.conf
+pcm.!default {
+    type plug
+    slave.pcm "dmixer"
+}
+pcm.dmixer{
+    type dmix
+       ipc_key 1024
+       slave {
+                pcm "hw:1,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+       }
+       bindings {
+               0 0
+               1 1
+       }
+}
+ct.dmixer{
+    type hw
+    card 1
+}
 pcm.pulse {
     type pulse
-    card 1
 }
 ctl.pulse {
     type pulse
-    card 1
-}
-
-pcm.!default {
-    type hw
-    card 1
-}
-ctl.!default {
-    type hw
-    card 1
 }
 EOT
 sudo cat <<EOT >>/boot/config.txt
@@ -346,22 +421,34 @@ sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
 sudo cat <<EOT >> /etc/asound.conf
+pcm.!default {
+    type plug
+    slave.pcm "dmixer"
+}
+pcm.dmixer{
+    type dmix
+       ipc_key 1024
+       slave {
+                pcm "hw:1,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+       }
+       bindings {
+               0 0
+               1 1
+       }
+}
+ct.dmixer{
+    type hw
+    card 1
+}
 pcm.pulse {
     type pulse
-    card 1
 }
 ctl.pulse {
     type pulse
-    card 1
-}
-
-pcm.!default {
-    type hw
-    card 1
-}
-ctl.!default {
-    type hw
-    card 1
 }
 EOT
 sudo cat <<EOT >>/boot/config.txt
@@ -402,22 +489,34 @@ sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
 sudo cat <<EOT >> /etc/asound.conf
+pcm.!default {
+    type plug
+    slave.pcm "dmixer"
+}
+pcm.dmixer{
+    type dmix
+       ipc_key 1024
+       slave {
+                pcm "hw:1,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+       }
+       bindings {
+               0 0
+               1 1
+       }
+}
+ct.dmixer{
+    type hw
+    card 1
+}
 pcm.pulse {
     type pulse
-    card 1
 }
 ctl.pulse {
     type pulse
-    card 1
-}
-
-pcm.!default {
-    type hw
-    card 1
-}
-ctl.!default {
-    type hw
-    card 1
 }
 EOT
 sudo cat <<EOT >>/boot/config.txt
@@ -458,22 +557,34 @@ sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
 sudo cat <<EOT >> /etc/asound.conf
+pcm.!default {
+    type plug
+    slave.pcm "dmixer"
+}
+pcm.dmixer{
+    type dmix
+       ipc_key 1024
+       slave {
+                pcm "hw:1,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+       }
+       bindings {
+               0 0
+               1 1
+       }
+}
+ct.dmixer{
+    type hw
+    card 1
+}
 pcm.pulse {
     type pulse
-    card 1
 }
 ctl.pulse {
     type pulse
-    card 1
-}
-
-pcm.!default {
-    type hw
-    card 1
-}
-ctl.!default {
-    type hw
-    card 1
 }
 EOT
 sudo cat <<EOT >>/boot/config.txt
@@ -516,22 +627,34 @@ sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
 sudo cat <<EOT >> /etc/asound.conf
+pcm.!default {
+    type plug
+    slave.pcm "dmixer"
+}
+pcm.dmixer{
+    type dmix
+       ipc_key 1024
+       slave {
+                pcm "hw:1,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+       }
+       bindings {
+               0 0
+               1 1
+       }
+}
+ct.dmixer{
+    type hw
+    card 1
+}
 pcm.pulse {
     type pulse
-    card 1
 }
 ctl.pulse {
     type pulse
-    card 1
-}
-
-pcm.!default {
-    type hw
-    card 1
-}
-ctl.!default {
-    type hw
-    card 1
 }
 EOT
 sudo cat <<EOT >>/boot/config.txt
@@ -572,22 +695,34 @@ sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
 sudo cat <<EOT >> /etc/asound.conf
+pcm.!default {
+    type plug
+    slave.pcm "dmixer"
+}
+pcm.dmixer{
+    type dmix
+       ipc_key 1024
+       slave {
+                pcm "hw:1,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+       }
+       bindings {
+               0 0
+               1 1
+       }
+}
+ct.dmixer{
+    type hw
+    card 1
+}
 pcm.pulse {
     type pulse
-    card 1
 }
 ctl.pulse {
     type pulse
-    card 1
-}
-
-pcm.!default {
-    type hw
-    card 1
-}
-ctl.!default {
-    type hw
-    card 1
 }
 EOT
 sudo cat <<EOT >>/boot/config.txt
@@ -628,22 +763,34 @@ sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
 sudo cat <<EOT >> /etc/asound.conf
+pcm.!default {
+    type plug
+    slave.pcm "dmixer"
+}
+pcm.dmixer{
+    type dmix
+       ipc_key 1024
+       slave {
+                pcm "hw:1,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+       }
+       bindings {
+               0 0
+               1 1
+       }
+}
+ct.dmixer{
+    type hw
+    card 1
+}
 pcm.pulse {
     type pulse
-    card 1
 }
 ctl.pulse {
     type pulse
-    card 1
-}
-
-pcm.!default {
-    type hw
-    card 1
-}
-ctl.!default {
-    type hw
-    card 1
 }
 EOT
 sudo cat <<EOT >>/boot/config.txt
