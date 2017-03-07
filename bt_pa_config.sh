@@ -58,7 +58,7 @@ tst sudo chmod 755 /usr/local/bin/say.sh
 
 tst sudo cp usr/local/bin/bluezutils.py /usr/local/bin
 
-tst sudo cp misc_setup/daemon.conf /etc/pulse
+tst sudo cp etc/pulse/daemon.conf /etc/pulse
 
 sudo patch /boot/config.txt << EOT
 @@ -54,3 +54,6 @@
