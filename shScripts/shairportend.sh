@@ -1,6 +1,6 @@
 #!/bin/sh
 bluetoothctl << EOT
-discoverable off
+discoverable on
 EOT
 amixer cset numid=3 90%
 exit 0
