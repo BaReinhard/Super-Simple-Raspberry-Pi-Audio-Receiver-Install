@@ -3,7 +3,8 @@ FILE=/home/pi/Lircmap.xml
 
 if [ -f "$FILE" ];
 then
-        mv /home/pi/Lircmap.xml /home/kodi/.kodi/userdata/Lircmap.xml
+        cp /home/pi/Lircmap.xml /home/kodi/.kodi/userdata/Lircmap.xml
+	rm /home/pi/Lircmap.xml
 	reboot
 fi
 exit 0
