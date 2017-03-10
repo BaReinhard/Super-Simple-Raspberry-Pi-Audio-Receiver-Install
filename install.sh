@@ -168,53 +168,52 @@ echo "--------------------------------------------" | tee -a $log
 # If Bluetooth is Chosen, it installs Bluetooth Dependencies and issues commands for proper configuration
 if [ $Bluetooth = "y" ]
 then
-tst ./bt_pa_install.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
-echo "${BluetoothName}" | tst ./bt_pa_config.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
+	tst ./bt_pa_install.sh | tee -a $log
+	echo "--------------------------------------------" | tee -a $log
+	echo "${BluetoothName}" | tst ./bt_pa_config.sh | tee -a $log
+	echo "--------------------------------------------" | tee -a $log
 fi
 if [ $SoundCardInstall = "y" ]
 then
-echo "${SoundCard}" | tst ./sound_card_install.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
+	echo "${SoundCard}" | tst ./sound_card_install.sh | tee -a $log
+	echo "--------------------------------------------" | tee -a $log
 fi
 # If AirPlay is Chosen, it installs AirPlay Dependencies and issues commands for proper configuration
 if [ $AirPlay = "y" ]
 then
-tst ./airplay_install.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
-{ echo "${AirPlayName}"; echo "${SoundCard}";} | tst ./airplay_config.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
+	tst ./airplay_install.sh | tee -a $log
+	echo "--------------------------------------------" | tee -a $log
+	{ echo "${AirPlayName}"; echo "${SoundCard}";} | tst ./airplay_config.sh | tee -a $log
+	echo "--------------------------------------------" | tee -a $log
 fi
 # If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
 if [ $AP = "y" ]
 then
-tst ./ap_install.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
-{ echo "${APName}"; echo "${WIFIPASS}";} | tst ./ap_config.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
+	tst ./ap_install.sh | tee -a $log
+	echo "--------------------------------------------" | tee -a $log
+	{ echo "${APName}"; echo "${WIFIPASS}";} | tst ./ap_config.sh | tee -a $log
+	echo "--------------------------------------------" | tee -a $log
 fi
 # If Kodi is Chosen, it installs Kodi Dependencies and issues commands for proper configuration
 if [ $Kodi = "y" ]
 then
-tst ./kodi_install.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
-tst ./kodi_config.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
+	tst ./kodi_install.sh | tee -a $log
+	echo "--------------------------------------------" | tee -a $log
+	tst ./kodi_config.sh | tee -a $log
+	echo "--------------------------------------------" | tee -a $log
 fi
 # If Lirc is Chosen, it installs Lirc Dependencies and issues commands for proper configuration
 if [ $Lirc = "y" ]
 then
-tst ./lirc_install.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
-tst ./lirc_config.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
+	tst ./lirc_install.sh | tee -a $log
+	echo "--------------------------------------------" | tee -a $log
+	tst ./lirc_config.sh | tee -a $log
+	echo "--------------------------------------------" | tee -a $log
 fi
 if [ $GMedia = "y" ]
 then
-echo "${GMediaName}" | tst ./gmrender_install.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
-
+	echo "${GMediaName}" | tst ./gmrender_install.sh | tee -a $log
+	echo "--------------------------------------------" | tee -a $log
 fi
 echo "Ending at @ `date`" | tee -a $log
 reboot
