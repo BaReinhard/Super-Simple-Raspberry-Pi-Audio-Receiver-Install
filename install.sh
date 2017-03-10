@@ -210,6 +210,7 @@ then
 	tst ./lirc_config.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
 fi
+# If GMedia is Chosen, it installs  GMedia Dependencies and issues commands for proper configuration
 if [ $GMedia = "y" ]
 then
 	echo "${GMediaName}" | tst ./gmrender_install.sh | tee -a $log
