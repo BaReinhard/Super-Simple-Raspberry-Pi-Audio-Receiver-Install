@@ -21,6 +21,7 @@ then
 	Kodi="y"
 	Lirc="y"
 	SoundCardInstall="y"
+	GMedia="n"
 # Home Installation - Previously Raspberry Pi Audio Receiver Install
 elif [ $Install = "2" ]
 then
@@ -29,7 +30,8 @@ then
         AP="n"
         Kodi="y"
         Lirc="y"
-	SoundCardInstall="y"	
+	SoundCardInstall="y"
+	GMedia="y"
 # Access Point Install - Previously Network Without Internet
 elif [ $Install = "3" ]
 then
@@ -38,6 +40,7 @@ then
         AP="y"
         Kodi="n"
         Lirc="n"
+	GMedia="n"
 # Custom Install - Allows Users to Choose Installation of various features. Further allowing the use of this project with other ideas aside from Audio Receivers.
 elif [ $Install = "4" ]
 then
@@ -77,6 +80,11 @@ then
 	do
 		read -p "Do you want to use a Sound Card? (y/n) : " SoundCardInstall
 	done
+	GMedia="GMedia"
+	while [ $GMedia != "y" ] && [ $GMedia != "n" ];
+	do
+		read -p "Do you want to setup device as a UPnP Renderer? (y/n) : " GMedia
+	done
 else
 	echo "Please choose a valid choice"
 fi
@@ -94,6 +102,7 @@ then
 	APName=$MYNAME
 	BluetoothName=$MYNAME
 	AirPlayName=$MYNAME
+	GMediaName=$MYNAME
 elif [ $SameName = "n" ]
 then	
 	# Asks for Bluetooth Device Name
@@ -110,6 +119,10 @@ then
 	if [ $AP = "y" ]
 	then
 		read -p "Access Point Device Name: " APName
+	fi
+	if [ $GMedia = "y" ]
+	then
+		read -p "UPnP Device Name: " GMediaName	
 	fi
 fi
 if [ $AP = "y" ]
@@ -196,6 +209,12 @@ tst ./lirc_install.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 tst ./lirc_config.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
+fi
+if [ $GMedia = "y" ]
+then
+echo "${GMediaName}" | tst ./gmrender_install.sh | tee -a $log
+echo "--------------------------------------------" | tee -a $log
+
 fi
 echo "Ending at @ `date`" | tee -a $log
 reboot
