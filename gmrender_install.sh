@@ -9,15 +9,15 @@ function tst {
     fi	
 }
 #--------------------------------------------------------------------
-
-tst aptitude install libupnp-dev libgstreamer1.0-dev \
-             gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
-             gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
-             gstreamer1.0-libav gstreamer1.0-alsa
+# Install Dependencies
+tst apt-get install libupnp-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-alsa -y
+# Download Package
 tst git clone https://github.com/hzeller/gmrender-resurrect.git
 tst cd gmrender-resurrect
+# Setup Package
 tst ./autogen.sh
 tst ./configure
+# Install Package
 tst make
 tst make install
 
