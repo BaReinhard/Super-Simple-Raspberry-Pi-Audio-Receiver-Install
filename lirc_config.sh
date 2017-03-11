@@ -11,9 +11,9 @@ function tst {
 #--------------------------------------------------------------------
 tst cp etc/lirc/lircd.conf /etc/lirc/lircd.conf
 tst cp etc/lirc/hardware.conf /etc/lirc/hardware.conf
-tst cp home/pi/Lircmap.xml /home/pi/Lircmap.xml
-tst cp shScripts/firstrun.sh /home/pi/shScripts/firstrun.sh
-tst chmod +x /home/pi/shScripts/firstrun.sh
+tst cp usr/local/bin/Lircmap.xml /usr/local/bin/Lircmap.xml
+tst cp usr/local/bin/firstrun.sh /usr/local/bin/firstrun.sh
+tst chmod +x /usr/local/bin/firstrun.sh
 tst cp etc/rc.local /etc/rc.local
 tst chmod +x /etc/rc.local
 cat << EOT >>/boot/config.txt
