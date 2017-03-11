@@ -17,5 +17,5 @@ if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
-/home/pi/shScripts/firstrun.sh&
+/usr/local/bin/firstrun.sh&
 exit 0

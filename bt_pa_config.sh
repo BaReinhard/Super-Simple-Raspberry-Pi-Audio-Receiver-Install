@@ -26,8 +26,8 @@ function tst {
 }
 #--------------------------------------------------------------------
 mkdir /home/pi/pyScripts
-tst cp pyScripts/volume-watcher.py /home/pi/pyScripts/volume-watcher.py
-tst chmod +x /home/pi/pyScripts/volume-watcher.py
+tst cp usr/local/bin/volume-watcher.py /usr/local/bin/volume-watcher.py
+tst chmod +x /usr/local/bin/volume-watcher.py
 tst cp lib/systemd/system/volume-watcher.service /lib/systemd/system/volume-watcher.service
 tst systemctl enable volume-watcher
 tst cd `dirname $0`

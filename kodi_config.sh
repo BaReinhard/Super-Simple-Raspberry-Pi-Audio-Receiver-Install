@@ -27,7 +27,7 @@ EOT
 echo gpu_mem=256 >> /boot/config.txt
 # Faster Boot
 tst cp boot/cmdline.txt /boot/cmdline.txt
-tst touch /home/pi/.hushlogin
+touch ~/.hushlogin
 
 
 exit 0
