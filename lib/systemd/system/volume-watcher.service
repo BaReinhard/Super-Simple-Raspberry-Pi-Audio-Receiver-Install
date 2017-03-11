@@ -3,7 +3,7 @@ Description=Watches Bluetooth for Volume Change
 After=multi-user.target
 
 [Service]
-ExecStart=/usr/bin/python /home/pi/pyScripts/volume-watcher.py
+ExecStart=/usr/bin/python /usr/local/bin/volume-watcher.py
 ExecStop=/bin/kill -9 $MAINPID
 StandardOutput=null
 
