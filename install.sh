@@ -149,7 +149,10 @@ then
 	do
 		read -p "Which Sound Card are you using? (0/1/2/3/4/5/6/7/8/9/10/11) : " SoundCard
 	done
+else
+	SoundCard="0"
 fi
+
 #--------------------------------------------------------------------
 function tst {
     echo "===> Executing: $*"
