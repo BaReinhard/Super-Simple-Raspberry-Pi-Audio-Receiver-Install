@@ -37,9 +37,10 @@ pi@raspberrypi:~/ $ cd Super-Simple-Raspberry-Pi-Audio-Receiver-Install
 pi@raspberrypi:~/Super-Simple-Raspberry-Pi-Audio-Receiver-Install $ sudo ./install.sh
 1. Install the Raspberry Pi Audio Receiver Car Installation
 2. Install the Raspberry Pi Audio Receiver Home Installation
-3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)"
-4. Install a Custom Raspberry Pi Audio Receiver
-Which installation would you like to choose? (1/2/3/4) : Choose 1, 2, 3, or 4
+3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)
+4. Install the Volumio (Bluetooth Only) Installation
+5. Install a Custom Raspberry Pi Audio Receiver
+Which installation would you like to choose? (1/2/3/4/5) : Choose 1, 2, 3, 4, or 5
 Do you want all the Devices to use the same name? (y/n) : Choose y or n
 
 # When Choosing 'y'
