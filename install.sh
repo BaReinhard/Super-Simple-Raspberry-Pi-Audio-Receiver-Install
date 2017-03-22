@@ -7,11 +7,12 @@ echo "" > $log
 echo "1. Install the Raspberry Pi Audio Receiver Car Installation"
 echo "2. Install the Raspberry Pi Audio Receiver Home Installation"
 echo "3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)"
-echo "4. Install a Custom Raspberry Pi Audio Receiver"
+echo "4. Install the Volumio (Bluetooth Only) Installation"
+echo "5. Install a Custom Raspberry Pi Audio Receiver"
 Install="5"
-while [ $Install != "1" ] && [ $Install != "2" ] && [ $Install != "3" ] && [ $Install != "4" ];
+while [ $Install != "1" ] && [ $Install != "2" ] && [ $Install != "3" ] && [ $Install != "4" ] && [ $Install != "5" ];
 do
-read -p "Which installation would you like to choose? (1/2/3/4) : " Install
+read -p "Which installation would you like to choose? (1/2/3/4/5) : " Install
 # Car Installation - Previously Raspberry Pi Audio Receiver Install Car Install
 if [ $Install = "1" ]
 then
@@ -41,8 +42,19 @@ then
         Kodi="n"
         Lirc="n"
 	GMedia="n"
-# Custom Install - Allows Users to Choose Installation of various features. Further allowing the use of this project with other ideas aside from Audio Receivers.
+	
 elif [ $Install = "4" ]
+then
+	AirPlay="n"
+	Bluetooth="y"
+	AP="n"
+	Kodi="n"
+	Lirc="n"
+	GMedia="n"
+	SoundCardInstall="n"
+	
+# Custom Install - Allows Users to Choose Installation of various features. Further allowing the use of this project with other ideas aside from Audio Receivers.
+elif [ $Install = "5" ]
 then
 	# Prompts the User to use AirPlay for Streaming (aka shairport-sync)
 	AirPlay="AirPlay"
