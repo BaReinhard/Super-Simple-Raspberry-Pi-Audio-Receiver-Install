@@ -22,4 +22,4 @@ tst make
 tst make install
 
 # Add line to /etc/rc.local to allow for startup on boot
-tst sed -i -e "\$i \/usr/local/bin/gmediarenderer -f $UPNP_NAME&\n" /etc/rc.local
+sed -i -e "\$i \/usr/local/bin/gmediarenderer -f $UPNP_NAME&\n" /etc/rc.local
