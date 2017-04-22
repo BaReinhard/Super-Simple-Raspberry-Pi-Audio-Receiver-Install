@@ -25,6 +25,9 @@ function tst {
     fi	
 }
 #--------------------------------------------------------------------
+
+
+
 mkdir /home/pi/pyScripts
 tst cp usr/local/bin/volume-watcher.py /usr/local/bin/volume-watcher.py
 tst chmod +x /usr/local/bin/volume-watcher.py
@@ -32,7 +35,7 @@ tst cp lib/systemd/system/volume-watcher.service /lib/systemd/system/volume-watc
 tst systemctl enable volume-watcher
 tst cd `dirname $0`
 
-sudo echo "PRETTY_HOSTNAME=$BT_NAME" >> /tmp/machine-info
+echo "PRETTY_HOSTNAME=$BT_NAME" >> /tmp/machine-info
 tst sudo cp /tmp/machine-info /etc
 
 tst sudo cp init.d/pulseaudio /etc/init.d
@@ -142,7 +145,20 @@ EOT
 #sudo service bluetooth start &
 #sudo service pulseaudio start &
 #sudo service bluetooth-agent start &
-
+# BT FIX
+mkdir /etc/pulsebackup
+cp /etc/pulse/* /etc/pulsebackup/
+git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
+apt-get install intltool
+apt-get install libsndfile-dev
+apt-get install libcap-dev
+apt-get install libjson0-dev
+cd pulseaudio
+./bootstrap.sh
+make
+make install
+ldconfig
+cp /etc/pulsebackup/* /etc/pulse
 
 sleep 5
 
