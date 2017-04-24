@@ -6,7 +6,7 @@ function tst {
     if ! $*; then
         echo "Exiting script due to error from: $*"
         exit 1
-    fi	
+    fi
 }
 #--------------------------------------------------------------------
 # Install Dependencies
@@ -22,4 +22,4 @@ tst make
 tst make install
 
 # Add line to /etc/rc.local to allow for startup on boot
-sed -i -e "\$i \/usr/local/bin/gmediarenderer -f $UPNP_NAME&\n" /etc/rc.local
+sed -i -e "\$i \/usr/local/bin/gmediarender -f $UPNP_NAME&\n" /etc/rc.local

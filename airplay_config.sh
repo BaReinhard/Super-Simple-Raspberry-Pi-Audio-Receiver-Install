@@ -62,7 +62,7 @@ metadata =
 };
 
 // Advanced parameters for controlling how a Shairport Sync runs
-sessioncontrol = 
+sessioncontrol =
 {
 //	Uncomment "run_this_before_play_begins" and "run_this_after_play_ends" for Audio Line Input
 
@@ -110,7 +110,7 @@ ao =
 //  audio_backend_buffer_desired_length = 44100; // Having started to send audio at the right time, send all subsequent audio this many frames ahead of time, creating a buffer this size.
 };
 
-// Static latency settings are deprecated and the settings have been removed. 
+// Static latency settings are deprecated and the settings have been removed.
 EOT
 
 elif [ $SoundCard = "0" ]
@@ -161,7 +161,7 @@ metadata =
 };
 
 // Advanced parameters for controlling how a Shairport Sync runs
-sessioncontrol = 
+sessioncontrol =
 {
 //	Uncomment "run_this_before_play_begins" and "run_this_after_play_ends" for Audio Line Input
 
@@ -209,19 +209,15 @@ ao =
 //  audio_backend_buffer_desired_length = 44100; // Having started to send audio at the right time, send all subsequent audio this many frames ahead of time, creating a buffer this size.
 };
 
-// Static latency settings are deprecated and the settings have been removed. 
+// Static latency settings are deprecated and the settings have been removed.
 EOT
 
 fi
 
-tst mkdir /home/pi/shScripts
+tst cp shScripts/shairportstart.sh /usr/local/bin/shairportstart.sh
+tst cp shScripts/shairportend.sh /usr/local/bin/shairportend.sh
 
-tst cp shScripts/shairportstart.sh /home/pi/shScripts/shairportstart.sh
-tst cp shScripts/shairportend.sh /home/pi/shScripts/shairportend.sh
-
-tst chmod +x /home/pi/shScripts/shairportstart.sh
-tst chmod +x /home/pi/shScripts/shairportend.sh
+tst chmod +x /usr/local/bin/shairportstart.sh
+tst chmod +x /usr/local/bin/shairportend.sh
 
 tst echo "It is suggested you reboot your pi."
-
-
