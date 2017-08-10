@@ -112,7 +112,6 @@ ao =
 
 // Static latency settings are deprecated and the settings have been removed.
 EOT
-
 elif [ $SoundCard = "0" ]
 then
 	cat <<EOT > /etc/shairport-sync.conf
