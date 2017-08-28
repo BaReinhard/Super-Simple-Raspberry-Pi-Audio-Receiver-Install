@@ -78,7 +78,7 @@ sessioncontrol =
 // These are parameters for the "alsa" audio back end, the only back end that supports synchronised audio.
 alsa =
 {
-output_device = "hw:1,0"; // the name of the alsa output device. Use "alsamixer" or "aplay" to find out the names of devices, mixers, etc.
+//  output_device = "hw:1,0"; // the name of the alsa output device. Use "alsamixer" or "aplay" to find out the names of devices, mixers, etc.
 //  mixer_control_name = "PCM"; // the name of the mixer to use to adjust output volume. If not specified, volume in adjusted in software.
 //  mixer_device = "default"; // the mixer_device default is whatever the output_device is. Normally you wouldn't have to use this.
 //  audio_backend_latency_offset = 0; // Set this offset to compensate for a fixed delay in the audio back end. E.g. if the output device delays by 100 ms, set this to -4410.
@@ -177,7 +177,7 @@ sessioncontrol =
 // These are parameters for the "alsa" audio back end, the only back end that supports synchronised audio.
 alsa =
 {
-output_device = "hw:0,0"; // the name of the alsa output device. Use "alsamixer" or "aplay" to find out the names of devices, mixers, etc.
+//  output_device = "hw:0,0"; // the name of the alsa output device. Use "alsamixer" or "aplay" to find out the names of devices, mixers, etc.
 //  mixer_control_name = "PCM"; // the name of the mixer to use to adjust output volume. If not specified, volume in adjusted in software.
 //  mixer_device = "default"; // the mixer_device default is whatever the output_device is. Normally you wouldn't have to use this.
 //  audio_backend_latency_offset = 0; // Set this offset to compensate for a fixed delay in the audio back end. E.g. if the output device delays by 100 ms, set this to -4410.

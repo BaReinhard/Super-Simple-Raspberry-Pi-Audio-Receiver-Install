@@ -26,6 +26,6 @@ getent passwd shairport-sync &> /dev/null || sudo useradd -r -M -g shairport-syn
 sleep 1
 tst make install
 sleep 1
-tst systemctl enable shairport-sync
+sed -i -e '$i \shairport-sync -o alsa -c pulse -c /etc/shairport-sync.conf\n' /etc/rc.local
 
 echo "Done! You should reboot now"
