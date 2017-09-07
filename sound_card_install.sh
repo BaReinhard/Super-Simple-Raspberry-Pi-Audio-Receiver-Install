@@ -27,7 +27,7 @@ ctl.!default {
     card 0
 }
 EOT
-sudo cat <<EOT >>/boot/config.txt
+sudo cat <<EOT >> /boot/config.txt
 # Enable HiFiberry Amp
 #dtoverlay=hifiberry-amp
 
@@ -59,7 +59,6 @@ sudo cat <<EOT >>/boot/config.txt
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
-
 elif [ $SoundCard = "1" ]
 then
 sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
@@ -94,7 +93,6 @@ dtoverlay=hifiberry-dac
 # Enable HiFiberry DAC Standard/Pro
 #dtoverlay=hifiberry-dacplus
 
-
 # Enable HiFiberry Digi
 #dtoverlay=hifiberry-digi
 
@@ -116,6 +114,7 @@ dtoverlay=hifiberry-dac
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
+sed -i '56 s/^/#/' /boot/config.txt # fixes problem with onboard sound card
 elif [ $SoundCard = "2" ]
 then
 sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
@@ -150,7 +149,6 @@ sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry DAC Standard/Pro
 dtoverlay=hifiberry-dacplus
 
-
 # Enable HiFiberry Digi
 #dtoverlay=hifiberry-digi
 
@@ -172,6 +170,7 @@ dtoverlay=hifiberry-dacplus
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
+sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "3" ]
 then
 sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
@@ -228,6 +227,7 @@ dtoverlay=hifiberry-digi
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
+sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "4" ]
 then
 sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
@@ -284,6 +284,7 @@ dtoverlay=hifiberry-amp
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
+sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "5" ]
 then
 sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
@@ -340,6 +341,7 @@ dtoverlay=iqaudio-dac
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
+sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "6" ]
 then
 sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
@@ -396,6 +398,7 @@ dtoverlay=iqaudio-dacplus
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
+sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "7" ]
 then
 sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
@@ -452,6 +455,7 @@ dtoverlay=iqaudio-dacplus,unmute_amp
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
+sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "8" ]
 then
 sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
@@ -510,6 +514,7 @@ dtoverlay=iqaudio-digi-wm8804-audio
 
 
 EOT
+sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "9" ]
 then
 sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
@@ -566,6 +571,7 @@ sudo cat <<EOT >>/boot/config.txt
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
+sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "10" ]
 then
 sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
@@ -622,6 +628,7 @@ dtoverlay=justboom-dac
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
+sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "11" ]
 then
 sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
@@ -656,7 +663,6 @@ sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry DAC Standard/Pro
 #dtoverlay=hifiberry-dacplus
 
-
 # Enable HiFiberry Digi
 #dtoverlay=hifiberry-digi
 
@@ -678,5 +684,6 @@ sudo cat <<EOT >>/boot/config.txt
 # Enable JustBoom Digi Cards
 dtoverlay=justboom-digi
 EOT
+sed -i '56 s/^/#/' /boot/config.txt
 fi
 exit 0
