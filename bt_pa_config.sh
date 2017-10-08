@@ -149,6 +149,7 @@ EOT
 mkdir /etc/pulsebackup
 cp /etc/pulse/* /etc/pulsebackup/
 git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
+apt-get install libtool
 apt-get install intltool
 apt-get install libsndfile-dev
 apt-get install libcap-dev
