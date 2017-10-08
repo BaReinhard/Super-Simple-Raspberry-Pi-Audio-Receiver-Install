@@ -154,6 +154,17 @@ apt-get install intltool
 apt-get install libsndfile-dev
 apt-get install libcap-dev
 apt-get install libjson0-dev
+apt-get install libasound2-dev
+apt-get install libavahi-client-dev
+apt-get install libbluetooth-dev
+apt-get install libglib2.0-dev
+apt-get install liborc-0.4-dev
+apt-get install libsamplerate0-dev
+apt-get install libsbc-dev
+apt-get install libspeexdsp-dev
+apt-get install libssl-dev
+apt-get install libtdb-dev
+apt-get install libbluetooth-dev
 cd pulseaudio
 ./bootstrap.sh
 make
