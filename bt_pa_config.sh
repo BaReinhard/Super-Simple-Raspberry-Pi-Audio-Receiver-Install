@@ -148,6 +148,7 @@ EOT
 # BT FIX
 mkdir /etc/pulsebackup
 cp /etc/pulse/* /etc/pulsebackup/
+cd ~
 git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
 apt-get install libtool
 apt-get install intltool
@@ -165,12 +166,30 @@ apt-get install libspeexdsp-dev
 apt-get install libssl-dev
 apt-get install libtdb-dev
 apt-get install libbluetooth-dev
+apt-get install intltool -y
+cd ~
+git clone https://github.com/json-c/json-c.git
+cd json-c
+sh autogen.sh
+./configure 
+make
+make install
+cd ~
+apt install autoconf autogen automake build-essential libasound2-dev libflac-dev libogg-dev libtool libvorbis-dev pkg-config python -y
+git clone git://github.com/erikd/libsndfile.git
+cd libsndfile
+./autogen.sh
+./configure --enable-werror
+make
+sudo make install
+cd ~
 cd pulseaudio
-./bootstrap.sh
+./bootstrap
 make
 make install
 ldconfig
 cp /etc/pulsebackup/* /etc/pulse
+sed -i "s/DAEMON=.*/DAEMON=/usr/local/bin/pulseaudio/" /etc/init.d/pulseaudio
 
 sleep 5
 
