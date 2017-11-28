@@ -148,7 +148,8 @@ EOT
 # BT FIX
 mkdir /etc/pulsebackup
 cp /etc/pulse/* /etc/pulsebackup/
-cd ~
+sudo su
+su pi -c cd ~
 git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
 apt-get install libtool
 apt-get install intltool
@@ -167,30 +168,29 @@ apt-get install libssl-dev
 apt-get install libtdb-dev
 apt-get install libbluetooth-dev
 apt-get install intltool -y
-cd ~
+su pi -c cd ~
 git clone https://github.com/json-c/json-c.git
 cd json-c
-sh autogen.sh
-./configure 
-make
+su pi -c sh autogen.sh
+su pi -c ./configure 
+su pi -c make
 make install
-cd ~
+su pi -c cd ~
 apt install autoconf autogen automake build-essential libasound2-dev libflac-dev libogg-dev libtool libvorbis-dev pkg-config python -y
 git clone git://github.com/erikd/libsndfile.git
 cd libsndfile
-./autogen.sh
-./configure --enable-werror
-make
-sudo make install
-cd ~
+su pi -c ./autogen.sh
+su pi -c ./configure --enable-werror
+su pi -c make
+make install
+su pi -c cd ~
 cd pulseaudio
 ./bootstrap.sh
 make
 make install
 ldconfig
 cp /etc/pulsebackup/* /etc/pulse
-sed -i "s/DAEMON=.*/DAEMON=/usr/local/bin/pulseaudio/" /etc/init.d/pulseaudio
-
+exit
 sleep 5
 
 echo "Done! You should reboot now"
