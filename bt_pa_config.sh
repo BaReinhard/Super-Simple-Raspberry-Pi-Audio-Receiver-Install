@@ -29,13 +29,13 @@ function tst {
 
 
 mkdir /home/pi/pyScripts
-tst cp usr/local/bin/volume-watcher.py /usr/local/bin/volume-watcher.py
-tst chmod +x /usr/local/bin/volume-watcher.py
-tst cp lib/systemd/system/volume-watcher.service /lib/systemd/system/volume-watcher.service
-tst systemctl enable volume-watcher
+tst sudo cp usr/local/bin/volume-watcher.py /usr/local/bin/volume-watcher.py
+tst sudo chmod +x /usr/local/bin/volume-watcher.py
+tst sudo cp lib/systemd/system/volume-watcher.service /lib/systemd/system/volume-watcher.service
+tst sudo systemctl enable volume-watcher
 tst cd `dirname $0`
 
-echo "PRETTY_HOSTNAME=$BT_NAME" >> /tmp/machine-info
+sudo echo "PRETTY_HOSTNAME=$BT_NAME" >> /tmp/machine-info
 tst sudo cp /tmp/machine-info /etc
 
 tst sudo cp init.d/pulseaudio /etc/init.d
@@ -146,8 +146,8 @@ EOT
 #sudo service pulseaudio start &
 #sudo service bluetooth-agent start &
 # BT FIX
-mkdir /etc/pulsebackup
-cp /etc/pulse/* /etc/pulsebackup/
+sudo mkdir /etc/pulsebackup
+sudo cp /etc/pulse/* /etc/pulsebackup/
 
 cd ~
 git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
@@ -174,7 +174,7 @@ sudo ./bootstrap.sh
 sudo make
 sudo make install
 sudo ldconfig
-cp /etc/pulsebackup/* /etc/pulse
+sudo cp /etc/pulsebackup/* /etc/pulse
 exit
 sleep 5
 
