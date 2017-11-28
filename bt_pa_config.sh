@@ -148,47 +148,32 @@ EOT
 # BT FIX
 mkdir /etc/pulsebackup
 cp /etc/pulse/* /etc/pulsebackup/
-sudo su
-su pi -c cd ~
+
+cd ~
 git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
-apt-get install libtool
-apt-get install intltool
-apt-get install libsndfile-dev
-apt-get install libcap-dev
-apt-get install libjson0-dev
-apt-get install libasound2-dev
-apt-get install libavahi-client-dev
-apt-get install libbluetooth-dev
-apt-get install libglib2.0-dev
-apt-get install liborc-0.4-dev
-apt-get install libsamplerate0-dev
-apt-get install libsbc-dev
-apt-get install libspeexdsp-dev
-apt-get install libssl-dev
-apt-get install libtdb-dev
-apt-get install libbluetooth-dev
-apt-get install intltool -y
-su pi -c cd ~
+sudo apt-get install libtool intltool libsndfile-dev libcap-dev libjson0-dev libasound2-dev libavahi-client-dev libbluetooth-dev libglib2.0-dev libsamplerate0-dev libsbc-dev libspeexdsp-dev libssl-dev libtdb-dev libbluetooth-dev intltool -y
+
+cd ~
 git clone https://github.com/json-c/json-c.git
 cd json-c
-su pi -c sh autogen.sh
-su pi -c ./configure 
-su pi -c make
-make install
-su pi -c cd ~
-apt install autoconf autogen automake build-essential libasound2-dev libflac-dev libogg-dev libtool libvorbis-dev pkg-config python -y
+sh autogen.sh
+./configure 
+make
+sudo make install
+cd ~
+sudo apt install autoconf autogen automake build-essential libasound2-dev libflac-dev libogg-dev libtool libvorbis-dev pkg-config python -y
 git clone git://github.com/erikd/libsndfile.git
 cd libsndfile
-su pi -c ./autogen.sh
-su pi -c ./configure --enable-werror
-su pi -c make
-make install
-su pi -c cd ~
-cd pulseaudio
-./bootstrap.sh
+./autogen.sh
+./configure --enable-werror
 make
-make install
-ldconfig
+sudo make install
+cd ~
+cd pulseaudio
+sudo ./bootstrap.sh
+sudo make
+sudo make install
+sudo ldconfig
 cp /etc/pulsebackup/* /etc/pulse
 exit
 sleep 5
