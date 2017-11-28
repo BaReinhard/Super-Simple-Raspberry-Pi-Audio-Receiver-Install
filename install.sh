@@ -178,7 +178,7 @@ chmod +x ./*
 echo "Starting @ `date`" | tee -a $log
 # Updates and Upgrades the Raspberry Pi
 sudo su
-echo "This is who i am: ${whoami}"
+echo "This is who i am: `whoami`"
 echo "--------------------------------------------" | tee -a $log
 tst ./bt_pa_prep.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
