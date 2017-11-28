@@ -184,7 +184,7 @@ make
 sudo make install
 cd ~
 cd pulseaudio
-./bootstrap
+./bootstrap.sh
 make
 make install
 ldconfig
