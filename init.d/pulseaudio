@@ -12,7 +12,7 @@
 #                    the PulseAudio sound server.
 ### END INIT INFO
 
-DAEMON=/usr/bin/pulseaudio
+DAEMON=/usr/local/bin/pulseaudio
 PIDDIR=/var/run/pulse
 PIDFILE=$PIDDIR/pid
 DAEMONUSER=pulse
