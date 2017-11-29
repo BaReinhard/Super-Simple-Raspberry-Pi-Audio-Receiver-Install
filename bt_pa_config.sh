@@ -63,14 +63,11 @@ tst sudo cp usr/local/bin/bluezutils.py /usr/local/bin
 
 tst sudo cp etc/pulse/daemon.conf /etc/pulse
 
-sudo patch /boot/config.txt << EOT
-@@ -54,3 +54,6 @@
- 
+sudo cat << EOT >> /boot/config.txt
  # Enable audio (loads snd_bcm2835)
  dtparam=audio=on
-+
-+# High Quality audio patch
-+audio_pwm_mode=2
+
+audio_pwm_mode=2
 EOT
 
 if [ -f /etc/udev/rules.d/99-com.rules ]; then
