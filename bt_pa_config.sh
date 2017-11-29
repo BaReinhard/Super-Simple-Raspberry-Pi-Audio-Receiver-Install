@@ -29,13 +29,13 @@ function tst {
 
 
 mkdir /home/pi/pyScripts
-tst cp usr/local/bin/volume-watcher.py /usr/local/bin/volume-watcher.py
-tst chmod +x /usr/local/bin/volume-watcher.py
-tst cp lib/systemd/system/volume-watcher.service /lib/systemd/system/volume-watcher.service
-tst systemctl enable volume-watcher
+tst sudo cp usr/local/bin/volume-watcher.py /usr/local/bin/volume-watcher.py
+tst sudo chmod +x /usr/local/bin/volume-watcher.py
+tst sudo cp lib/systemd/system/volume-watcher.service /lib/systemd/system/volume-watcher.service
+tst sudo systemctl enable volume-watcher
 tst cd `dirname $0`
 
-echo "PRETTY_HOSTNAME=$BT_NAME" >> /tmp/machine-info
+sudo echo "PRETTY_HOSTNAME=$BT_NAME" >> /tmp/machine-info
 tst sudo cp /tmp/machine-info /etc
 
 tst sudo cp init.d/pulseaudio /etc/init.d
@@ -63,14 +63,11 @@ tst sudo cp usr/local/bin/bluezutils.py /usr/local/bin
 
 tst sudo cp etc/pulse/daemon.conf /etc/pulse
 
-sudo patch /boot/config.txt << EOT
-@@ -54,3 +54,6 @@
- 
+sudo cat << EOT >> /boot/config.txt
  # Enable audio (loads snd_bcm2835)
  dtparam=audio=on
-+
-+# High Quality audio patch
-+audio_pwm_mode=2
+
+audio_pwm_mode=2
 EOT
 
 if [ -f /etc/udev/rules.d/99-com.rules ]; then
@@ -146,36 +143,22 @@ EOT
 #sudo service pulseaudio start &
 #sudo service bluetooth-agent start &
 # BT FIX
-mkdir /etc/pulsebackup
-cp /etc/pulse/* /etc/pulsebackup/
+sudo mkdir /etc/pulsebackup
+sudo cp /etc/pulse/* /etc/pulsebackup/
+
 cd ~
 git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
-apt-get install libtool
-apt-get install intltool
-apt-get install libsndfile-dev
-apt-get install libcap-dev
-apt-get install libjson0-dev
-apt-get install libasound2-dev
-apt-get install libavahi-client-dev
-apt-get install libbluetooth-dev
-apt-get install libglib2.0-dev
-apt-get install liborc-0.4-dev
-apt-get install libsamplerate0-dev
-apt-get install libsbc-dev
-apt-get install libspeexdsp-dev
-apt-get install libssl-dev
-apt-get install libtdb-dev
-apt-get install libbluetooth-dev
-apt-get install intltool -y
+sudo apt-get install libtool intltool libsndfile-dev libcap-dev libjson0-dev libasound2-dev libavahi-client-dev libbluetooth-dev libglib2.0-dev libsamplerate0-dev libsbc-dev libspeexdsp-dev libssl-dev libtdb-dev libbluetooth-dev intltool -y
+
 cd ~
 git clone https://github.com/json-c/json-c.git
 cd json-c
 sh autogen.sh
 ./configure 
 make
-make install
+sudo make install
 cd ~
-apt install autoconf autogen automake build-essential libasound2-dev libflac-dev libogg-dev libtool libvorbis-dev pkg-config python -y
+sudo apt install autoconf autogen automake build-essential libasound2-dev libflac-dev libogg-dev libtool libvorbis-dev pkg-config python -y
 git clone git://github.com/erikd/libsndfile.git
 cd libsndfile
 ./autogen.sh
@@ -184,13 +167,12 @@ make
 sudo make install
 cd ~
 cd pulseaudio
-./bootstrap.sh
-make
-make install
-ldconfig
-cp /etc/pulsebackup/* /etc/pulse
-sed -i "s/DAEMON=.*/DAEMON=/usr/local/bin/pulseaudio/" /etc/init.d/pulseaudio
-
+sudo ./bootstrap.sh
+sudo make
+sudo make install
+sudo ldconfig
+sudo cp /etc/pulsebackup/* /etc/pulse
+exit
 sleep 5
 
 echo "Done! You should reboot now"

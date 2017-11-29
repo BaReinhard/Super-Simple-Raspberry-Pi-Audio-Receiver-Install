@@ -177,15 +177,17 @@ function tst {
 chmod +x ./*
 echo "Starting @ `date`" | tee -a $log
 # Updates and Upgrades the Raspberry Pi
+echo "This is who i am: `whoami`"
 echo "--------------------------------------------" | tee -a $log
 tst ./bt_pa_prep.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 # If Bluetooth is Chosen, it installs Bluetooth Dependencies and issues commands for proper configuration
+
 if [ $Bluetooth = "y" ]
 then
 	tst ./bt_pa_install.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
-	echo "${BluetoothName}" | tst ./bt_pa_config.sh | tee -a $log
+	echo "${BluetoothName}" | tst su pi -c ./bt_pa_config.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
 fi
 if [ $SoundCardInstall = "y" ]
