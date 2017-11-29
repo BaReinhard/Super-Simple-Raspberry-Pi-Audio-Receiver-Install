@@ -1,7 +1,8 @@
 # Super Simple Raspberry Pi Audio Receiver Install. 
+## **Requires Raspbian Jessie LITE** you can find the lastest Jessie Lite Image [here]
 ![SSPARI](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/blob/master/img/SSRPARI_1080_668.png?raw=true)
 
-## **Requires Raspbian Jessie LITE** you can find the lastest Jessie Lite Image [here](http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/)
+(http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/)
 ### Looking for Devs to Help Support/Futher This Project
 ### This install has replaced [Raspberry Pi Audio Receiver Install Car Version](https://github.com/BaReinhard/Raspberry-Pi-Audio-Receiver-Install-Car-Install), [Raspberry Pi Audio Receiver Install Home Version](https://github.com/BaReinhard/Raspberry-Pi-Audio-Receiver-Install), and [Network Without Internet](https://github.com/BaReinhard/Network-Without-Internet). The new version allows for the Installation Package of Home, Car, Network Without Internet, and a custom Installation (where you choose what portions of the project you want installed)
 This project has combined several different projects into one, culminating into a plug-and-play Audio Receiver project. It incorporates A2DP, AirPlay, and Auxillary line input as possible ways to stream music to your Raspberry Pi. When paired with a sound card or HiFi audio DAC, with the exception of Aux Line Input, you get high quality stereo audio. 
