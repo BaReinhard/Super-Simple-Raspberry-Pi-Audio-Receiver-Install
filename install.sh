@@ -234,4 +234,13 @@ then
 	echo "--------------------------------------------" | tee -a $log
 fi
 echo "Ending at @ `date`" | tee -a $log
+cat << EOT > install_choices
+Bluetooth = $Bluetooth
+AirPlay = $AirPlay
+AP = $AP
+Kodi = $Kodi
+Lirc = $Lirc
+SoundCardInstall = $SoundCardInstall
+GMedia = $GMedia
+EOT
 reboot
