@@ -28,19 +28,24 @@ tst make
 if [ $SNAP = "s" ]
 then
     tst sudo make installserver
+    echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a /etc/pulse/system.pa
+    echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
 elif [ $SNAP = "c" ]
 then
     tst sudo make installclient
+    echo "sudo snapclient" | sudo tee -a ~/.profile
+    # Add set-default-sink-input here
 elif [ $SNAP = "b" ]
 then
     tst sudo make installserver
     tst sudo make installclient
+    echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a /etc/pulse/system.pa
+    echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
+    echo "sudo snapclient" | sudo tee -a ~/.profile
 fi
-# LATER CREATE Config
 
-# Change Pulse to output to snapcast
+echo "Snapcast Install Has Finished"
 
-# Change Shairport to output to snapcast, shairport conf output /tmp/snapfifo
 
-echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a ~/me
+
 
