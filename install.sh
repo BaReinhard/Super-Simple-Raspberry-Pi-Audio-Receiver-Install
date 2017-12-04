@@ -4,6 +4,7 @@
 log="./install.log"
 # Begins Logging
 SSPARI_PATH=`pwd`
+echo $SSPARI_PATH
 export SSPARI_PATH
 if [ $SUDO_USER ]; 
 then 
