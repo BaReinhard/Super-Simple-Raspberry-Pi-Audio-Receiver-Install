@@ -3,7 +3,13 @@
 # Sets Log File
 log="./install.log"
 # Begins Logging
-if [ $SUDO_USER ]; then user=$SUDO_USER;echo else echo "Must be run as root user!!"; exit 1; fi
+if [ $SUDO_USER ]; 
+then 
+	user=$SUDO_USER;echo 
+else 
+	echo "Must be run as root user!!" 
+	exit 1 
+fi
 echo "" > $log
 echo "1. Install the Raspberry Pi Audio Receiver Car Installation"
 echo "2. Install the Raspberry Pi Audio Receiver Home Installation"
@@ -58,9 +64,9 @@ then
 elif [ $Install = "5" ]
 then
 	SNAPCAST="SNAPCAST"
-	while [ $SNAPCAST != "y" ] && [ $SNAPCAST != "n"];
+	while [ $SNAPCAST != "y" ] && [ $SNAPCAST != "n" ];
 	do
-		read -p "Do you want to install SnapCast? (y/n): SNAPCAST
+		read -p "Do you want to install SnapCast? (y/n): " SNAPCAST
 	done
 	if [ $SNAPCAST = "y" ]
 	then
