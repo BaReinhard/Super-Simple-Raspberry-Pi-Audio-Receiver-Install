@@ -261,7 +261,7 @@ fi
 if [ $SNAPCAST != "n" ]
 then
 	echo "--------------SNAP CAST INSTALL--------------------" | tee -a $log
-	echo "${SNAPCAST}" | tst su ${user} -c ./snapcast_install.sh | tee -a $log
+	{ echo "${SNAPCAST}"; echo "${MYNAME}";}  | tst su ${user} -c ./snapcast_install.sh | tee -a $log
 	echo "----------------------------------------------------" | tee -a $log
 fi
 echo "Ending at @ `date`" | tee -a $log
