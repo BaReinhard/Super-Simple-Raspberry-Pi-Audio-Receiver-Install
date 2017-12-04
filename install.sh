@@ -3,6 +3,8 @@
 # Sets Log File
 log="./install.log"
 # Begins Logging
+SSPARI_PATH=`pwd`
+export SSPARI_PATH
 if [ $SUDO_USER ]; 
 then 
 	user=$SUDO_USER;echo 
