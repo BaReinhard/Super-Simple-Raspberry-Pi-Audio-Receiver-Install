@@ -4,7 +4,7 @@ while [ $SNAP != "s" ] && [ $SNAP != "c" ] && [ $SNAP != "b" ];
 do
     read -p "Install this as a SnapCast Server(s), Client(c), and Both (b): (s/c/b)" SNAP
 done
-if [ $SUDO_USER ]; then echo "needs to be run as non-root user";exit 1; else user=`whoami`; fi
+if [ $SUDO_USER ]; then user=$SUDO_USER ; else user=`whoami`; fi
 #--------------------------------------------------------------------
 function tst {
     echo "===> Executing: $*"
