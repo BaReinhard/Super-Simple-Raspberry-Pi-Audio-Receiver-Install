@@ -64,7 +64,7 @@ then
 	done
 	if [ $SNAPCAST = "y" ]
 	then
-		read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" $SNAPCAST
+		read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" SNAPCAST
 	fi
 	# Prompts the User to use AirPlay for Streaming (aka shairport-sync)
 	AirPlay="AirPlay"
