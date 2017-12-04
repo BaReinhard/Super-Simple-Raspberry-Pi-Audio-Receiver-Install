@@ -14,7 +14,8 @@ function tst {
     fi
 }
 #--------------------------------------------------------------------
-SNAP_DIR=$0/snapcast
+PWD=`pwd`
+SNAP_DIR=$PWD/snapcast
 tst git clone https://github.com/badaix/snapcast.git
 tst cd $SNAP_DIR/externals
 tst git submodule update --init --recursive
