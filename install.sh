@@ -3,7 +3,11 @@
 # Sets Log File
 log="./install.log"
 # Begins Logging
-SSPARI_PATH=`pwd`
+currentDir=$(
+  cd $(dirname "$0")
+  pwd
+) 
+SSPARI_PATH=$currentDir 
 echo $SSPARI_PATH
 export SSPARI_PATH
 if [ $SUDO_USER ]; 
