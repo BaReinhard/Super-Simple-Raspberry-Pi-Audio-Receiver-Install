@@ -29,8 +29,10 @@ if [ $SNAP = "s" ]
 then
     tst sudo make installserver
 elif [ $SNAP = "c" ]
+then
     tst sudo make installclient
 elif [ $SNAP = "b" ]
+then
     tst sudo make installserver
     tst sudo make installclient
 fi
@@ -40,6 +42,5 @@ fi
 
 # Change Shairport to output to snapcast, shairport conf output /tmp/snapfifo
 
-sudo cat << EOT >> /etc/pulse/system.pa
-load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast 
-EOT
+echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a ~/me
+
