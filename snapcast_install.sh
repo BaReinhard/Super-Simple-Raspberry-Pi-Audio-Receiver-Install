@@ -43,6 +43,10 @@ then
     echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "sudo snapclient" | sudo tee -a ~/.profile
 fi
+if [ $SNAP != "n" ]
+then
+    sudo sed -i "s///  name = \"/path/to/pipe\"; // there is no default pipe name for the output/  name = \"/tmp/snapfifo\"; // there is no default pipe name for the output/" /etc/shairport-sync.conf
+fi
 
 echo "Snapcast Install Has Finished"
 
