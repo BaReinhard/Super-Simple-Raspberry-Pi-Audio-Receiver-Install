@@ -7,8 +7,9 @@ currentDir=$(
   cd $(dirname "$0")
   pwd
 ) 
+
 SSPARI_PATH=$currentDir 
-echo $SSPARI_PATH
+cd $currentDir
 export SSPARI_PATH
 if [ $SUDO_USER ]; 
 then 
