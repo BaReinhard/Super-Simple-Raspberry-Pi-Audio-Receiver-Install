@@ -23,7 +23,8 @@ echo "1. Install the Raspberry Pi Audio Receiver Car Installation"
 echo "2. Install the Raspberry Pi Audio Receiver Home Installation"
 echo "3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)"
 echo "4. Install the Volumio (Bluetooth Only) Installation"
-echo "5. Install a Custom Raspberry Pi Audio Receiver"
+echo "5. Install the Snapcast Installation (BETA), choose from Snapcast Server, Client, or Both (Requires Minor Configuration)"
+echo "6. Install a Custom Raspberry Pi Audio Receiver"
 Install="0"
 while [ $Install != "1" ] && [ $Install != "2" ] && [ $Install != "3" ] && [ $Install != "4" ] && [ $Install != "5" ];
 do
@@ -70,6 +71,20 @@ then
 	
 # Custom Install - Allows Users to Choose Installation of various features. Further allowing the use of this project with other ideas aside from Audio Receivers.
 elif [ $Install = "5" ]
+then
+	AirPlay="y"
+	Bluetooth="y"
+	AP="n"
+	Kodi="n"
+	Lirc="n"
+	GMedia="n"
+	SNAPCAST="y"
+	SoundCardInstall="y"
+	if [ $SNAPCAST = "y" ]
+	then
+		read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" SNAPCAST
+	fi
+elif [ $Install = "6" ]
 then
 	SNAPCAST="SNAPCAST"
 	while [ $SNAPCAST != "y" ] && [ $SNAPCAST != "n" ];
