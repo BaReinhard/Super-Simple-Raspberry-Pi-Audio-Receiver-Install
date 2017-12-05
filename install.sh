@@ -26,9 +26,9 @@ echo "4. Install the Volumio (Bluetooth Only) Installation"
 echo "5. Install the Snapcast Installation (BETA), choose from Snapcast Server, Client, or Both (Requires Minor Configuration)"
 echo "6. Install a Custom Raspberry Pi Audio Receiver"
 Install="0"
-while [ $Install != "1" ] && [ $Install != "2" ] && [ $Install != "3" ] && [ $Install != "4" ] && [ $Install != "5" ];
+while [ $Install != "1" ] && [ $Install != "2" ] && [ $Install != "3" ] && [ $Install != "4" ] && [ $Install != "5" ] && [ $Install != "6" ];
 do
-read -p "Which installation would you like to choose? (1/2/3/4/5) : " Install
+read -p "Which installation would you like to choose? (1/2/3/4/5/6) : " Install
 # Car Installation - Previously Raspberry Pi Audio Receiver Install Car Install
 if [ $Install = "1" ]
 then
