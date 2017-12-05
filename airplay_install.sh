@@ -17,7 +17,7 @@ tst cd /$HOME
 tst git clone https://github.com/mikebrady/shairport-sync.git
 tst cd shairport-sync
 tst autoreconf -i -f
-tst ./configure --sysconfdir=/etc --with-alsa --with-avahi --with-ssl=openssl --with-metadata --with-soxr --with-systemd
+tst ./configure --sysconfdir=/etc --with-stdout --with-pipe --with-alsa --with-avahi --with-ssl=openssl --with-metadata --with-soxr --with-systemd
 sleep 1
 tst make
 sleep 1

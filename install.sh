@@ -3,16 +3,32 @@
 # Sets Log File
 log="./install.log"
 # Begins Logging
+currentDir=$(
+  cd $(dirname "$0")
+  pwd
+) 
+
+SSPARI_PATH=$currentDir 
+cd $currentDir
+export SSPARI_PATH
+if [ $SUDO_USER ]; 
+then 
+	user=$SUDO_USER;echo 
+else 
+	echo "Must be run as root user!!" 
+	exit 1 
+fi
 echo "" > $log
 echo "1. Install the Raspberry Pi Audio Receiver Car Installation"
 echo "2. Install the Raspberry Pi Audio Receiver Home Installation"
 echo "3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)"
 echo "4. Install the Volumio (Bluetooth Only) Installation"
-echo "5. Install a Custom Raspberry Pi Audio Receiver"
+echo "5. Install the Snapcast Installation (BETA), choose from Snapcast Server, Client, or Both (Requires Minor Configuration)"
+echo "6. Install a Custom Raspberry Pi Audio Receiver"
 Install="0"
-while [ $Install != "1" ] && [ $Install != "2" ] && [ $Install != "3" ] && [ $Install != "4" ] && [ $Install != "5" ];
+while [ $Install != "1" ] && [ $Install != "2" ] && [ $Install != "3" ] && [ $Install != "4" ] && [ $Install != "5" ] && [ $Install != "6" ];
 do
-read -p "Which installation would you like to choose? (1/2/3/4/5) : " Install
+read -p "Which installation would you like to choose? (1/2/3/4/5/6) : " Install
 # Car Installation - Previously Raspberry Pi Audio Receiver Install Car Install
 if [ $Install = "1" ]
 then
@@ -56,6 +72,29 @@ then
 # Custom Install - Allows Users to Choose Installation of various features. Further allowing the use of this project with other ideas aside from Audio Receivers.
 elif [ $Install = "5" ]
 then
+	AirPlay="y"
+	Bluetooth="y"
+	AP="n"
+	Kodi="n"
+	Lirc="n"
+	GMedia="n"
+	SNAPCAST="y"
+	SoundCardInstall="y"
+	if [ $SNAPCAST = "y" ]
+	then
+		read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" SNAPCAST
+	fi
+elif [ $Install = "6" ]
+then
+	SNAPCAST="SNAPCAST"
+	while [ $SNAPCAST != "y" ] && [ $SNAPCAST != "n" ];
+	do
+		read -p "Do you want to install SnapCast? (y/n): " SNAPCAST
+	done
+	if [ $SNAPCAST = "y" ]
+	then
+		read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" SNAPCAST
+	fi
 	# Prompts the User to use AirPlay for Streaming (aka shairport-sync)
 	AirPlay="AirPlay"
 	while [ $AirPlay != "y" ] && [ $AirPlay != "n" ];
@@ -174,6 +213,7 @@ function tst {
     fi
 }
 #--------------------------------------------------------------------
+
 chmod +x ./*
 echo "Starting @ `date`" | tee -a $log
 # Updates and Upgrades the Raspberry Pi
@@ -187,7 +227,7 @@ if [ $Bluetooth = "y" ]
 then
 	tst ./bt_pa_install.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
-	echo "${BluetoothName}" | tst su pi -c ./bt_pa_config.sh | tee -a $log
+	echo "${BluetoothName}" | tst su ${user} -c ./bt_pa_config.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
 fi
 if [ $SoundCardInstall = "y" ]
@@ -232,6 +272,12 @@ if [ $GMedia = "y" ]
 then
 	echo "${GMediaName}" | tst ./gmrender_install.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
+fi
+if [ $SNAPCAST != "n" ]
+then
+	echo "--------------SNAP CAST INSTALL--------------------" | tee -a $log
+	{ echo "${SNAPCAST}"; echo "${MYNAME}";}  | tst su ${user} -c ./snapcast_install.sh | tee -a $log
+	echo "----------------------------------------------------" | tee -a $log
 fi
 echo "Ending at @ `date`" | tee -a $log
 cat << EOT > install_choices

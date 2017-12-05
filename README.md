@@ -3,10 +3,16 @@
 ![SSPARI](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/blob/master/img/SSRPARI_1080_668.png?raw=true)
 
 
+# NEW FEATURE! SNAPCAST Support! Please test it out! Requires minor configuration.
+* When connecting to Snapcast Server via AirPlay, it will play to /tmp/snapfifo, all snap clients will need to manually move-sink-input from pulseaudio sink-input to soundcard. (In the future this will be automated, somehow...)
+* When connecting to Snapcast Server via Bluetooth, Snapcast server will need to move-sink-input from pulseaudio sink-input to Snapcast sink-out, additionally, all Snapcast servers will need to move-sink-input from pulseaudio sink-input to soundcard. (This will also be automated in the future, somehow...)
+* Snapclients, installed with this repo will have the ability to play via Bluetooth, AirPlay, and Snapclient. There may be some configuration once connected from any input. Airplay should play to soundcard automatically, but bluetooth and snapclient will need to be moved to soundcard output via `sudo pactl move-sink-input $sinkinput $sinkoutput`, eventually this will be controlled via web ui or CLI bin script.
+
 ### Looking for Devs to Help Support/Futher This Project
 ### This install has replaced [Raspberry Pi Audio Receiver Install Car Version](https://github.com/BaReinhard/Raspberry-Pi-Audio-Receiver-Install-Car-Install), [Raspberry Pi Audio Receiver Install Home Version](https://github.com/BaReinhard/Raspberry-Pi-Audio-Receiver-Install), and [Network Without Internet](https://github.com/BaReinhard/Network-Without-Internet). The new version allows for the Installation Package of Home, Car, Network Without Internet, and a custom Installation (where you choose what portions of the project you want installed)
 This project has combined several different projects into one, culminating into a plug-and-play Audio Receiver project. It incorporates A2DP, AirPlay, and Auxillary line input as possible ways to stream music to your Raspberry Pi. When paired with a sound card or HiFi audio DAC, with the exception of Aux Line Input, you get high quality stereo audio. 
 ## Changes
+* Addition and support for SnapCast as Server and Client or Both (Will need some manual configuration, creates a very simple multiroom setup)
 * Use of External Soundcards
 * soxr interpolation with shairport-sync, works well on Raspberry Pi Zero and Raspberry Pi 3, haven't tested on any other boards yet.
 * Works great with Sabrent USB Sound Card, HifiBerry Amp+ (I would not recommend this in a car), and will shortly be testing this with a HifiBerry DAC+ Pro.
@@ -43,8 +49,9 @@ pi@raspberrypi:~/Super-Simple-Raspberry-Pi-Audio-Receiver-Install $ sudo ./insta
 2. Install the Raspberry Pi Audio Receiver Home Installation
 3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)
 4. Install the Volumio (Bluetooth Only) Installation
-5. Install a Custom Raspberry Pi Audio Receiver
-Which installation would you like to choose? (1/2/3/4/5) : Choose 1, 2, 3, 4, or 5
+5. Install the Snapcast Installation (BETA), choose from Snapcast Server, Client, or Both (Requires Minor Configuration)
+6. Install a Custom Raspberry Pi Audio Receiver
+Which installation would you like to choose? (1/2/3/4/5/6) : Choose 1, 2, 3, 4, 5, or 6
 Do you want all the Devices to use the same name? (y/n) : Choose y or n
 
 # When Choosing 'y'
