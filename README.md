@@ -49,8 +49,9 @@ pi@raspberrypi:~/Super-Simple-Raspberry-Pi-Audio-Receiver-Install $ sudo ./insta
 2. Install the Raspberry Pi Audio Receiver Home Installation
 3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)
 4. Install the Volumio (Bluetooth Only) Installation
-5. Install a Custom Raspberry Pi Audio Receiver
-Which installation would you like to choose? (1/2/3/4/5) : Choose 1, 2, 3, 4, or 5
+5. Install the Snapcast Installation (BETA), choose from Snapcast Server, Client, or Both (Requires Minor Configuration)
+6. Install a Custom Raspberry Pi Audio Receiver
+Which installation would you like to choose? (1/2/3/4/5/6) : Choose 1, 2, 3, 4, 5, or 6
 Do you want all the Devices to use the same name? (y/n) : Choose y or n
 
 # When Choosing 'y'
