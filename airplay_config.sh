@@ -2,6 +2,14 @@
 
 read -p "Airplay device name: " MYNAME
 read -p "Sound Card" SoundCard
+read -p "AirPlay password: " AirPlayPass
+
+if [ "$AirPlayPass" != "" ]
+then
+        AirPlayPass="	password = \"$AirPlayPass\"; // leave this commented out if you don't want to require a password"
+else
+        AirPlayPass="//	password = \"secret\"; // leave this commented out if you don't want to require a password"
+fi
 
 #--------------------------------------------------------------------
 function tst {
@@ -32,7 +40,7 @@ general =
 //	%v for the version number, e.g. 2.8.5 and
 //	%V for the full version string, e.g. 2.8.5-OpenSSL-Avahi-ALSA-soxr-metadata-sysconfdir:/etc
 //	Overall length can not exceed 50 characters. Example: "Shairport Sync %v on %H".
-//	password = "secret"; // leave this commented out if you don't want to require a password
+$AirPlayPass
 //	interpolation = "basic"; // aka "stuffing". Default is "basic", alternative is "soxr". Use "soxr" only if you have a reasonably fast processor.
 //	output_backend = "alsa"; // Run "shairport-sync -h" to get a list of all output_backends, e.g. "alsa", "pipe", "stdout". The default is the first one.
 //	mdns_backend = "avahi"; // Run "shairport-sync -h" to get a list of all mdns_backends. The default is the first one.
@@ -130,7 +138,7 @@ general =
 //	%v for the version number, e.g. 2.8.5 and
 //	%V for the full version string, e.g. 2.8.5-OpenSSL-Avahi-ALSA-soxr-metadata-sysconfdir:/etc
 //	Overall length can not exceed 50 characters. Example: "Shairport Sync %v on %H".
-//	password = "secret"; // leave this commented out if you don't want to require a password
+$AirPlayPass
 //	interpolation = "basic"; // aka "stuffing". Default is "basic", alternative is "soxr". Use "soxr" only if you have a reasonably fast processor.
 //	output_backend = "alsa"; // Run "shairport-sync -h" to get a list of all output_backends, e.g. "alsa", "pipe", "stdout". The default is the first one.
 //	mdns_backend = "avahi"; // Run "shairport-sync -h" to get a list of all mdns_backends. The default is the first one.

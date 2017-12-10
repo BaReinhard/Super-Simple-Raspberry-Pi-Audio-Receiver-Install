@@ -181,6 +181,21 @@ then
 # Asks for the Access Point Password
 read -p "Device WiFi Password: " WIFIPASS
 fi
+if [ "$AirPlay" = "y" ]
+then
+	AirPlaySecured="undefined"
+	AirPlayPass=""
+	# Asks user if AirPlay password should be set
+	while [ "$AirPlaySecured" != "y" ] && [ "$AirPlaySecured" != "n" ];
+	do
+		read -p "Do you want to use an AirPlay password? (y/n) : " AirPlaySecured
+	done
+	# Prompts user for AirPlay password
+	if [ "$AirPlaySecured" = "y" ]
+	then
+		read -p "Device AirPlay password: " AirPlayPass
+	fi
+fi
 if [ $SoundCardInstall = "y" ]
 then
 	echo "0. No Sound Card"
@@ -240,7 +255,7 @@ if [ $AirPlay = "y" ]
 then
 	tst ./airplay_install.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
-	{ echo "${AirPlayName}"; echo "${SoundCard}";} | tst ./airplay_config.sh | tee -a $log
+	{ echo "${AirPlayName}"; echo "${SoundCard}"; echo "${AirPlayPass}";} | tst ./airplay_config.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
 fi
 # If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
