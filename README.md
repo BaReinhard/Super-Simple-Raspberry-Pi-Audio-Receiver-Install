@@ -2,6 +2,16 @@
 ## **Requires Raspbian Jessie LITE** you can find the lastest Jessie Lite Image [here](http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/)
 ![SSPARI](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/blob/master/img/SSRPARI_1080_668.png?raw=true)
 
+# Volumio Users!, use this command to install, until it is merged with the master:
+
+```
+sudo apt-get install git
+git clone https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install.git
+cd Super-Simple-Raspberry-Pi-Audio-Receiver-Install
+git checkout volumio_fix
+sudo ./install.sh
+# then follow the prompts
+```
 
 # NEW FEATURE! SNAPCAST Support! Please test it out! Requires minor configuration.
 * When connecting to Snapcast Server via AirPlay, it will play to /tmp/snapfifo, all snap clients will need to manually move-sink-input from pulseaudio sink-input to soundcard. (In the future this will be automated, somehow...)
