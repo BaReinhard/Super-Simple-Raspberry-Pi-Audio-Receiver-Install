@@ -1,5 +1,28 @@
 #!/bin/bash
 # Prompt User for Installation
+
+YesNo() {
+	# Usage: YesNo "prompt"
+	# Returns: 0 (true) if answer is Yes
+	#          1 (false) if answer is No
+	while true
+	do
+		read -p "$1" answer
+		case "$answer" in
+		[nN]*)
+			answer="1"; break;
+		;;
+		[yY]*)
+			answer="0"; break;
+		;;
+		*)
+			echo "Please answer y or n"
+		;;
+		esac
+	done
+	return $answer
+}
+
 # Sets Log File
 log="./install.log"
 # Begins Logging
