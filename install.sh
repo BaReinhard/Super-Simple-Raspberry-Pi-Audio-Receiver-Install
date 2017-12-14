@@ -31,117 +31,115 @@ echo "6. Install a Custom Raspberry Pi Audio Receiver"
 Install="0"
 while [ $Install != "1" ] && [ $Install != "2" ] && [ $Install != "3" ] && [ $Install != "4" ] && [ $Install != "5" ] && [ $Install != "6" ];
 do
-read -p "Which installation would you like to choose? (1/2/3/4/5/6) : " Install
-# Car Installation - Previously Raspberry Pi Audio Receiver Install Car Install
-if [ $Install = "1" ]
-then
-	AirPlay="y"
-	Bluetooth="y"
-	AP="y"
-	Kodi="y"
-	Lirc="y"
-	SoundCardInstall="y"
-	GMedia="n"
-# Home Installation - Previously Raspberry Pi Audio Receiver Install
-elif [ $Install = "2" ]
-then
-	AirPlay="y"
-	Bluetooth="y"
-	AP="n"
-	Kodi="y"
-	Lirc="y"
-	SoundCardInstall="y"
-	GMedia="y"
-# Access Point Install - Previously Network Without Internet
-elif [ $Install = "3" ]
-then
-	AirPlay="n"
-	Bluetooth="n"
-	AP="y"
-	Kodi="n"
-	Lirc="n"
-	GMedia="n"
-
-elif [ $Install = "4" ]
-then
-	AirPlay="n"
-	Bluetooth="y"
-	AP="n"
-	Kodi="n"
-	Lirc="n"
-	GMedia="n"
-	SoundCardInstall="n"
-
-# Custom Install - Allows Users to Choose Installation of various features. Further allowing the use of this project with other ideas aside from Audio Receivers.
-elif [ $Install = "5" ]
-then
-	AirPlay="y"
-	Bluetooth="y"
-	AP="n"
-	Kodi="n"
-	Lirc="n"
-	GMedia="n"
-	SNAPCAST="y"
-	SoundCardInstall="y"
-	if [ $SNAPCAST = "y" ]
+	read -p "Which installation would you like to choose? (1/2/3/4/5/6) : " Install
+	# Car Installation - Previously Raspberry Pi Audio Receiver Install Car Install
+	if [ $Install = "1" ]
 	then
-		read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" SNAPCAST
-	fi
-elif [ $Install = "6" ]
-then
-	SNAPCAST="SNAPCAST"
-	while [ $SNAPCAST != "y" ] && [ $SNAPCAST != "n" ];
-	do
-		read -p "Do you want to install SnapCast? (y/n): " SNAPCAST
-	done
-	if [ $SNAPCAST = "y" ]
+		AirPlay="y"
+		Bluetooth="y"
+		AP="y"
+		Kodi="y"
+		Lirc="y"
+		SoundCardInstall="y"
+		GMedia="n"
+	# Home Installation - Previously Raspberry Pi Audio Receiver Install
+	elif [ $Install = "2" ]
 	then
-		read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" SNAPCAST
-	fi
-	# Prompts the User to use AirPlay for Streaming (aka shairport-sync)
-	AirPlay="AirPlay"
-	while [ $AirPlay != "y" ] && [ $AirPlay != "n" ];
-	do
-		read -p "Do you want AirPlay Enabled? (y/n) : " AirPlay
-	done
-	# Prompts the User to use Bluetooth for Streaming (aka A2DP)
-	Bluetooth="Bluetooth"
-	while [ $Bluetooth != "y" ] && [ $Bluetooth != "n" ];
-	do
-		read -p "Do you want Bluetooth A2DP Enabled? (y/n) : " Bluetooth
+		AirPlay="y"
+		Bluetooth="y"
+		AP="n"
+		Kodi="y"
+		Lirc="y"
+		SoundCardInstall="y"
+		GMedia="y"
+	# Access Point Install - Previously Network Without Internet
+	elif [ $Install = "3" ]
+	then
+		AirPlay="n"
+		Bluetooth="n"
+		AP="y"
+		Kodi="n"
+		Lirc="n"
+		GMedia="n"
+	elif [ $Install = "4" ]
+	then
+		AirPlay="n"
+		Bluetooth="y"
+		AP="n"
+		Kodi="n"
+		Lirc="n"
+		GMedia="n"
+		SoundCardInstall="n"
+	# Custom Install - Allows Users to Choose Installation of various features. Further allowing the use of this project with other ideas aside from Audio Receivers.
+	elif [ $Install = "5" ]
+	then
+		AirPlay="y"
+		Bluetooth="y"
+		AP="n"
+		Kodi="n"
+		Lirc="n"
+		GMedia="n"
+		SNAPCAST="y"
+		SoundCardInstall="y"
+		if [ $SNAPCAST = "y" ]
+		then
+			read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" SNAPCAST
+		fi
+	elif [ $Install = "6" ]
+	then
+		SNAPCAST="SNAPCAST"
+		while [ $SNAPCAST != "y" ] && [ $SNAPCAST != "n" ];
+		do
+			read -p "Do you want to install SnapCast? (y/n): " SNAPCAST
+		done
+		if [ $SNAPCAST = "y" ]
+		then
+			read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" SNAPCAST
+		fi
+		# Prompts the User to use AirPlay for Streaming (aka shairport-sync)
+		AirPlay="AirPlay"
+		while [ $AirPlay != "y" ] && [ $AirPlay != "n" ];
+		do
+			read -p "Do you want AirPlay Enabled? (y/n) : " AirPlay
+		done
+		# Prompts the User to use Bluetooth for Streaming (aka A2DP)
+		Bluetooth="Bluetooth"
+		while [ $Bluetooth != "y" ] && [ $Bluetooth != "n" ];
+		do
+			read -p "Do you want Bluetooth A2DP Enabled? (y/n) : " Bluetooth
 
-	done
-	# Prompts the User to use the Raspberry Pi as an Access Point to create a network (needed for AirPlay when no existing network exists)
-	AP="AP"
-	while [ $AP != "y" ] && [ $AP != "n" ];
-	do
-		read -p "Do you want to setup as an Access Point? (Necessary for AirPlay, in location without a Wireless Network) (y/n) : " AP
-	done
-	# Prompts the User to use Kodi as a GUI for a Media Center
-	Kodi="Kodi"
-	while [ $Kodi != "y" ] && [ $Kodi != "n" ];
-	do
-		read -p "Do you want Kodi installed? (y/n) : " Kodi
-	done
-	# Prompts the User to use Lirc for Infrared Remote Support (matricom IR remote already setup for use with Kodi)
-	Lirc="Lirc"
-	while [ $Lirc != "y" ] && [ $Lirc != "n" ];
-	do
-		read -p "Do you want to use infrared remotes? (y/n) : " Lirc
-	done
-	SoundCardInstall="SoundCardInstall"
-	while [ $SoundCardInstall != "y" ] && [ $SoundCardInstall != "n" ];
-	do
-		read -p "Do you want to use a Sound Card? (y/n) : " SoundCardInstall
-	done
-	GMedia="GMedia"
-	while [ $GMedia != "y" ] && [ $GMedia != "n" ];
-	do
-		read -p "Do you want to setup device as a UPnP Renderer? (y/n) : " GMedia
-	done
-else
-	echo "Please choose a valid choice"
-fi
+		done
+		# Prompts the User to use the Raspberry Pi as an Access Point to create a network (needed for AirPlay when no existing network exists)
+		AP="AP"
+		while [ $AP != "y" ] && [ $AP != "n" ];
+		do
+			read -p "Do you want to setup as an Access Point? (Necessary for AirPlay, in location without a Wireless Network) (y/n) : " AP
+		done
+		# Prompts the User to use Kodi as a GUI for a Media Center
+		Kodi="Kodi"
+		while [ $Kodi != "y" ] && [ $Kodi != "n" ];
+		do
+			read -p "Do you want Kodi installed? (y/n) : " Kodi
+		done
+		# Prompts the User to use Lirc for Infrared Remote Support (matricom IR remote already setup for use with Kodi)
+		Lirc="Lirc"
+		while [ $Lirc != "y" ] && [ $Lirc != "n" ];
+		do
+			read -p "Do you want to use infrared remotes? (y/n) : " Lirc
+		done
+		SoundCardInstall="SoundCardInstall"
+		while [ $SoundCardInstall != "y" ] && [ $SoundCardInstall != "n" ];
+		do
+			read -p "Do you want to use a Sound Card? (y/n) : " SoundCardInstall
+		done
+		GMedia="GMedia"
+		while [ $GMedia != "y" ] && [ $GMedia != "n" ];
+		do
+			read -p "Do you want to setup device as a UPnP Renderer? (y/n) : " GMedia
+		done
+	else
+		echo "Please choose a valid choice"
+	fi
 done
 
 # Prompts the User to check whether or not to use individual names for the chosen devices
