@@ -58,7 +58,7 @@ then
         Kodi="n"
         Lirc="n"
 	GMedia="n"
-	
+
 elif [ $Install = "4" ]
 then
 	AirPlay="n"
@@ -68,7 +68,7 @@ then
 	Lirc="n"
 	GMedia="n"
 	SoundCardInstall="n"
-	
+
 # Custom Install - Allows Users to Choose Installation of various features. Further allowing the use of this project with other ideas aside from Audio Receivers.
 elif [ $Install = "5" ]
 then
@@ -155,7 +155,7 @@ then
 	AirPlayName=$MYNAME
 	GMediaName=$MYNAME
 elif [ $SameName = "n" ]
-then	
+then
 	# Asks for Bluetooth Device Name
 	if [ $Bluetooth = "y" ]
 	then
@@ -173,7 +173,7 @@ then
 	fi
 	if [ $GMedia = "y" ]
 	then
-		read -p "UPnP Device Name: " GMediaName	
+		read -p "UPnP Device Name: " GMediaName
 	fi
 fi
 if [ $AP = "y" ]
