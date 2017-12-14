@@ -107,7 +107,6 @@ do
 		while [ $Bluetooth != "y" ] && [ $Bluetooth != "n" ];
 		do
 			read -p "Do you want Bluetooth A2DP Enabled? (y/n) : " Bluetooth
-
 		done
 		# Prompts the User to use the Raspberry Pi as an Access Point to create a network (needed for AirPlay when no existing network exists)
 		AP="AP"
