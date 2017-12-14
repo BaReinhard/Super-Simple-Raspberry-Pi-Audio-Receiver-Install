@@ -18,13 +18,16 @@ else
 	echo "Must be run as root user!!" 
 	exit 1 
 fi
+
 echo "" > $log
+
 echo "1. Install the Raspberry Pi Audio Receiver Car Installation"
 echo "2. Install the Raspberry Pi Audio Receiver Home Installation"
 echo "3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)"
 echo "4. Install the Volumio (Bluetooth Only) Installation"
 echo "5. Install the Snapcast Installation (BETA), choose from Snapcast Server, Client, or Both (Requires Minor Configuration)"
 echo "6. Install a Custom Raspberry Pi Audio Receiver"
+
 Install="0"
 while [ $Install != "1" ] && [ $Install != "2" ] && [ $Install != "3" ] && [ $Install != "4" ] && [ $Install != "5" ] && [ $Install != "6" ];
 do
@@ -140,6 +143,7 @@ else
 	echo "Please choose a valid choice"
 fi
 done
+
 # Prompts the User to check whether or not to use individual names for the chosen devices
 SameName="SameName"
 while [ $SameName != "y" ] && [ $SameName != "n" ];
@@ -176,11 +180,13 @@ then
 		read -p "UPnP Device Name: " GMediaName
 	fi
 fi
+
 if [ $AP = "y" ]
 then
 # Asks for the Access Point Password
 read -p "Device WiFi Password: " WIFIPASS
 fi
+
 if [ "$AirPlay" = "y" ]
 then
 	AirPlaySecured="undefined"
@@ -196,6 +202,7 @@ then
 		read -p "Device AirPlay password: " AirPlayPass
 	fi
 fi
+
 if [ $SoundCardInstall = "y" ]
 then
 	echo "0. No Sound Card"
@@ -245,11 +252,13 @@ then
 	echo "${BluetoothName}" | tst su ${user} -c ./bt_pa_config.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
 fi
+
 if [ $SoundCardInstall = "y" ]
 then
 	echo "${SoundCard}" | tst ./sound_card_install.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
 fi
+
 # If AirPlay is Chosen, it installs AirPlay Dependencies and issues commands for proper configuration
 if [ $AirPlay = "y" ]
 then
@@ -258,6 +267,7 @@ then
 	{ echo "${AirPlayName}"; echo "${SoundCard}"; echo "${AirPlayPass}";} | tst ./airplay_config.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
 fi
+
 # If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
 if [ $AP = "y" ]
 then
@@ -266,6 +276,7 @@ then
 	{ echo "${APName}"; echo "${WIFIPASS}";} | tst ./ap_config.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
 fi
+
 # If Kodi is Chosen, it installs Kodi Dependencies and issues commands for proper configuration
 if [ $Kodi = "y" ]
 then
@@ -274,6 +285,7 @@ then
 	tst ./kodi_config.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
 fi
+
 # If Lirc is Chosen, it installs Lirc Dependencies and issues commands for proper configuration
 if [ $Lirc = "y" ]
 then
@@ -282,18 +294,21 @@ then
 	tst ./lirc_config.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
 fi
+
 # If GMedia is Chosen, it installs  GMedia Dependencies and issues commands for proper configuration
 if [ $GMedia = "y" ]
 then
 	echo "${GMediaName}" | tst ./gmrender_install.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
 fi
+
 if [ $SNAPCAST != "n" ]
 then
 	echo "--------------SNAP CAST INSTALL--------------------" | tee -a $log
 	{ echo "${SNAPCAST}"; echo "${MYNAME}";}  | tst su ${user} -c ./snapcast_install.sh | tee -a $log
 	echo "----------------------------------------------------" | tee -a $log
 fi
+
 echo "Ending at @ `date`" | tee -a $log
 cat << EOT > install_choices
 Bluetooth = $Bluetooth
@@ -304,4 +319,5 @@ Lirc = $Lirc
 SoundCardInstall = $SoundCardInstall
 GMedia = $GMedia
 EOT
+
 reboot
