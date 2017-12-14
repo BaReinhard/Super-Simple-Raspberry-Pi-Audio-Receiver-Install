@@ -181,8 +181,8 @@ fi
 
 if [ $AP = "y" ]
 then
-# Asks for the Access Point Password
-read -p "Device WiFi Password: " WIFIPASS
+	# Asks for the Access Point Password
+	read -p "Device WiFi Password: " WIFIPASS
 fi
 
 if [ "$AirPlay" = "y" ]
@@ -226,11 +226,11 @@ fi
 
 #--------------------------------------------------------------------
 function tst {
-    echo "===> Executing: $*"
-    if ! $*; then
-        echo "Exiting script due to error from: $*"
-        exit 1
-    fi
+	echo "===> Executing: $*"
+	if ! $*; then
+		echo "Exiting script due to error from: $*"
+		exit 1
+	fi
 }
 #--------------------------------------------------------------------
 
