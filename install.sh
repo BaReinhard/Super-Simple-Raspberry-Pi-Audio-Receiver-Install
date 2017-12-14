@@ -9,7 +9,6 @@ currentDir=$(
 ) 
 
 SSPARI_PATH=$currentDir 
-cd $currentDir
 export SSPARI_PATH
 if [ $SUDO_USER ]; 
 then 
@@ -19,6 +18,7 @@ else
 	exit 1 
 fi
 
+cd "$currentDir"
 echo "" > $log
 
 echo "1. Install the Raspberry Pi Audio Receiver Car Installation"
