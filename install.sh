@@ -42,21 +42,21 @@ then
 # Home Installation - Previously Raspberry Pi Audio Receiver Install
 elif [ $Install = "2" ]
 then
-        AirPlay="y"
-        Bluetooth="y"
-        AP="n"
-        Kodi="y"
-        Lirc="y"
+	AirPlay="y"
+	Bluetooth="y"
+	AP="n"
+	Kodi="y"
+	Lirc="y"
 	SoundCardInstall="y"
 	GMedia="y"
 # Access Point Install - Previously Network Without Internet
 elif [ $Install = "3" ]
 then
 	AirPlay="n"
-        Bluetooth="n"
-        AP="y"
-        Kodi="n"
-        Lirc="n"
+	Bluetooth="n"
+	AP="y"
+	Kodi="n"
+	Lirc="n"
 	GMedia="n"
 
 elif [ $Install = "4" ]
