@@ -29,12 +29,12 @@ echo "5. Install the Snapcast Installation (BETA), choose from Snapcast Server, 
 echo "6. Install a Custom Raspberry Pi Audio Receiver"
 
 Install="0"
-while [ $Install != "1" ] && [ $Install != "2" ] && [ $Install != "3" ] && [ $Install != "4" ] && [ $Install != "5" ] && [ $Install != "6" ];
+while true
 do
 	read -p "Which installation would you like to choose? (1/2/3/4/5/6) : " Install
+	case "$Install" in
+	1)
 	# Car Installation - Previously Raspberry Pi Audio Receiver Install Car Install
-	if [ $Install = "1" ]
-	then
 		AirPlay="y"
 		Bluetooth="y"
 		AP="y"
@@ -42,9 +42,10 @@ do
 		Lirc="y"
 		SoundCardInstall="y"
 		GMedia="n"
+		break
+	;;
+	2)
 	# Home Installation - Previously Raspberry Pi Audio Receiver Install
-	elif [ $Install = "2" ]
-	then
 		AirPlay="y"
 		Bluetooth="y"
 		AP="n"
@@ -52,17 +53,19 @@ do
 		Lirc="y"
 		SoundCardInstall="y"
 		GMedia="y"
+		break
+	;;
+	3)
 	# Access Point Install - Previously Network Without Internet
-	elif [ $Install = "3" ]
-	then
 		AirPlay="n"
 		Bluetooth="n"
 		AP="y"
 		Kodi="n"
 		Lirc="n"
 		GMedia="n"
-	elif [ $Install = "4" ]
-	then
+		break
+	;;
+	4)
 		AirPlay="n"
 		Bluetooth="y"
 		AP="n"
@@ -70,9 +73,10 @@ do
 		Lirc="n"
 		GMedia="n"
 		SoundCardInstall="n"
+		break
+	;;
+	5)
 	# Custom Install - Allows Users to Choose Installation of various features. Further allowing the use of this project with other ideas aside from Audio Receivers.
-	elif [ $Install = "5" ]
-	then
 		AirPlay="y"
 		Bluetooth="y"
 		AP="n"
@@ -85,8 +89,9 @@ do
 		then
 			read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" SNAPCAST
 		fi
-	elif [ $Install = "6" ]
-	then
+		break
+	;;
+	6)
 		SNAPCAST="SNAPCAST"
 		while [ $SNAPCAST != "y" ] && [ $SNAPCAST != "n" ];
 		do
@@ -136,9 +141,11 @@ do
 		do
 			read -p "Do you want to setup device as a UPnP Renderer? (y/n) : " GMedia
 		done
-	else
+		break
+	;;
+	*)
 		echo "Please choose a valid choice"
-	fi
+	esac
 done
 
 # Prompts the User to check whether or not to use individual names for the chosen devices
@@ -215,9 +222,17 @@ then
 	echo "10. JustBoom DAC and AMP Cards"
 	echo "11. JustBoom Digi Cards"
 	SoundCard="SoundCard"
-	while [ $SoundCard != "0" ] && [ $SoundCard != "1" ] && [ $SoundCard != "2" ] && [ $SoundCard != "3" ] && [ $SoundCard != "4" ] && [ $SoundCard != "5" ] && [ $SoundCard != "6" ] && [ $SoundCard != "7" ] && [ $SoundCard != "8" ] && [ $SoundCard != "9" ] && [ $SoundCard != "10" ] && [ $SoundCard != "11" ];
+	while true
 	do
 		read -p "Which Sound Card are you using? (0/1/2/3/4/5/6/7/8/9/10/11) : " SoundCard
+		case "$SoundCard" in
+		[0-9]|10|11)
+			break
+		;;
+		*)
+			echo "Please enter a valid choice"
+		;;
+		esac
 	done
 else
 	SoundCard="0"
