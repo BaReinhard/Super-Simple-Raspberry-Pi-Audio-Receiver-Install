@@ -1,30 +1,7 @@
 #!/bin/bash
 # Prompt User for Installation
 
-YesNo() {
-	# Usage: YesNo "prompt"
-	# Returns: 0 (true) if answer is Yes
-	#          1 (false) if answer is No
-	while true
-	do
-		read -p "$1" answer
-		case "$answer" in
-		[nN]*)
-			answer="1"; break;
-		;;
-		[yY]*)
-			answer="0"; break;
-		;;
-		*)
-			echo "Please answer y or n"
-		;;
-		esac
-	done
-	return $answer
-}
 
-# Sets Log File
-log="./install.log"
 currentDir=$(
   cd $(dirname "$0")
   pwd
@@ -41,8 +18,13 @@ else
 fi
 
 cd "$currentDir"
+# Set up file-based logging
+exec 1> >(tee install.log)
+source functions.sh
+source dependencies.sh
+
+log "Select Your Install Options"
 # Begins Logging
-echo "" > $log
 
 echo "1. Install the Raspberry Pi Audio Receiver Car Installation"
 echo "2. Install the Raspberry Pi Audio Receiver Home Installation"
@@ -243,91 +225,63 @@ else
 	SoundCard="0"
 fi
 
-#--------------------------------------------------------------------
-function tst {
-	echo "===> Executing: $*"
-	if ! $*; then
-		echo "Exiting script due to error from: $*"
-		exit 1
-	fi
-}
-#--------------------------------------------------------------------
-
 chmod +x ./*.sh
-echo "Starting @ `date`" | tee -a $log
 # Updates and Upgrades the Raspberry Pi
-echo "This is who i am: `whoami`"
-echo "--------------------------------------------" | tee -a $log
-tst ./bt_pa_prep.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
+
 # If Bluetooth is Chosen, it installs Bluetooth Dependencies and issues commands for proper configuration
 
 if [ "$Bluetooth" = "y" ]
 then
-	tst ./bt_pa_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
-	echo "${BluetoothName}" | tst su ${user} -c ./bt_pa_config.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	run ./bt_pa_install.sh
+	echo "${BluetoothName}" | run su ${user} -c ./bt_pa_config.sh 
 fi
 
 if [ "$SoundCardInstall" = "y" ]
 then
-	echo "${SoundCard}" | tst ./sound_card_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	echo "${SoundCard}" | run ./sound_card_install.sh 
 fi
 
 # If AirPlay is Chosen, it installs AirPlay Dependencies and issues commands for proper configuration
 if [ "$AirPlay" = "y" ]
 then
-	tst ./airplay_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
-	{ echo "${AirPlayName}"; echo "${SoundCard}"; echo "${AirPlayPass}";} | tst ./airplay_config.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	run ./airplay_install.sh 
+		{ echo "${AirPlayName}"; echo "${SoundCard}"; echo "${AirPlayPass}";} | run ./airplay_config.sh 
 fi
 
 # If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
 if [ "$AP" = "y" ]
 then
-	tst ./ap_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
-	{ echo "${APName}"; echo "${WIFIPASS}";} | tst ./ap_config.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	run ./ap_install.sh 
+	{ echo "${APName}"; echo "${WIFIPASS}";} | run ./ap_config.sh 
 fi
 
 # If Kodi is Chosen, it installs Kodi Dependencies and issues commands for proper configuration
 if [ "$Kodi" = "y" ]
 then
-	tst ./kodi_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
-	tst ./kodi_config.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	run ./kodi_install.sh 
+	run ./kodi_config.sh
 fi
 
 # If Lirc is Chosen, it installs Lirc Dependencies and issues commands for proper configuration
 if [ "$Lirc" = "y" ]
 then
-	tst ./lirc_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
-	tst ./lirc_config.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	run ./lirc_install.sh
+	run ./lirc_config.sh
 fi
 
 # If GMedia is Chosen, it installs  GMedia Dependencies and issues commands for proper configuration
 if [ "$GMedia" = "y" ]
 then
-	echo "${GMediaName}" | tst ./gmrender_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	echo "${GMediaName}" | run ./gmrender_install.sh
 fi
 
 if [ "$SNAPCAST" != "n" ]
 then
-	echo "--------------SNAP CAST INSTALL--------------------" | tee -a $log
-	{ echo "${SNAPCAST}"; echo "${MYNAME}";}  | tst su ${user} -c ./snapcast_install.sh | tee -a $log
-	echo "----------------------------------------------------" | tee -a $log
+	{ echo "${SNAPCAST}"; echo "${MYNAME}";}  | run su ${user} -c ./snapcast_install.sh
 fi
 
-echo "Ending at @ `date`" | tee -a $log
-cat << EOT > install_choices
+
+run cat << EOT > install_choices
 Bluetooth = $Bluetooth
 AirPlay = $AirPlay
 AP = $AP
@@ -337,4 +291,4 @@ SoundCardInstall = $SoundCardInstall
 GMedia = $GMedia
 EOT
 
-reboot
+log You should now reboot

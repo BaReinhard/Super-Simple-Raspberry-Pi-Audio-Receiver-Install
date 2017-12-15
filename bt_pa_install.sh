@@ -1,30 +1,26 @@
 #!/bin/bash
 
-#--------------------------------------------------------------------
-function tst {
-    echo "===> Executing: $*"
-    if ! $*; then
-        echo "Exiting script due to error from: $*"
-        exit 1
-    fi	
-}
-#--------------------------------------------------------------------
+source functions.sh
+source dependencies.sh
 
-# Install Pulse Audio & Bluez
-tst apt-get install bluez pulseaudio pulseaudio-module-bluetooth -y
 
-# Install dbus for python
-tst apt-get install python-dbus -y
+# Update
 
-# Install espeak
-tst apt-get install -qy espeak
+apt_update apt-get update -q=2 -y
+
+# Upgrade the distro
+apt_upgrade apt-get upgrade -q=2 -y
+
+
+for _dep in ${BT_DEPS[@]}; do
+    apt_install $_dep;
+done
 
 # Create users and priviliges for Bluez-Pulse Audio interaction - most should already exist
-tst addgroup --system pulse
-tst adduser --system --ingroup pulse --home /var/run/pulse pulse
-tst addgroup --system pulse-access
-tst adduser pulse audio
-tst adduser root pulse-access
-tst adduser pulse lp
+exc addgroup --system pulse 
+exc adduser --system --ingroup pulse --home /var/run/pulse pulse
+exc addgroup --system pulse-access
+exc adduser pulse audio
+exc adduser root pulse-access
+exc adduser pulse lp
 
-echo "Done! You should reboot now"

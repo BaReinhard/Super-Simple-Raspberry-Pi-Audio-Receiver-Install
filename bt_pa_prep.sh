@@ -1,20 +1,19 @@
 #!/bin/bash
 
-#--------------------------------------------------------------------
-function tst {
-    echo "===> Executing: $*"
-    if ! $*; then
-        echo "Exiting script due to error from: $*"
-        exit 1
-    fi	
-}
-#--------------------------------------------------------------------
+source functions.sh
+source dependencies.sh
 
 
 # Update
-apt-get update -y
+
+apt_update apt-get update -q=2 -y
 
 # Upgrade the distro
-apt-get upgrade -y
+apt_upgrade apt-get upgrade -q=2 -y
+
+
+for _dep in ${BT_DEPS[@]}; do
+    apt_install $_dep;
+done
 
 echo "Done! You should reboot now"

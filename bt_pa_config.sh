@@ -16,54 +16,46 @@
 
 read -p "Bluetooth device name: " BT_NAME
 
-#--------------------------------------------------------------------
-function tst {
-    echo "===> Executing: $*"
-    if ! $*; then
-        echo "Exiting script due to error from: $*"
-        exit 1
-    fi	
-}
-#--------------------------------------------------------------------
-
+source functions.sh
+source dependencies.sh
 
 
 mkdir /home/pi/pyScripts
-tst sudo cp usr/local/bin/volume-watcher.py /usr/local/bin/volume-watcher.py
-tst sudo chmod +x /usr/local/bin/volume-watcher.py
-tst sudo cp lib/systemd/system/volume-watcher.service /lib/systemd/system/volume-watcher.service
-tst sudo systemctl enable volume-watcher
-tst cd `dirname $0`
+exc sudo cp usr/local/bin/volume-watcher.py /usr/local/bin/volume-watcher.py
+exc sudo chmod +x /usr/local/bin/volume-watcher.py
+exc sudo cp lib/systemd/system/volume-watcher.service /lib/systemd/system/volume-watcher.service
+exc sudo systemctl enable volume-watcher
+exc cd `dirname $0`
 
-sudo echo "PRETTY_HOSTNAME=$BT_NAME" >> /tmp/machine-info
-tst sudo cp /tmp/machine-info /etc
+exc sudo echo "PRETTY_HOSTNAME=$BT_NAME" >> /tmp/machine-info
+exc tst sudo cp /tmp/machine-info /etc
 
-tst sudo cp init.d/pulseaudio /etc/init.d
-tst sudo chmod +x /etc/init.d/pulseaudio
-tst sudo update-rc.d pulseaudio defaults
+exc sudo cp init.d/pulseaudio /etc/init.d
+exc sudo chmod +x /etc/init.d/pulseaudio
+exc sudo update-rc.d pulseaudio defaults
 
-tst sudo cp init.d/bluetooth /etc/init.d
-tst sudo chmod +x /etc/init.d/bluetooth
-tst sudo update-rc.d bluetooth defaults
+exc sudo cp init.d/bluetooth /etc/init.d
+exc sudo chmod +x /etc/init.d/bluetooth
+exc sudo update-rc.d bluetooth defaults
 
-tst sudo cp init.d/bluetooth-agent /etc/init.d
-tst sudo chmod +x /etc/init.d/bluetooth-agent
-tst sudo update-rc.d bluetooth-agent defaults
+exc sudo cp init.d/bluetooth-agent /etc/init.d
+exc sudo chmod +x /etc/init.d/bluetooth-agent
+exc sudo update-rc.d bluetooth-agent defaults
 
-tst sudo cp usr/local/bin/bluez-udev /usr/local/bin
-tst sudo chmod 755 /usr/local/bin/bluez-udev
+exc sudo cp usr/local/bin/bluez-udev /usr/local/bin
+exc sudo chmod 755 /usr/local/bin/bluez-udev
 
-tst sudo cp usr/local/bin/simple-agent.autotrust /usr/local/bin
-tst sudo chmod 755 /usr/local/bin/simple-agent.autotrust
+exc sudo cp usr/local/bin/simple-agent.autotrust /usr/local/bin
+exc sudo chmod 755 /usr/local/bin/simple-agent.autotrust
 
-tst sudo cp usr/local/bin/say.sh /usr/local/bin
-tst sudo chmod 755 /usr/local/bin/say.sh
+exc sudo cp usr/local/bin/say.sh /usr/local/bin
+exc sudo chmod 755 /usr/local/bin/say.sh
 
-tst sudo cp usr/local/bin/bluezutils.py /usr/local/bin
+exc sudo cp usr/local/bin/bluezutils.py /usr/local/bin
 
-tst sudo cp etc/pulse/daemon.conf /etc/pulse
+exc sudo cp etc/pulse/daemon.conf /etc/pulse
 
-sudo cat << EOT >> /boot/config.txt
+exc cat << EOT | sudo tee -a /boot/config.txt
  # Enable audio (loads snd_bcm2835)
  dtparam=audio=on
 
@@ -72,7 +64,7 @@ EOT
 
 if [ -f /etc/udev/rules.d/99-com.rules ]; then
 
-sudo patch /etc/udev/rules.d/99-com.rules << EOT
+exc sudo patch /etc/udev/rules.d/99-com.rules << EOT
 ***************
 *** 1 ****
 --- 1,2 ----
@@ -82,18 +74,18 @@ EOT
 
 else
 
-tst sudo touch /etc/udev/rules.d/99-com.rules
-tst sudo chmod 666 /etc/udev/rules.d/99-com.rules
-sudo cat  << EOT > /etc/udev/rules.d/99-input.rules
+exc sudo touch /etc/udev/rules.d/99-com.rules
+exc sudo chmod 666 /etc/udev/rules.d/99-com.rules
+exc cat  << EOT | sudo tee -a /etc/udev/rules.d/99-input.rules
 SUBSYSTEM=="input", GROUP="input", MODE="0660"
 KERNEL=="input[0-9]*", RUN+="/usr/local/bin/bluez-udev"
 EOT
 
 fi
 
-tst sudo chmod 644 /etc/udev/rules.d/99-com.rules
+exc sudo chmod 644 /etc/udev/rules.d/99-com.rules
 
-sudo patch /etc/bluetooth/main.conf << EOT
+exc sudo patch /etc/bluetooth/main.conf << EOT
 ***************
 *** 7,8 ****
 --- 7,9 ----
@@ -116,7 +108,7 @@ sudo patch /etc/bluetooth/main.conf << EOT
 ! DiscoverableTimeout = 0
 EOT
 
-sudo patch /etc/pulse/system.pa << EOT
+exc sudo patch /etc/pulse/system.pa << EOT
 ***************
 *** 23,25 ****
   .ifexists module-udev-detect.so
@@ -143,36 +135,30 @@ EOT
 #sudo service pulseaudio start &
 #sudo service bluetooth-agent start &
 # BT FIX
-sudo mkdir /etc/pulsebackup
-sudo cp /etc/pulse/* /etc/pulsebackup/
+exc sudo mkdir /etc/pulsebackup
+exc sudo cp /etc/pulse/* /etc/pulsebackup/
 
-cd ~
-git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
-sudo apt-get install libtool intltool libsndfile-dev libcap-dev libjson0-dev libasound2-dev libavahi-client-dev libbluetooth-dev libglib2.0-dev libsamplerate0-dev libsbc-dev libspeexdsp-dev libssl-dev libtdb-dev libbluetooth-dev intltool -y
+exc cd ~
+exc git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
 
-cd ~
-git clone https://github.com/json-c/json-c.git
-cd json-c
-sh autogen.sh
-./configure 
-make
-sudo make install
-cd ~
-sudo apt install autoconf autogen automake build-essential libasound2-dev libflac-dev libogg-dev libtool libvorbis-dev pkg-config python -y
-git clone git://github.com/erikd/libsndfile.git
-cd libsndfile
-./autogen.sh
-./configure --enable-werror
-make
-sudo make install
-cd ~
-cd pulseaudio
-sudo ./bootstrap.sh
-sudo make
-sudo make install
-sudo ldconfig
-sudo cp /etc/pulsebackup/* /etc/pulse
-exit
-sleep 5
-
-echo "Done! You should reboot now"
+exc cd ~
+exc git clone https://github.com/json-c/json-c.git
+exc cd json-c
+exc sh autogen.sh
+exc ./configure 
+exc make
+exc sudo make install
+exc cd ~
+exc git clone git://github.com/erikd/libsndfile.git
+exc cd libsndfile
+exc ./autogen.sh
+exc ./configure --enable-werror
+exc make
+exc sudo make install
+exc cd ~
+exc cd pulseaudio
+exc sudo ./bootstrap.sh
+exc sudo make
+exc sudo make install
+exc sudo ldconfig
+exc sudo cp /etc/pulsebackup/* /etc/pulse
