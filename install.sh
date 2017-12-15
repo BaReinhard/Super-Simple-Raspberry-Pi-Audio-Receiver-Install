@@ -143,7 +143,7 @@ if [ "$SNAPCAST" = "y" ]
 then
 	while true
 	do
-		read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b) " SNAPCAST
+		read -p "Would you like to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b) " SNAPCAST
 		case "$SNAPCAST" in
 		[bB]*) SNAPCAST="b"; break;
 		;;
