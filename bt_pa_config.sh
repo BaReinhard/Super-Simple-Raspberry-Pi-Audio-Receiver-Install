@@ -53,7 +53,7 @@ exc sudo chmod 755 /usr/local/bin/say.sh
 
 exc sudo cp usr/local/bin/bluezutils.py /usr/local/bin
 
-exc sudo cp etc/pulse/daemon.conf /etc/pulse
+exc sudo cp etc/pulse/daemon.conf /etc/pulse/daemon.conf
 
 exc cat << EOT | sudo tee -a /boot/config.txt
  # Enable audio (loads snd_bcm2835)
