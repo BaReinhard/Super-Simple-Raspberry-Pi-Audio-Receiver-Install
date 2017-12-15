@@ -115,55 +115,31 @@ do
 		break
 	;;
 	6)
-		SNAPCAST="SNAPCAST"
-		while [ $SNAPCAST != "y" ] && [ $SNAPCAST != "n" ];
-		do
-			read -p "Do you want to install SnapCast? (y/n): " SNAPCAST
-		done
+		SNAPCAST="n"
+		YesNo "Do you want to install SnapCast? (y/n): " && SNAPCAST="y"
 		if [ $SNAPCAST = "y" ]
 		then
 			read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" SNAPCAST
 		fi
 		# Prompts the User to use AirPlay for Streaming (aka shairport-sync)
-		AirPlay="AirPlay"
-		while [ $AirPlay != "y" ] && [ $AirPlay != "n" ];
-		do
-			read -p "Do you want AirPlay Enabled? (y/n) : " AirPlay
-		done
+		AirPlay="n"
+		YesNo "Do you want AirPlay Enabled? (y/n) : " && AirPlay="y"
 		# Prompts the User to use Bluetooth for Streaming (aka A2DP)
-		Bluetooth="Bluetooth"
-		while [ $Bluetooth != "y" ] && [ $Bluetooth != "n" ];
-		do
-			read -p "Do you want Bluetooth A2DP Enabled? (y/n) : " Bluetooth
-		done
+		Bluetooth="n"
+		YesNo "Do you want Bluetooth A2DP Enabled? (y/n) : " && Bluetooth="y"
 		# Prompts the User to use the Raspberry Pi as an Access Point to create a network (needed for AirPlay when no existing network exists)
-		AP="AP"
-		while [ $AP != "y" ] && [ $AP != "n" ];
-		do
-			read -p "Do you want to setup as an Access Point? (Necessary for AirPlay, in location without a Wireless Network) (y/n) : " AP
-		done
+		AP="n"
+		YesNo "Do you want to setup as an Access Point? (Necessary for AirPlay, in location without a Wireless Network) (y/n) : " && AP="y"
 		# Prompts the User to use Kodi as a GUI for a Media Center
-		Kodi="Kodi"
-		while [ $Kodi != "y" ] && [ $Kodi != "n" ];
-		do
-			read -p "Do you want Kodi installed? (y/n) : " Kodi
-		done
+		Kodi="n"
+		YesNo "Do you want Kodi installed? (y/n) : " && Kodi="y"
 		# Prompts the User to use Lirc for Infrared Remote Support (matricom IR remote already setup for use with Kodi)
-		Lirc="Lirc"
-		while [ $Lirc != "y" ] && [ $Lirc != "n" ];
-		do
-			read -p "Do you want to use infrared remotes? (y/n) : " Lirc
-		done
-		SoundCardInstall="SoundCardInstall"
-		while [ $SoundCardInstall != "y" ] && [ $SoundCardInstall != "n" ];
-		do
-			read -p "Do you want to use a Sound Card? (y/n) : " SoundCardInstall
-		done
-		GMedia="GMedia"
-		while [ $GMedia != "y" ] && [ $GMedia != "n" ];
-		do
-			read -p "Do you want to setup device as a UPnP Renderer? (y/n) : " GMedia
-		done
+		Lirc="n"
+		YesNo "Do you want to use infrared remotes? (y/n) : " && Lirc="y"
+		SoundCardInstall="n"
+		YesNo "Do you want to use a Sound Card? (y/n) : " && SoundCardInstall="y"
+		GMedia="n"
+		YesNo "Do you want to setup device as a UPnP Renderer? (y/n) : " && GMedia="y"
 		break
 	;;
 	*)
@@ -172,11 +148,8 @@ do
 done
 
 # Prompts the User to check whether or not to use individual names for the chosen devices
-SameName="SameName"
-while [ $SameName != "y" ] && [ $SameName != "n" ];
-do
-	read -p "Do you want all the Devices to use the same name? (y/n) : " SameName
-done
+SameName="n"
+YesNo "Do you want all the Devices to use the same name? (y/n) : " && SameName="y"
 if [ $SameName = "y" ]
 then
 	# Asks for All Devices Identical Name
@@ -216,13 +189,10 @@ fi
 
 if [ "$AirPlay" = "y" ]
 then
-	AirPlaySecured="undefined"
+	AirPlaySecured="n"
 	AirPlayPass=""
 	# Asks user if AirPlay password should be set
-	while [ "$AirPlaySecured" != "y" ] && [ "$AirPlaySecured" != "n" ];
-	do
-		read -p "Do you want to use an AirPlay password? (y/n) : " AirPlaySecured
-	done
+	YesNo "Do you want to use an AirPlay password? (y/n) : " && AirPlaySecured="y"
 	# Prompts user for AirPlay password
 	if [ "$AirPlaySecured" = "y" ]
 	then
