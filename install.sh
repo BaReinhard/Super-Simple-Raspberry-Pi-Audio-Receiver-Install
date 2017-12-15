@@ -253,7 +253,7 @@ function tst {
 }
 #--------------------------------------------------------------------
 
-chmod +x ./*
+chmod +x ./*.sh
 echo "Starting @ `date`" | tee -a $log
 # Updates and Upgrades the Raspberry Pi
 echo "This is who i am: `whoami`"
