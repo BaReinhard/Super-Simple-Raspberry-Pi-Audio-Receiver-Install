@@ -108,7 +108,7 @@ do
 		GMedia="n"
 		SNAPCAST="y"
 		SoundCardInstall="y"
-		if [ $SNAPCAST = "y" ]
+		if [ "$SNAPCAST" = "y" ]
 		then
 			read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" SNAPCAST
 		fi
@@ -117,7 +117,7 @@ do
 	6)
 		SNAPCAST="n"
 		YesNo "Do you want to install SnapCast? (y/n): " && SNAPCAST="y"
-		if [ $SNAPCAST = "y" ]
+		if [ "$SNAPCAST" = "y" ]
 		then
 			read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" SNAPCAST
 		fi
@@ -150,7 +150,7 @@ done
 # Prompts the User to check whether or not to use individual names for the chosen devices
 SameName="n"
 YesNo "Do you want all the Devices to use the same name? (y/n) : " && SameName="y"
-if [ $SameName = "y" ]
+if [ "$SameName" = "y" ]
 then
 	# Asks for All Devices Identical Name
 	read -p "Device name: " MYNAME
@@ -158,30 +158,30 @@ then
 	BluetoothName=$MYNAME
 	AirPlayName=$MYNAME
 	GMediaName=$MYNAME
-elif [ $SameName = "n" ]
+elif [ "$SameName" = "n" ]
 then
 	# Asks for Bluetooth Device Name
-	if [ $Bluetooth = "y" ]
+	if [ "$Bluetooth" = "y" ]
 	then
 		read -p "Bluetooth Device Name: " BluetoothName
 	fi
 	# Asks for AirPlay Device Name
-	if [ $AirPlay = "y" ]
+	if [ "$AirPlay" = "y" ]
 	then
 		read -p "AirPlay Device Name: " AirPlayName
 	fi
 	# Asks for Access Point Device Name
-	if [ $AP = "y" ]
+	if [ "$AP" = "y" ]
 	then
 		read -p "Access Point Device Name: " APName
 	fi
-	if [ $GMedia = "y" ]
+	if [ "$GMedia" = "y" ]
 	then
 		read -p "UPnP Device Name: " GMediaName
 	fi
 fi
 
-if [ $AP = "y" ]
+if [ "$AP" = "y" ]
 then
 	# Asks for the Access Point Password
 	read -p "Device WiFi Password: " WIFIPASS
@@ -200,7 +200,7 @@ then
 	fi
 fi
 
-if [ $SoundCardInstall = "y" ]
+if [ "$SoundCardInstall" = "y" ]
 then
 	echo "0. No Sound Card"
 	echo "1. HifiBerry DAC Light"
@@ -250,7 +250,7 @@ tst ./bt_pa_prep.sh | tee -a $log
 echo "--------------------------------------------" | tee -a $log
 # If Bluetooth is Chosen, it installs Bluetooth Dependencies and issues commands for proper configuration
 
-if [ $Bluetooth = "y" ]
+if [ "$Bluetooth" = "y" ]
 then
 	tst ./bt_pa_install.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
@@ -258,14 +258,14 @@ then
 	echo "--------------------------------------------" | tee -a $log
 fi
 
-if [ $SoundCardInstall = "y" ]
+if [ "$SoundCardInstall" = "y" ]
 then
 	echo "${SoundCard}" | tst ./sound_card_install.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
 fi
 
 # If AirPlay is Chosen, it installs AirPlay Dependencies and issues commands for proper configuration
-if [ $AirPlay = "y" ]
+if [ "$AirPlay" = "y" ]
 then
 	tst ./airplay_install.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
@@ -274,7 +274,7 @@ then
 fi
 
 # If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
-if [ $AP = "y" ]
+if [ "$AP" = "y" ]
 then
 	tst ./ap_install.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
@@ -283,7 +283,7 @@ then
 fi
 
 # If Kodi is Chosen, it installs Kodi Dependencies and issues commands for proper configuration
-if [ $Kodi = "y" ]
+if [ "$Kodi" = "y" ]
 then
 	tst ./kodi_install.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
@@ -292,7 +292,7 @@ then
 fi
 
 # If Lirc is Chosen, it installs Lirc Dependencies and issues commands for proper configuration
-if [ $Lirc = "y" ]
+if [ "$Lirc" = "y" ]
 then
 	tst ./lirc_install.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
@@ -301,13 +301,13 @@ then
 fi
 
 # If GMedia is Chosen, it installs  GMedia Dependencies and issues commands for proper configuration
-if [ $GMedia = "y" ]
+if [ "$GMedia" = "y" ]
 then
 	echo "${GMediaName}" | tst ./gmrender_install.sh | tee -a $log
 	echo "--------------------------------------------" | tee -a $log
 fi
 
-if [ $SNAPCAST != "n" ]
+if [ "$SNAPCAST" != "n" ]
 then
 	echo "--------------SNAP CAST INSTALL--------------------" | tee -a $log
 	{ echo "${SNAPCAST}"; echo "${MYNAME}";}  | tst su ${user} -c ./snapcast_install.sh | tee -a $log
