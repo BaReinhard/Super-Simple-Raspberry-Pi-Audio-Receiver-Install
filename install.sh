@@ -99,7 +99,8 @@ do
 		break
 	;;
 	5)
-	# Custom Install - Allows Users to Choose Installation of various features. Further allowing the use of this project with other ideas aside from Audio Receivers.
+	# Custom Install - Allows Users to Choose Installation of various features.
+	# Further allowing the use of this project with other ideas aside from Audio Receivers.
 		AirPlay="y"
 		Bluetooth="y"
 		AP="n"
@@ -119,13 +120,15 @@ do
 		# Prompts the User to use Bluetooth for Streaming (aka A2DP)
 		Bluetooth="n"
 		YesNo "Do you want Bluetooth A2DP Enabled? (y/n) : " && Bluetooth="y"
-		# Prompts the User to use the Raspberry Pi as an Access Point to create a network (needed for AirPlay when no existing network exists)
+		# Prompts the User to use the Raspberry Pi as an Access Point to create a network
+		# (needed for AirPlay when no existing network exists)
 		AP="n"
 		YesNo "Do you want to setup as an Access Point? (Necessary for AirPlay, in location without a Wireless Network) (y/n) : " && AP="y"
 		# Prompts the User to use Kodi as a GUI for a Media Center
 		Kodi="n"
 		YesNo "Do you want Kodi installed? (y/n) : " && Kodi="y"
-		# Prompts the User to use Lirc for Infrared Remote Support (matricom IR remote already setup for use with Kodi)
+		# Prompts the User to use Lirc for Infrared Remote Support
+		# (matricom IR remote already setup for use with Kodi)
 		Lirc="n"
 		YesNo "Do you want to use infrared remotes? (y/n) : " && Lirc="y"
 		SoundCardInstall="n"
