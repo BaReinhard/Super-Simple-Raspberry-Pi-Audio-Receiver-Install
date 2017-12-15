@@ -108,45 +108,11 @@ do
 		GMedia="n"
 		SNAPCAST="y"
 		SoundCardInstall="y"
-		if [ "$SNAPCAST" = "y" ]
-		then
-			while true
-			do
-				read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b) " SNAPCAST
-				case "$SNAPCAST" in
-				[bB]*) SNAPCAST="b"; break;
-				;;
-				[cC]*) SNAPCAST="c"; break;
-				;;
-				[sS]*) SNAPCAST="s"; break;
-				;;
-				*) echo "Please enter a valid choice";
-				;;
-				esac
-			done
-		fi
 		break
 	;;
 	6)
 		SNAPCAST="n"
 		YesNo "Do you want to install SnapCast? (y/n): " && SNAPCAST="y"
-		if [ "$SNAPCAST" = "y" ]
-		then
-			while true
-			do
-				read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b) " SNAPCAST
-				case "$SNAPCAST" in
-				[bB]*) SNAPCAST="b"; break;
-				;;
-				[cC]*) SNAPCAST="c"; break;
-				;;
-				[sS]*) SNAPCAST="s"; break;
-				;;
-				*) echo "Please enter a valid choice";
-				;;
-				esac
-			done
-		fi
 		# Prompts the User to use AirPlay for Streaming (aka shairport-sync)
 		AirPlay="n"
 		YesNo "Do you want AirPlay Enabled? (y/n) : " && AirPlay="y"
@@ -173,6 +139,23 @@ do
 	esac
 done
 
+if [ "$SNAPCAST" = "y" ]
+then
+	while true
+	do
+		read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b) " SNAPCAST
+		case "$SNAPCAST" in
+		[bB]*) SNAPCAST="b"; break;
+		;;
+		[cC]*) SNAPCAST="c"; break;
+		;;
+		[sS]*) SNAPCAST="s"; break;
+		;;
+		*) echo "Please enter a valid choice";
+		;;
+		esac
+	done
+fi
 # Prompts the User to check whether or not to use individual names for the chosen devices
 SameName="n"
 YesNo "Do you want all the Devices to use the same name? (y/n) : " && SameName="y"
