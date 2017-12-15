@@ -110,7 +110,20 @@ do
 		SoundCardInstall="y"
 		if [ "$SNAPCAST" = "y" ]
 		then
-			read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b)" SNAPCAST
+			while true
+			do
+				read -p "Would you line to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b) " SNAPCAST
+				case "$SNAPCAST" in
+				[bB]*) SNAPCAST="b"; break;
+				;;
+				[cC]*) SNAPCAST="c"; break;
+				;;
+				[sS]*) SNAPCAST="s"; break;
+				;;
+				*) echo "Please enter a valid choice";
+				;;
+				esac
+			done
 		fi
 		break
 	;;
