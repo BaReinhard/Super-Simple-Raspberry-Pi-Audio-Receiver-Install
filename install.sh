@@ -25,7 +25,6 @@ YesNo() {
 
 # Sets Log File
 log="./install.log"
-# Begins Logging
 currentDir=$(
   cd $(dirname "$0")
   pwd
@@ -42,6 +41,7 @@ else
 fi
 
 cd "$currentDir"
+# Begins Logging
 echo "" > $log
 
 echo "1. Install the Raspberry Pi Audio Receiver Car Installation"
