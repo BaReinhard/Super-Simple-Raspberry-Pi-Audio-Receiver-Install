@@ -1,33 +1,29 @@
 #!/bin/bash
+if [ -z "$exc" ]
+then
+    source functions.sh
+    source dependencies.sh
+fi
 
-if [ "$AirPlayName" == "" ]
+if [ -z "$AirPlayName" ]
 then
 	read -p "Airplay device name: " AirPlayName
 	read -p "Sound Card" SoundCard
 	read -p "AirPlay password: " AirPlayPass
 fi
 
-if [ "$AirPlayPass" != "" ]
+if [ -z "$AirPlayPass" ]
 then
         AirPlayPass="	password = \"$AirPlayPass\"; // leave this commented out if you don't want to require a password"
 else
         AirPlayPass="//	password = \"secret\"; // leave this commented out if you don't want to require a password"
 fi
 
-#--------------------------------------------------------------------
-function tst {
-    echo "===> Executing: $*"
-    if ! $*; then
-        echo "Exiting script due to error from: $*"
-        exit 1
-    fi
-}
-#--------------------------------------------------------------------
 
 # Configure shairplay
 if [ $SoundCard != "0" ]
 then
-cat <<EOT > /etc/shairport-sync.conf
+exc cat <<EOT > /etc/shairport-sync.conf
 // Sample Configuration File for Shairport Sync
 // Commented out settings are generally the defaults, except where noted.
 
@@ -125,7 +121,7 @@ ao =
 EOT
 elif [ $SoundCard = "0" ]
 then
-	cat <<EOT > /etc/shairport-sync.conf
+	exc cat <<EOT > /etc/shairport-sync.conf
 // Sample Configuration File for Shairport Sync
 // Commented out settings are generally the defaults, except where noted.
 
@@ -224,10 +220,9 @@ EOT
 
 fi
 
-tst cp shScripts/shairportstart.sh /usr/local/bin/shairportstart.sh
-tst cp shScripts/shairportend.sh /usr/local/bin/shairportend.sh
+exc cp shScripts/shairportstart.sh /usr/local/bin/shairportstart.sh
+exc cp shScripts/shairportend.sh /usr/local/bin/shairportend.sh
 
-tst chmod +x /usr/local/bin/shairportstart.sh
-tst chmod +x /usr/local/bin/shairportend.sh
+exc chmod +x /usr/local/bin/shairportstart.sh
+exc chmod +x /usr/local/bin/shairportend.sh
 
-tst echo "It is suggested you reboot your pi."
