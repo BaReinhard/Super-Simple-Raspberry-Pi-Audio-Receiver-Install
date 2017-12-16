@@ -1,8 +1,11 @@
 #!/bin/bash
 
-read -p "Airplay device name: " MYNAME
-read -p "Sound Card" SoundCard
-read -p "AirPlay password: " AirPlayPass
+if [ "$AirPlayName" == "" ]
+then
+	read -p "Airplay device name: " AirPlayName
+	read -p "Sound Card" SoundCard
+	read -p "AirPlay password: " AirPlayPass
+fi
 
 if [ "$AirPlayPass" != "" ]
 then
@@ -31,7 +34,7 @@ cat <<EOT > /etc/shairport-sync.conf
 // General Settings
 general =
 {
-	name = "$MYNAME"; // This means "Hostname" -- see below. This is the name the service will advertise to iTunes.
+	name = "$AirPlayName"; // This means "Hostname" -- see below. This is the name the service will advertise to iTunes.
     interpolation = "soxr";
 //	The default is "Hostname" -- i.e. the machine's hostname with the first letter capitalised (ASCII only.)
 //	You can use the following substitutions:
