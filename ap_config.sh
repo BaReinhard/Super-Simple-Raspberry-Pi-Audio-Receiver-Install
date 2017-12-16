@@ -1,6 +1,8 @@
 #!/bin/bash
-read -p "Wifi Network name: " MYNAME
-read -p "Wifi Password: " WIFIPASS
+if [ "$WIFIPASS" == "" ]
+then
+    read -p "Wifi Network name: " APName
+    read -p "Wifi Password: " WIFIPASS
 #--------------------------------------------------------------------
 function tst {
     echo "===> Executing: $*"
@@ -64,7 +66,7 @@ EOT
 cat <<EOT > /etc/hostapd/hostapd.conf
 interface=wlan0
 driver=nl80211
-ssid=$MYNAME
+ssid=$APName
 hw_mode=g
 channel=6
 macaddr_acl=0
