@@ -232,27 +232,34 @@ chmod +x ./*.sh
 
 if [ "$Bluetooth" = "y" ]
 then
+	export BluetoothName
 	run ./bt_pa_install.sh
 	echo "${BluetoothName}" | run su ${user} -c ./bt_pa_config.sh 
 fi
 
 if [ "$SoundCardInstall" = "y" ]
 then
-	echo "${SoundCard}" | run ./sound_card_install.sh 
+	export SoundCard
+	run ./sound_card_install.sh 
 fi
 
 # If AirPlay is Chosen, it installs AirPlay Dependencies and issues commands for proper configuration
 if [ "$AirPlay" = "y" ]
 then
+	export SoundCard
+	export AirPlayPass
+	export AirPlayName
 	run ./airplay_install.sh 
-		{ echo "${AirPlayName}"; echo "${SoundCard}"; echo "${AirPlayPass}";} | run ./airplay_config.sh 
+	run ./airplay_config.sh 
 fi
 
 # If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
 if [ "$AP" = "y" ]
 then
+	export APName
+	export WIFIPASS
 	run ./ap_install.sh 
-	{ echo "${APName}"; echo "${WIFIPASS}";} | run ./ap_config.sh 
+	run ./ap_config.sh 
 fi
 
 # If Kodi is Chosen, it installs Kodi Dependencies and issues commands for proper configuration
@@ -277,7 +284,9 @@ fi
 
 if [ "$SNAPCAST" != "n" ]
 then
-	{ echo "${SNAPCAST}"; echo "${MYNAME}";}  | run su ${user} -c ./snapcast_install.sh
+	export SNAPCAST
+	export SNAPNAME
+	run su ${user} -c ./snapcast_install.sh
 fi
 
 
