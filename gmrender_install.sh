@@ -1,25 +1,26 @@
 #!/bin/bash
-read -p "UPnP Device Name: " UPNP_NAME
-#--------------------------------------------------------------------
-function tst {
-    echo "===> Executing: $*"
-    if ! $*; then
-        echo "Exiting script due to error from: $*"
-        exit 1
-    fi
-}
-#--------------------------------------------------------------------
+if [ -z "exc" ]
+then
+    source functions.sh
+    source dependencies.sh
+fi
+if [ -z "$GMediaName" ]
+then
+    read -p "UPnP Device Name: " UPNP_NAME
+fi
 # Install Dependencies
-tst apt-get install libupnp-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-alsa -y
+for _dep in ${GMEDIA_DEPS[@]}; do
+    apt_install $_dep;
+done
 # Download Package
-tst git clone https://github.com/hzeller/gmrender-resurrect.git
-tst cd gmrender-resurrect
+exc git clone https://github.com/hzeller/gmrender-resurrect.git
+exc cd gmrender-resurrect
 # Setup Package
-tst ./autogen.sh
-tst ./configure
+exc ./autogen.sh
+exc ./configure
 # Install Package
-tst make
-tst make install
+exc make
+exc make install
 
 # Add line to /etc/rc.local to allow for startup on boot
-sed -i -e "\$i \/usr/local/bin/gmediarender -f $UPNP_NAME&\n" /etc/rc.local
+sed -i -e "\$i \/usr/local/bin/gmediarender -f $GMediaName&\n" /etc/rc.local
