@@ -1,27 +1,20 @@
 #!/bin/bash
+if [ -z "$exc" ]
+then
+    source functions.sh
+    source dependencies.sh
+fi
 
-#--------------------------------------------------------------------
-function tst {
-    echo "===> Executing: $*"
-    if ! $*; then
-        echo "Exiting script due to error from: $*"
-        exit 1
-    fi	
-}
-#--------------------------------------------------------------------
-tst cp etc/lirc/lircd.conf /etc/lirc/lircd.conf
-tst cp etc/lirc/hardware.conf /etc/lirc/hardware.conf
-tst cp usr/local/bin/Lircmap.xml /usr/local/bin/Lircmap.xml
-tst cp usr/local/bin/firstrun.sh /usr/local/bin/firstrun.sh
-tst chmod +x /usr/local/bin/firstrun.sh
-tst cp etc/rc.local /etc/rc.local
-tst chmod +x /etc/rc.local
-cat << EOT >>/boot/config.txt
+exc cp etc/lirc/lircd.conf /etc/lirc/lircd.conf
+exc cp etc/lirc/hardware.conf /etc/lirc/hardware.conf
+exc cp usr/local/bin/Lircmap.xml /usr/local/bin/Lircmap.xml
+exc cp usr/local/bin/firstrun.sh /usr/local/bin/firstrun.sh
+exc chmod +x /usr/local/bin/firstrun.sh
+exc cp etc/rc.local /etc/rc.local
+exc chmod +x /etc/rc.local
+exc cat << EOT >>/boot/config.txt
 # Enabled Lirc
 dtoverlay=lirc-rpi
 dtparam=gpio_in_pin=25
 
 EOT
-
-
-exit 0
