@@ -26,12 +26,12 @@ source dependencies.sh
 log "Select Your Install Options"
 # Begins Logging
 
-echo "1. Install the Raspberry Pi Audio Receiver Car Installation"
-echo "2. Install the Raspberry Pi Audio Receiver Home Installation"
-echo "3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)"
-echo "4. Install the Volumio (Bluetooth Only) Installation"
-echo "5. Install the Snapcast Installation (BETA), choose from Snapcast Server, Client, or Both (Requires Minor Configuration)"
-echo "6. Install a Custom Raspberry Pi Audio Receiver"
+installlog "1. Install the Raspberry Pi Audio Receiver Car Installation"
+installlog "2. Install the Raspberry Pi Audio Receiver Home Installation"
+installlog "3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)"
+installlog "4. Install the Volumio (Bluetooth Only) Installation"
+installlog "5. Install the Snapcast Installation (BETA), choose from Snapcast Server, Client, or Both (Requires Minor Configuration)"
+installlog "6. Install a Custom Raspberry Pi Audio Receiver"
 
 Install="0"
 while true
@@ -201,18 +201,18 @@ fi
 
 if [ "$SoundCardInstall" = "y" ]
 then
-	echo "0. No Sound Card"
-	echo "1. HifiBerry DAC Light"
-	echo "2. HifiBerry DAC Standard/Pro"
-	echo "3. HifiBerry Digi+"
-	echo "4. Hifiberry Amp+"
-	echo "5. Pi-IQaudIO DAC"
-	echo "6. Pi-IQaudIO DAC+, Pi-IQaudIO DACZero, Pi-IQaudIO DAC PRO"
-	echo "7. Pi-IQaudIO DigiAMP"
-	echo "8. Pi-IQaudIO Digi+"
-	echo "9. USB Sound Card"
-	echo "10. JustBoom DAC and AMP Cards"
-	echo "11. JustBoom Digi Cards"
+	installlog "0. No Sound Card"
+	installlog "1. HifiBerry DAC Light"
+	installlog "2. HifiBerry DAC Standard/Pro"
+	installlog "3. HifiBerry Digi+"
+	installlog "4. Hifiberry Amp+"
+	installlog "5. Pi-IQaudIO DAC"
+	installlog "6. Pi-IQaudIO DAC+, Pi-IQaudIO DACZero, Pi-IQaudIO DAC PRO"
+	installlog "7. Pi-IQaudIO DigiAMP"
+	installlog "8. Pi-IQaudIO Digi+"
+	installlog "9. USB Sound Card"
+	installlog "10. JustBoom DAC and AMP Cards"
+	installlog "11. JustBoom Digi Cards"
 	SoundCard="SoundCard"
 	while true
 	do
