@@ -20,7 +20,7 @@ exc cd shairport-sync
 exc autoreconf -i -f
 exc ./configure --sysconfdir=/etc --with-stdout --with-pipe --with-alsa --with-avahi --with-ssl=openssl --with-metadata --with-soxr --with-systemd
 exc make
-exc getent group shairport-sync &>/dev/null || sudo groupadd -r shairport-sync >/dev/null
-exc getent passwd shairport-sync &> /dev/null || sudo useradd -r -M -g shairport-sync -s /usr/bin/nologin -G audio shairport-sync >/dev/null
+getent group shairport-sync &>/dev/null || sudo groupadd -r shairport-sync >/dev/null
+getent passwd shairport-sync &> /dev/null || sudo useradd -r -M -g shairport-sync -s /usr/bin/nologin -G audio shairport-sync >/dev/null
 exc make install
 exc systemctl enable shairport-sync
