@@ -3,6 +3,10 @@ log() {
     echo -ne "\e[1;34mSSRPARI \e[m" >&2
     echo -e "[`date`] $@"
 }
+installlog() {
+    echo -ne "\e[1;34mSSRPARI \e[m" >&2
+    echo -e "$@"
+}
 YesNo() {
         # Usage: YesNo "prompt"
         # Returns: 0 (true) if answer is Yes
