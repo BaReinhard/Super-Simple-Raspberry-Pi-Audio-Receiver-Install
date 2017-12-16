@@ -1,8 +1,10 @@
 #!/bin/bash
 
-source functions.sh
-source dependencies.sh
-
+if [ -z "$exc" ]
+then
+    source functions.sh
+    source dependencies.sh
+fi
 
 # Update
 
