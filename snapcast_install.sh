@@ -1,12 +1,12 @@
 #!/bin/bash
 SNAP="SNAP"
-MYNAME=SNAPCAST
+SnapName=SNAPCAST
 while [ $SNAP != "s" ] && [ $SNAP != "c" ] && [ $SNAP != "b" ];
 do
     read -p "Install this as a SnapCast Server(s), Client(c), and Both (b): (s/c/b)" SNAP
 done
 
-read -p "Airplay device name: " MYNAME
+read -p "SnapCast device name: " SnapName
 if [ $SUDO_USER ]; then user=$SUDO_USER ; else user=`whoami`; fi
 #--------------------------------------------------------------------
 function tst {
@@ -34,7 +34,7 @@ then
     echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
     sudo systemctl disable shairport-sync
-    echo "sudo shairport-sync shairport-sync -a \"$MYNAME to Snapcast\" -o pipe -- /tmp/snapfifo" >> ~/.profile
+    echo "sudo shairport-sync shairport-sync -a \"$SnapName to Snapcast\" -o pipe -- /tmp/snapfifo" >> ~/.profile
 elif [ $SNAP = "c" ]
 then
     tst sudo make installclient
