@@ -234,7 +234,7 @@ if [ "$Bluetooth" = "y" ]
 then
 	export BluetoothName
 	run ./bt_pa_install.sh
-	echo "${BluetoothName}" | run su ${user} -c ./bt_pa_config.sh 
+	run su ${user} -c ./bt_pa_config.sh 
 fi
 
 if [ "$SoundCardInstall" = "y" ]
@@ -279,7 +279,8 @@ fi
 # If GMedia is Chosen, it installs  GMedia Dependencies and issues commands for proper configuration
 if [ "$GMedia" = "y" ]
 then
-	echo "${GMediaName}" | run ./gmrender_install.sh
+	export GMediaName
+	run ./gmrender_install.sh
 fi
 
 if [ "$SNAPCAST" != "n" ]
