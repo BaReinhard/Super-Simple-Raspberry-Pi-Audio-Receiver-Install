@@ -13,8 +13,10 @@
 # 0x20041C - Headphones, Portable Audio / Portable Audio
 # 0x20043C - Headphones, Portable Audio, Car audio / Portable Audio, Car audio
 
-
-read -p "Bluetooth device name: " BT_NAME
+if [ "$BluetoothName" == "" ]
+then
+ read -p "Bluetooth device name: " BluetoothName
+fi
 
 source functions.sh
 source dependencies.sh
@@ -27,7 +29,7 @@ exc sudo cp lib/systemd/system/volume-watcher.service /lib/systemd/system/volume
 exc sudo systemctl enable volume-watcher
 exc cd `dirname $0`
 
-exc sudo echo "PRETTY_HOSTNAME=$BT_NAME" >> /tmp/machine-info
+sudo echo "PRETTY_HOSTNAME=$BluetoothName" >> /tmp/machine-info
 exc tst sudo cp /tmp/machine-info /etc
 
 exc sudo cp init.d/pulseaudio /etc/init.d
