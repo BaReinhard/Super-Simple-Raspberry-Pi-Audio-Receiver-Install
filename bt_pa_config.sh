@@ -13,16 +13,17 @@
 # 0x20041C - Headphones, Portable Audio / Portable Audio
 # 0x20043C - Headphones, Portable Audio, Car audio / Portable Audio, Car audio
 
-if [ "$BluetoothName" == "" ]
+if [ -z "$BluetoothName" ]
 then
  read -p "Bluetooth device name: " BluetoothName
 fi
+if [ -z "$exc" ]
+then 
+    source functions.sh
+    source dependencies.sh
+fi
 
-source functions.sh
-source dependencies.sh
-
-
-mkdir /home/pi/pyScripts
+exc mkdir /home/pi/pyScripts
 exc sudo cp usr/local/bin/volume-watcher.py /usr/local/bin/volume-watcher.py
 exc sudo chmod +x /usr/local/bin/volume-watcher.py
 exc sudo cp lib/systemd/system/volume-watcher.service /lib/systemd/system/volume-watcher.service
