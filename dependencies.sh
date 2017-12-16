@@ -4,7 +4,7 @@ BT_DEPS="python-dbus pulseaudio libtool intltool libsndfile-dev libcap-dev libjs
 
 AP_DEPS="hostapd isc-dhcp-server"
 
-AIRPLAY_DEPS="install build-essential git autoconf automake libtool libdaemon-dev libasound2-dev libpopt-dev libconfig-dev avahi-daemon libavahi-client-dev libssl-dev libpolarssl-dev libsoxr-dev"
+AIRPLAY_DEPS="build-essential git autoconf automake libtool libdaemon-dev libasound2-dev libpopt-dev libconfig-dev avahi-daemon libavahi-client-dev libssl-dev libpolarssl-dev libsoxr-dev"
 
 KODI_DEPS="kodi"
 
