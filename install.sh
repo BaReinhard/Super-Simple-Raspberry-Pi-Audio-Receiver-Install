@@ -152,6 +152,7 @@ then
 	BluetoothName=$MYNAME
 	AirPlayName=$MYNAME
 	GMediaName=$MYNAME
+	SnapName=$MYNAME
 elif [ "$SameName" = "n" ]
 then
 	# Asks for Bluetooth Device Name
@@ -173,6 +174,10 @@ then
 	then
 		read -p "UPnP Device Name: " GMediaName
 	fi
+	if [ "$SNAPCAST" != "n" ]
+	then
+	        read -p "Snapcast Device Name: " SNAPNAME
+        fi
 fi
 
 if [ "$AP" = "y" ]
