@@ -12,6 +12,6 @@ GMEDIA_DEPS="libupnp-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer
 
 LIRC_DEPS="lirc"
 
-INSTALL_COMMAND="sudo apt-get install -q=2 -y"
+INSTALL_COMMAND="sudo apt-get install -qq --print-uris -y"
 
 
