@@ -59,7 +59,7 @@ then
     exc sudo make installclient
     echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
-    echo "sudo snapclient" | sudo tee -a ~/.profile
+    echo "sudo snapclient &> /dev/null&" | sudo tee -a ~/.profile
 fi
 
 
