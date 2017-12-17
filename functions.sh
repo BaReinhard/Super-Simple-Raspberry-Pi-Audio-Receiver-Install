@@ -44,7 +44,7 @@ tst() {
 
 apt_install() {
     log Installing $1...
-    $INSTALL_COMMAND $1
+    $INSTALL_COMMAND $1 &> /dev/null
     verify "Installation of package '$1' failed"
 }
 run(){
