@@ -41,19 +41,19 @@ exc cd $SNAP_DIR
 exc make
 
 
-if [ $SNAP = "s" ]
+if [ "$SNAPCAST" = "s" ]
 then
     exc sudo make installserver
     echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
     exc sudo systemctl disable shairport-sync
     echo "sudo shairport-sync shairport-sync -a \"$SnapName to Snapcast\" -o pipe -- /tmp/snapfifo&" >> ~/.profile
-elif [ $SNAP = "c" ]
+elif [ "$SNAPCAST" = "c" ]
 then
     tst sudo make installclient
     echo "sudo snapclient &> /dev/null&" | sudo tee -a ~/.profile
     # Add set-default-sink-input here
-elif [ $SNAP = "b" ]
+elif [ "$SNAPCAST" = "b" ]
 then
     exc sudo make installserver
     exc sudo make installclient
