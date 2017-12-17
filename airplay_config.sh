@@ -128,7 +128,7 @@ then
 // General Settings
 general =
 {
-	name = "$MYNAME"; // This means "Hostname" -- see below. This is the name the service will advertise to iTunes.
+	name = "$AirPlayName"; // This means "Hostname" -- see below. This is the name the service will advertise to iTunes.
     interpolation = "soxr";
 //	The default is "Hostname" -- i.e. the machine's hostname with the first letter capitalised (ASCII only.)
 //	You can use the following substitutions:
