@@ -1,20 +1,18 @@
 #!/bin/bash
-read -p "Wifi Network name: " MYNAME
-read -p "Wifi Password: " WIFIPASS
-#--------------------------------------------------------------------
-function tst {
-    echo "===> Executing: $*"
-    if ! $*; then
-        echo "Exiting script due to error from: $*"
-        exit 1
-    fi	
-}
-#--------------------------------------------------------------------
-
+if [ "$WIFIPASS" == "" ]
+then
+    read -p "Wifi Network name: " APName
+    read -p "Wifi Password: " WIFIPASS
+fi
+if [ -z "$exc" ]
+then
+    source functions.sh
+    source dependencies.sh
+fi
 
 # setup the config files
-cp etc/network/interfaces /etc/network/interfaces
-patch /etc/dhcpcd.conf <<EOT
+exc cp etc/network/interfaces /etc/network/interfaces
+exc patch /etc/dhcpcd.conf <<EOT
 @@ -39,3 +39,4 @@
  # A hook script is provided to lookup the hostname if not set by the DHCP
  # server, but it should not be run by default
@@ -22,7 +20,7 @@ patch /etc/dhcpcd.conf <<EOT
 +denyinterfaces wlan0
 EOT
 # Add patch for /etc/default/hostapd 
-cat << EOT > /etc/default/hostapd 
+exc cat << EOT > /etc/default/hostapd 
 # Defaults for hostapd initscript
 #
 # See /usr/share/doc/hostapd/README.Debian for information about alternative
@@ -48,7 +46,7 @@ DAEMON_CONF="/etc/hostapd/hostapd.conf"
 
 
 EOT
-patch /etc/init.d/hostapd <<EOT
+exc patch /etc/init.d/hostapd <<EOT
 @@ -16,7 +16,7 @@
  PATH=/sbin:/bin:/usr/sbin:/usr/bin
  DAEMON_SBIN=/usr/sbin/hostapd
@@ -61,10 +59,10 @@ patch /etc/init.d/hostapd <<EOT
 EOT
 
 # Setup AP
-cat <<EOT > /etc/hostapd/hostapd.conf
+exc cat <<EOT > /etc/hostapd/hostapd.conf
 interface=wlan0
 driver=nl80211
-ssid=$MYNAME
+ssid=$APName
 hw_mode=g
 channel=6
 macaddr_acl=0
@@ -82,7 +80,7 @@ EOT
 
 # Setup dhcp server
 
-cat <<EOT >>/etc/dhcp/dhcpd.conf
+exc cat <<EOT >>/etc/dhcp/dhcpd.conf
 ddns-update-style none;
 ignore client-updates;
 authoritative;
@@ -111,7 +109,7 @@ max-lease-time 1814400;
 EOT
 
 # Add Patch for /etc/default/isc-dhcp-server
-patch /etc/default/isc-dhcp-server <<EOT
+exc patch /etc/default/isc-dhcp-server <<EOT
 @@ -18,4 +18,4 @@
  
  # On what interfaces should the DHCP server (dhcpd) serve DHCP requests?
@@ -120,5 +118,4 @@ patch /etc/default/isc-dhcp-server <<EOT
 +INTERFACES="wlan0"
 EOT
 
-echo "You may now reboot your Pi"
 

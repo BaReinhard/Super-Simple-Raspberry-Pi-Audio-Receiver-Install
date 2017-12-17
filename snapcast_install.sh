@@ -1,56 +1,73 @@
 #!/bin/bash
-SNAP="SNAP"
-MYNAME=SNAPCAST
-while [ $SNAP != "s" ] && [ $SNAP != "c" ] && [ $SNAP != "b" ];
-do
-    read -p "Install this as a SnapCast Server(s), Client(c), and Both (b): (s/c/b)" SNAP
-done
-
-read -p "Airplay device name: " MYNAME
-if [ $SUDO_USER ]; then user=$SUDO_USER ; else user=`whoami`; fi
-#--------------------------------------------------------------------
-function tst {
-    echo "===> Executing: $*"
-    if ! $*; then
-        echo "Exiting script due to error from: $*"
-        exit 1
+if [ -z "$exc" ]
+then
+    source functions.sh
+    source dependencies.sh
+fi
+if [ -z "$SNAPCAST" ]
+then
+    while true
+	do
+		read -p "Would you like to install SnapCast as a Server(s), Client(c), or both (b)?: (s/c/b) " SNAPCAST
+		case "$SNAPCAST" in
+		[bB]*) SNAPCAST="b"; break;
+		;;
+		[cC]*) SNAPCAST="c"; break;
+		;;
+		[sS]*) SNAPCAST="s"; break;
+		;;
+		*) echo "Please enter a valid choice";
+		;;
+		esac
+	done
+fi
+if [ "$SNAPCAST" != "c" ]
+then
+    if [ -z "$SNAPNAME" ]
+    then
+    	read -p "SnapCast device name: " SNAPNAME
     fi
-}
-#--------------------------------------------------------------------
-PWD=`pwd`
-SNAP_DIR=$PWD/snapcast
-tst git clone https://github.com/badaix/snapcast.git
-tst cd $SNAP_DIR/externals
-tst git submodule update --init --recursive
-tst sudo apt-get install build-essential -y
-tst sudo apt-get install libasound2-dev libvorbisidec-dev libvorbis-dev libflac-dev alsa-utils libavahi-client-dev avahi-daemon -y
-tst cd $SNAP_DIR
-tst make
+    
+fi
+if [ $SUDO_USER ]; then user=$SUDO_USER ; else user=`whoami`; fi
+
+currentDir=$(
+  cd $(dirname "$0")
+  pwd
+) 
+SNAP_DIR=$currentDir/snapcast
+exc git clone https://github.com/badaix/snapcast.git
+exc cd $SNAP_DIR/externals
+exc git submodule update --init --recursive
+exc sudo apt-get install build-essential -y
+exc sudo apt-get install libasound2-dev libvorbisidec-dev libvorbis-dev libflac-dev alsa-utils libavahi-client-dev avahi-daemon -y
+exc cd $SNAP_DIR
+exc make
 
 
-if [ $SNAP = "s" ]
+if [ "$SNAPCAST" = "s" ]
 then
-    tst sudo make installserver
+    exc sudo make installserver
     echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
-    sudo systemctl disable shairport-sync
-    echo "sudo shairport-sync shairport-sync -a \"$MYNAME to Snapcast\" -o pipe -- /tmp/snapfifo" >> ~/.profile
-elif [ $SNAP = "c" ]
+    exc sudo systemctl disable shairport-sync
+    echo "sudo shairport-sync shairport-sync -a \"$SNAPNAME to Snapcast\" -o pipe -- /tmp/snapfifo&" >> ~/.profile
+elif [ "$SNAPCAST" = "c" ]
 then
     tst sudo make installclient
-    echo "sudo snapclient" | sudo tee -a ~/.profile
+    echo "sudo snapclient &> /dev/null&" | sudo tee -a ~/.profile
     # Add set-default-sink-input here
-elif [ $SNAP = "b" ]
+elif [ "$SNAPCAST" = "b" ]
 then
-    tst sudo make installserver
-    tst sudo make installclient
+    exc sudo make installserver
+    exc sudo make installclient
     echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
-    echo "sudo snapclient" | sudo tee -a ~/.profile
+    echo "sudo snapclient &> /dev/null&" | sudo tee -a ~/.profile
+    echo "sudo shairport-sync shairport-sync -a \"$SNAPNAME to Snapcast\" -o pipe -- /tmp/snapfifo&" >> ~/.profile
+
 fi
 
-
-echo "Snapcast Install Has Finished"
 
 
 

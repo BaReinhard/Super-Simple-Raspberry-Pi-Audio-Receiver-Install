@@ -1,15 +1,11 @@
 #!/bin/bash
 
-#--------------------------------------------------------------------
-function tst {
-    echo "===> Executing: $*"
-    if ! $*; then
-        echo "Exiting script due to error from: $*"
-        exit 1
-    fi	
-}
-#--------------------------------------------------------------------
-
-tst apt-get install lirc -y
-
-exit 0
+if [ -z "$exc" ]
+then
+    source functions.sh
+    source dependencies.sh
+fi
+# Install Dependencies
+for _dep in ${LIRC_DEPS[@]}; do
+    apt_install $_dep;
+done

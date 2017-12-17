@@ -2,13 +2,22 @@
 # This file will add the proper sound card configurations to your /etc/asound.conf
 # I am unsure whether or not you need pulse and pulse_connect, but will be testing if its absolutely necessary.
 # If you are not using any sound card please change all the following line of "card 1" to "card 0"
-read -p "Which sound card are you using" SoundCard
+
+if [ -z "$SoundCard ]
+then 
+    read -p "Which sound card are you using" SoundCard
+fi
+if [ -z "$exc" ]
+then
+    source functions.sh
+    source dependencies.sh
+fi
 if [ $SoundCard = "0" ]
 then
-sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
+exc sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
-sudo cat <<EOT >> /etc/asound.conf
+exc sudo cat <<EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
     card 0
@@ -27,7 +36,7 @@ ctl.!default {
     card 0
 }
 EOT
-sudo cat <<EOT >> /boot/config.txt
+exc sudo cat <<EOT >> /boot/config.txt
 # Enable HiFiberry Amp
 #dtoverlay=hifiberry-amp
 
@@ -61,10 +70,10 @@ sudo cat <<EOT >> /boot/config.txt
 EOT
 elif [ $SoundCard = "1" ]
 then
-sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
+exc sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
-sudo cat <<EOT >> /etc/asound.conf
+exc sudo cat <<EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
     card 1
@@ -83,7 +92,7 @@ ctl.!default {
     card 1
 }
 EOT
-sudo cat <<EOT >>/boot/config.txt
+exc sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Amp
 #dtoverlay=hifiberry-amp
 
@@ -114,13 +123,13 @@ dtoverlay=hifiberry-dac
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
-sed -i '56 s/^/#/' /boot/config.txt # fixes problem with onboard sound card
+exc sed -i '56 s/^/#/' /boot/config.txt # fixes problem with onboard sound card
 elif [ $SoundCard = "2" ]
 then
-sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
+exc sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
-sudo cat <<EOT >> /etc/asound.conf
+exc sudo cat <<EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
     card 1
@@ -139,7 +148,7 @@ ctl.!default {
     card 1
 }
 EOT
-sudo cat <<EOT >>/boot/config.txt
+exc sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Amp
 #dtoverlay=hifiberry-amp
 
@@ -170,13 +179,13 @@ dtoverlay=hifiberry-dacplus
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
-sed -i '56 s/^/#/' /boot/config.txt
+exc sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "3" ]
 then
-sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
+exc sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
-sudo cat <<EOT >> /etc/asound.conf
+exc sudo cat <<EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
     card 1
@@ -195,7 +204,7 @@ ctl.!default {
     card 1
 }
 EOT
-sudo cat <<EOT >>/boot/config.txt
+exc sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Amp
 #dtoverlay=hifiberry-amp
 
@@ -227,13 +236,13 @@ dtoverlay=hifiberry-digi
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
-sed -i '56 s/^/#/' /boot/config.txt
+exc sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "4" ]
 then
-sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
+exc sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
-sudo cat <<EOT >> /etc/asound.conf
+exc sudo cat <<EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
     card 1
@@ -252,7 +261,7 @@ ctl.!default {
     card 1
 }
 EOT
-sudo cat <<EOT >>/boot/config.txt
+exc sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Amp
 dtoverlay=hifiberry-amp
 
@@ -284,13 +293,13 @@ dtoverlay=hifiberry-amp
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
-sed -i '56 s/^/#/' /boot/config.txt
+exc sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "5" ]
 then
-sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
+exc sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
-sudo cat <<EOT >> /etc/asound.conf
+exc sudo cat <<EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
     card 1
@@ -309,7 +318,7 @@ ctl.!default {
     card 1
 }
 EOT
-sudo cat <<EOT >>/boot/config.txt
+exc sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Amp
 #dtoverlay=hifiberry-amp
 
@@ -341,13 +350,13 @@ dtoverlay=iqaudio-dac
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
-sed -i '56 s/^/#/' /boot/config.txt
+exc sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "6" ]
 then
-sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
+exc sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
-sudo cat <<EOT >> /etc/asound.conf
+exc sudo cat <<EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
     card 1
@@ -366,7 +375,7 @@ ctl.!default {
     card 1
 }
 EOT
-sudo cat <<EOT >>/boot/config.txt
+exc sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Amp
 #dtoverlay=hifiberry-amp
 
@@ -398,13 +407,13 @@ dtoverlay=iqaudio-dacplus
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
-sed -i '56 s/^/#/' /boot/config.txt
+exc sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "7" ]
 then
-sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
+exc sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
-sudo cat <<EOT >> /etc/asound.conf
+exc sudo cat <<EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
     card 1
@@ -423,7 +432,7 @@ ctl.!default {
     card 1
 }
 EOT
-sudo cat <<EOT >>/boot/config.txt
+exc sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Amp
 #dtoverlay=hifiberry-amp
 
@@ -455,13 +464,13 @@ dtoverlay=iqaudio-dacplus,unmute_amp
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
-sed -i '56 s/^/#/' /boot/config.txt
+exc sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "8" ]
 then
-sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
+exc sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
-sudo cat <<EOT >> /etc/asound.conf
+exc sudo cat <<EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
     card 1
@@ -480,7 +489,7 @@ ctl.!default {
     card 1
 }
 EOT
-sudo cat <<EOT >>/boot/config.txt
+exc sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Amp
 #dtoverlay=hifiberry-amp
 
@@ -514,13 +523,13 @@ dtoverlay=iqaudio-digi-wm8804-audio
 
 
 EOT
-sed -i '56 s/^/#/' /boot/config.txt
+exc sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "9" ]
 then
-sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
+exc sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
-sudo cat <<EOT >> /etc/asound.conf
+exc sudo cat <<EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
     card 1
@@ -539,7 +548,7 @@ ctl.!default {
     card 1
 }
 EOT
-sudo cat <<EOT >>/boot/config.txt
+exc sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Amp
 #dtoverlay=hifiberry-amp
 
@@ -571,13 +580,13 @@ sudo cat <<EOT >>/boot/config.txt
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
-sed -i '56 s/^/#/' /boot/config.txt
+exc sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "10" ]
 then
-sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
+exc sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
-sudo cat <<EOT >> /etc/asound.conf
+exc sudo cat <<EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
     card 1
@@ -596,7 +605,7 @@ ctl.!default {
     card 1
 }
 EOT
-sudo cat <<EOT >>/boot/config.txt
+exc sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Amp
 #dtoverlay=hifiberry-amp
 
@@ -628,13 +637,13 @@ dtoverlay=justboom-dac
 # Enable JustBoom Digi Cards
 #dtoverlay=justboom-digi
 EOT
-sed -i '56 s/^/#/' /boot/config.txt
+exc sed -i '56 s/^/#/' /boot/config.txt
 elif [ $SoundCard = "11" ]
 then
-sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
+exc sudo cat <<EOT >> /etc/modprobe.d/alsa-base.conf
 options snd_bcm2835 index=0
 EOT
-sudo cat <<EOT >> /etc/asound.conf
+exc sudo cat <<EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
     card 1
@@ -653,7 +662,7 @@ ctl.!default {
     card 1
 }
 EOT
-sudo cat <<EOT >>/boot/config.txt
+exc sudo cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Amp
 #dtoverlay=hifiberry-amp
 
@@ -684,6 +693,5 @@ sudo cat <<EOT >>/boot/config.txt
 # Enable JustBoom Digi Cards
 dtoverlay=justboom-digi
 EOT
-sed -i '56 s/^/#/' /boot/config.txt
+exc sed -i '56 s/^/#/' /boot/config.txt
 fi
-exit 0

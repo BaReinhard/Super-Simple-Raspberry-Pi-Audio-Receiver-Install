@@ -1,19 +1,15 @@
 #!/bin/bash
 
-#--------------------------------------------------------------------
-function tst {
-    echo "===> Executing: $*"
-    if ! $*; then
-        echo "Exiting script due to error from: $*"
-        exit 1
-    fi	
-}
-#--------------------------------------------------------------------
-tst usermod -a -G input kodi
-tst usermod -a -G lp kodi
-tst usermod -a -G pulse-access,audio root
-tst adduser kodi pulse-access
-patch /etc/default/kodi << EOT
+if [ -z "$exc" ]
+then
+    source functions.sh
+    source dependencies.sh
+fi
+exc usermod -a -G input kodi
+exc usermod -a -G lp kodi
+exc usermod -a -G pulse-access,audio root
+exc adduser kodi pulse-access
+exc patch /etc/default/kodi << EOT
 @@ -1,5 +1,5 @@
  # Set this to 1 to enable startup
 -ENABLED=0
@@ -26,8 +22,8 @@ EOT
 # Add gpu_mem=256 to config.txt for use with Kodi
 echo gpu_mem=256 >> /boot/config.txt
 # Faster Boot
-tst cp boot/cmdline.txt /boot/cmdline.txt
-touch ~/.hushlogin
+exc cp boot/cmdline.txt /boot/cmdline.txt
+exc touch ~/.hushlogin
 
 
-exit 0
+

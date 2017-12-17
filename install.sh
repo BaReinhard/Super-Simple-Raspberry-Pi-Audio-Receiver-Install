@@ -1,30 +1,7 @@
 #!/bin/bash
 # Prompt User for Installation
 
-YesNo() {
-	# Usage: YesNo "prompt"
-	# Returns: 0 (true) if answer is Yes
-	#          1 (false) if answer is No
-	while true
-	do
-		read -p "$1" answer
-		case "$answer" in
-		[nN]*)
-			answer="1"; break;
-		;;
-		[yY]*)
-			answer="0"; break;
-		;;
-		*)
-			echo "Please answer y or n"
-		;;
-		esac
-	done
-	return $answer
-}
 
-# Sets Log File
-log="./install.log"
 currentDir=$(
   cd $(dirname "$0")
   pwd
@@ -41,15 +18,20 @@ else
 fi
 
 cd "$currentDir"
-# Begins Logging
-echo "" > $log
+# Set up file-based logging
+exec 1> >(tee install.log)
+source functions.sh
+source dependencies.sh
 
-echo "1. Install the Raspberry Pi Audio Receiver Car Installation"
-echo "2. Install the Raspberry Pi Audio Receiver Home Installation"
-echo "3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)"
-echo "4. Install the Volumio (Bluetooth Only) Installation"
-echo "5. Install the Snapcast Installation (BETA), choose from Snapcast Server, Client, or Both (Requires Minor Configuration)"
-echo "6. Install a Custom Raspberry Pi Audio Receiver"
+log "Select Your Install Options"
+# Begins Logging
+
+installlog "1. Install the Raspberry Pi Audio Receiver Car Installation"
+installlog "2. Install the Raspberry Pi Audio Receiver Home Installation"
+installlog "3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)"
+installlog "4. Install the Volumio (Bluetooth Only) Installation"
+installlog "5. Install the Snapcast Installation (BETA), choose from Snapcast Server, Client, or Both (Requires Minor Configuration)"
+installlog "6. Install a Custom Raspberry Pi Audio Receiver"
 
 Install="0"
 while true
@@ -170,6 +152,7 @@ then
 	BluetoothName=$MYNAME
 	AirPlayName=$MYNAME
 	GMediaName=$MYNAME
+	SnapName=$MYNAME
 elif [ "$SameName" = "n" ]
 then
 	# Asks for Bluetooth Device Name
@@ -191,6 +174,10 @@ then
 	then
 		read -p "UPnP Device Name: " GMediaName
 	fi
+	if [ "$SNAPCAST" != "n" ]
+	then
+	        read -p "Snapcast Device Name: " SNAPNAME
+        fi
 fi
 
 if [ "$AP" = "y" ]
@@ -214,18 +201,18 @@ fi
 
 if [ "$SoundCardInstall" = "y" ]
 then
-	echo "0. No Sound Card"
-	echo "1. HifiBerry DAC Light"
-	echo "2. HifiBerry DAC Standard/Pro"
-	echo "3. HifiBerry Digi+"
-	echo "4. Hifiberry Amp+"
-	echo "5. Pi-IQaudIO DAC"
-	echo "6. Pi-IQaudIO DAC+, Pi-IQaudIO DACZero, Pi-IQaudIO DAC PRO"
-	echo "7. Pi-IQaudIO DigiAMP"
-	echo "8. Pi-IQaudIO Digi+"
-	echo "9. USB Sound Card"
-	echo "10. JustBoom DAC and AMP Cards"
-	echo "11. JustBoom Digi Cards"
+	installlog "0. No Sound Card"
+	installlog "1. HifiBerry DAC Light"
+	installlog "2. HifiBerry DAC Standard/Pro"
+	installlog "3. HifiBerry Digi+"
+	installlog "4. Hifiberry Amp+"
+	installlog "5. Pi-IQaudIO DAC"
+	installlog "6. Pi-IQaudIO DAC+, Pi-IQaudIO DACZero, Pi-IQaudIO DAC PRO"
+	installlog "7. Pi-IQaudIO DigiAMP"
+	installlog "8. Pi-IQaudIO Digi+"
+	installlog "9. USB Sound Card"
+	installlog "10. JustBoom DAC and AMP Cards"
+	installlog "11. JustBoom Digi Cards"
 	SoundCard="SoundCard"
 	while true
 	do
@@ -243,91 +230,73 @@ else
 	SoundCard="0"
 fi
 
-#--------------------------------------------------------------------
-function tst {
-	echo "===> Executing: $*"
-	if ! $*; then
-		echo "Exiting script due to error from: $*"
-		exit 1
-	fi
-}
-#--------------------------------------------------------------------
-
 chmod +x ./*.sh
-echo "Starting @ `date`" | tee -a $log
 # Updates and Upgrades the Raspberry Pi
-echo "This is who i am: `whoami`"
-echo "--------------------------------------------" | tee -a $log
-tst ./bt_pa_prep.sh | tee -a $log
-echo "--------------------------------------------" | tee -a $log
+
 # If Bluetooth is Chosen, it installs Bluetooth Dependencies and issues commands for proper configuration
 
 if [ "$Bluetooth" = "y" ]
 then
-	tst ./bt_pa_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
-	echo "${BluetoothName}" | tst su ${user} -c ./bt_pa_config.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	export BluetoothName
+	run ./bt_pa_install.sh
+	run su ${user} -c ./bt_pa_config.sh 
 fi
 
 if [ "$SoundCardInstall" = "y" ]
 then
-	echo "${SoundCard}" | tst ./sound_card_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	export SoundCard
+	run ./sound_card_install.sh 
 fi
 
 # If AirPlay is Chosen, it installs AirPlay Dependencies and issues commands for proper configuration
 if [ "$AirPlay" = "y" ]
 then
-	tst ./airplay_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
-	{ echo "${AirPlayName}"; echo "${SoundCard}"; echo "${AirPlayPass}";} | tst ./airplay_config.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	export SoundCard
+	export AirPlayPass
+	export AirPlayName
+	run ./airplay_install.sh 
+	run ./airplay_config.sh 
 fi
 
 # If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
 if [ "$AP" = "y" ]
 then
-	tst ./ap_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
-	{ echo "${APName}"; echo "${WIFIPASS}";} | tst ./ap_config.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	export APName
+	export WIFIPASS
+	run ./ap_install.sh 
+	run ./ap_config.sh 
 fi
 
 # If Kodi is Chosen, it installs Kodi Dependencies and issues commands for proper configuration
 if [ "$Kodi" = "y" ]
 then
-	tst ./kodi_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
-	tst ./kodi_config.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	run ./kodi_install.sh 
+	run ./kodi_config.sh
 fi
 
 # If Lirc is Chosen, it installs Lirc Dependencies and issues commands for proper configuration
 if [ "$Lirc" = "y" ]
 then
-	tst ./lirc_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
-	tst ./lirc_config.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	run ./lirc_install.sh
+	run ./lirc_config.sh
 fi
 
 # If GMedia is Chosen, it installs  GMedia Dependencies and issues commands for proper configuration
 if [ "$GMedia" = "y" ]
 then
-	echo "${GMediaName}" | tst ./gmrender_install.sh | tee -a $log
-	echo "--------------------------------------------" | tee -a $log
+	export GMediaName
+	run ./gmrender_install.sh
 fi
 
 if [ "$SNAPCAST" != "n" ]
 then
-	echo "--------------SNAP CAST INSTALL--------------------" | tee -a $log
-	{ echo "${SNAPCAST}"; echo "${MYNAME}";}  | tst su ${user} -c ./snapcast_install.sh | tee -a $log
-	echo "----------------------------------------------------" | tee -a $log
+	export SNAPCAST
+	export SNAPNAME
+	run su ${user} -c ./snapcast_install.sh
 fi
 
-echo "Ending at @ `date`" | tee -a $log
-cat << EOT > install_choices
+
+run cat << EOT > install_choices
 Bluetooth = $Bluetooth
 AirPlay = $AirPlay
 AP = $AP
@@ -337,4 +306,4 @@ SoundCardInstall = $SoundCardInstall
 GMedia = $GMedia
 EOT
 
-reboot
+log You should now reboot

@@ -1,25 +1,24 @@
 #!/bin/bash
+if [ -z "$exc" ]
+then
+    source functions.sh
+    source dependencies.sh
+fi
 
-read -p "Airplay device name: " MYNAME
-read -p "Sound Card" SoundCard
-read -p "AirPlay password: " AirPlayPass
+if [ -z "$AirPlayName" ]
+then
+	read -p "Airplay device name: " AirPlayName
+	read -p "Sound Card" SoundCard
+	read -p "AirPlay password: " AirPlayPass
+fi
 
-if [ "$AirPlayPass" != "" ]
+if [ -z "$AirPlayPass" ]
 then
         AirPlayPass="	password = \"$AirPlayPass\"; // leave this commented out if you don't want to require a password"
 else
         AirPlayPass="//	password = \"secret\"; // leave this commented out if you don't want to require a password"
 fi
 
-#--------------------------------------------------------------------
-function tst {
-    echo "===> Executing: $*"
-    if ! $*; then
-        echo "Exiting script due to error from: $*"
-        exit 1
-    fi
-}
-#--------------------------------------------------------------------
 
 # Configure shairplay
 if [ $SoundCard != "0" ]
@@ -31,7 +30,7 @@ cat <<EOT > /etc/shairport-sync.conf
 // General Settings
 general =
 {
-	name = "$MYNAME"; // This means "Hostname" -- see below. This is the name the service will advertise to iTunes.
+	name = "$AirPlayName"; // This means "Hostname" -- see below. This is the name the service will advertise to iTunes.
     interpolation = "soxr";
 //	The default is "Hostname" -- i.e. the machine's hostname with the first letter capitalised (ASCII only.)
 //	You can use the following substitutions:
@@ -129,7 +128,7 @@ then
 // General Settings
 general =
 {
-	name = "$MYNAME"; // This means "Hostname" -- see below. This is the name the service will advertise to iTunes.
+	name = "$AirPlayName"; // This means "Hostname" -- see below. This is the name the service will advertise to iTunes.
     interpolation = "soxr";
 //	The default is "Hostname" -- i.e. the machine's hostname with the first letter capitalised (ASCII only.)
 //	You can use the following substitutions:
@@ -221,10 +220,9 @@ EOT
 
 fi
 
-tst cp shScripts/shairportstart.sh /usr/local/bin/shairportstart.sh
-tst cp shScripts/shairportend.sh /usr/local/bin/shairportend.sh
+exc cp shScripts/shairportstart.sh /usr/local/bin/shairportstart.sh
+exc cp shScripts/shairportend.sh /usr/local/bin/shairportend.sh
 
-tst chmod +x /usr/local/bin/shairportstart.sh
-tst chmod +x /usr/local/bin/shairportend.sh
+exc chmod +x /usr/local/bin/shairportstart.sh
+exc chmod +x /usr/local/bin/shairportend.sh
 
-tst echo "It is suggested you reboot your pi."
