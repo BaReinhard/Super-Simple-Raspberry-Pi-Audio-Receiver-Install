@@ -51,7 +51,7 @@ then
     echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
     exc sudo systemctl disable shairport-sync
-    echo "sudo shairport-sync shairport-sync -a \"$SNAPNAME to Snapcast\" -o pipe -- /tmp/snapfifo&" >> ~/.profile
+    echo "sudo shairport-sync -a \"$SNAPNAME to Snapcast\" -o pipe -- /tmp/snapfifo&" >> ~/.profile
 elif [ "$SNAPCAST" = "c" ]
 then
     tst sudo make installclient
@@ -64,7 +64,7 @@ then
     echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "sudo snapclient &> /dev/null&" | sudo tee -a ~/.profile
-    echo "sudo shairport-sync shairport-sync -a \"$SNAPNAME to Snapcast\" -o pipe -- /tmp/snapfifo&" >> ~/.profile
+    echo "sudo shairport-sync -a \"$SNAPNAME to Snapcast\" -o pipe -- /tmp/snapfifo&" >> ~/.profile
 
 fi
 
