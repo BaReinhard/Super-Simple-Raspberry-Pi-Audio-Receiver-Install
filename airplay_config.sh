@@ -23,7 +23,7 @@ fi
 # Configure shairplay
 if [ $SoundCard != "0" ]
 then
-exc cat <<EOT > /etc/shairport-sync.conf
+cat <<EOT > /etc/shairport-sync.conf
 // Sample Configuration File for Shairport Sync
 // Commented out settings are generally the defaults, except where noted.
 
@@ -121,7 +121,7 @@ ao =
 EOT
 elif [ $SoundCard = "0" ]
 then
-	exc cat <<EOT > /etc/shairport-sync.conf
+	cat <<EOT > /etc/shairport-sync.conf
 // Sample Configuration File for Shairport Sync
 // Commented out settings are generally the defaults, except where noted.
 
