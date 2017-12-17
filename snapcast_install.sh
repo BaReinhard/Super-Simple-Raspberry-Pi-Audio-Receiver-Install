@@ -4,7 +4,7 @@ then
     source functions.sh
     source dependencies.sh
 fi
-if [ -z "$SNAPCAST ]
+if [ -z "$SNAPCAST" ]
 then
     while true
 	do
