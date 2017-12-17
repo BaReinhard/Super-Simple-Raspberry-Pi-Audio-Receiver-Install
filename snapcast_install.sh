@@ -21,9 +21,13 @@ then
 		esac
 	done
 fi
-if [ "$SNAPCAST" != "s" ]
+if [ "$SNAPCAST" != "c" ]
 then
-    read -p "SnapCast device name: " SnapName
+    if [ -z "$SNAPNAME" ]
+    then
+    	read -p "SnapCast device name: " SNAPNAME
+    fi
+    
 fi
 if [ $SUDO_USER ]; then user=$SUDO_USER ; else user=`whoami`; fi
 
@@ -47,7 +51,7 @@ then
     echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
     exc sudo systemctl disable shairport-sync
-    echo "sudo shairport-sync shairport-sync -a \"$SnapName to Snapcast\" -o pipe -- /tmp/snapfifo&" >> ~/.profile
+    echo "sudo shairport-sync shairport-sync -a \"$SNAPNAME to Snapcast\" -o pipe -- /tmp/snapfifo&" >> ~/.profile
 elif [ "$SNAPCAST" = "c" ]
 then
     tst sudo make installclient
@@ -60,6 +64,8 @@ then
     echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "sudo snapclient &> /dev/null&" | sudo tee -a ~/.profile
+    echo "sudo shairport-sync shairport-sync -a \"$SNAPNAME to Snapcast\" -o pipe -- /tmp/snapfifo&" >> ~/.profile
+
 fi
 
 
