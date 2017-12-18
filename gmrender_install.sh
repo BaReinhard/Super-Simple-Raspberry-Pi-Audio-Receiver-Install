@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ -z "exc" ]
+if [ -z "$exc" ]
 then
     source functions.sh
     source dependencies.sh
