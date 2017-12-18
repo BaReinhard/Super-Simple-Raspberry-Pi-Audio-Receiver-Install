@@ -14,6 +14,6 @@ done
 
 # Download TV-Addons Zip for easy installation
 exc cd /home/kodi
-exc wget http://fusion.tvaddons.ag/begin-here/plugin.program.indigo-1.0.2.zip
+
 
 
