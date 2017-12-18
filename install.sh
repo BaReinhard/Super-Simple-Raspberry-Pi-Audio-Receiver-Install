@@ -234,7 +234,10 @@ chmod +x ./*.sh
 # Updates and Upgrades the Raspberry Pi
 
 # If Bluetooth is Chosen, it installs Bluetooth Dependencies and issues commands for proper configuration
-
+log "Updating via Apt-Get"
+apt-get update -y &> /dev/null
+log "Upgrading via Apt-Get"
+apt-get upgrade -y &> /dev/null
 if [ "$Bluetooth" = "y" ]
 then
 	export BluetoothName
