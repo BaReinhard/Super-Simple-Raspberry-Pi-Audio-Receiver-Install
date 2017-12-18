@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # This file will add the proper sound card configurations to your /etc/asound.conf
 # I am unsure whether or not you need pulse and pulse_connect, but will be testing if its absolutely necessary.
 # If you are not using any sound card please change all the following line of "card 1" to "card 0"
