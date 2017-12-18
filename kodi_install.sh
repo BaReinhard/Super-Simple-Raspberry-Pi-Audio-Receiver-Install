@@ -12,8 +12,5 @@ for _dep in ${KODI_DEPS[@]}; do
 done
 
 
-# Download TV-Addons Zip for easy installation
-exc cd /home/kodi
-
 
 
