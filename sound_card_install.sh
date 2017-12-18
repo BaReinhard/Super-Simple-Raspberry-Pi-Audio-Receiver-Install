@@ -9,14 +9,38 @@ else
 	echo "Must be run as root user!!" 
 	exit 1 
 fi
-if [ -z "$SoundCard" ]
-then 
-    read -p "Which sound card are you using" SoundCard
-fi
 if [ -z "$exc" ]
 then
     source functions.sh
     source dependencies.sh
+fi
+if [ -z "$SoundCard" ]
+then 
+    installlog "0. No Sound Card"
+	installlog "1. HifiBerry DAC Light"
+	installlog "2. HifiBerry DAC Standard/Pro"
+	installlog "3. HifiBerry Digi+"
+	installlog "4. Hifiberry Amp+"
+	installlog "5. Pi-IQaudIO DAC"
+	installlog "6. Pi-IQaudIO DAC+, Pi-IQaudIO DACZero, Pi-IQaudIO DAC PRO"
+	installlog "7. Pi-IQaudIO DigiAMP"
+	installlog "8. Pi-IQaudIO Digi+"
+	installlog "9. USB Sound Card"
+	installlog "10. JustBoom DAC and AMP Cards"
+	installlog "11. JustBoom Digi Cards"
+	SoundCard="SoundCard"
+	while true
+	do
+		read -p "Which Sound Card are you using? (0/1/2/3/4/5/6/7/8/9/10/11) : " SoundCard
+		case "$SoundCard" in
+		[0-9]|10|11)
+			break
+		;;
+		*)
+			echo "Please enter a valid choice"
+		;;
+		esac
+	done
 fi
 if [ $SoundCard = "0" ]
 then
