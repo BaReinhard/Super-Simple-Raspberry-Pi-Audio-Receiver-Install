@@ -5,6 +5,7 @@ then
     source functions.sh
     source dependencies.sh
 fi
+exc adduser kodi
 exc adduser kodi pulse-access
 exc usermod -a -G input kodi
 exc usermod -a -G lp kodi
