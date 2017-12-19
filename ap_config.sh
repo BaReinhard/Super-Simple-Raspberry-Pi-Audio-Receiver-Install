@@ -11,7 +11,9 @@ then
 fi
 
 # setup the config files
+save_original "/etc/network/interfaces"
 exc cp etc/network/interfaces /etc/network/interfaces
+save_original "/etc/dhcpcd.conf"
 exc patch /etc/dhcpcd.conf <<EOT
 @@ -39,3 +39,4 @@
  # A hook script is provided to lookup the hostname if not set by the DHCP
@@ -20,6 +22,7 @@ exc patch /etc/dhcpcd.conf <<EOT
 +denyinterfaces wlan0
 EOT
 # Add patch for /etc/default/hostapd 
+save_original "/etc/default/hostapd"
 exc cat << EOT > /etc/default/hostapd 
 # Defaults for hostapd initscript
 #
@@ -46,6 +49,7 @@ DAEMON_CONF="/etc/hostapd/hostapd.conf"
 
 
 EOT
+save_original "/etc/init.d/hostapd"
 exc patch /etc/init.d/hostapd <<EOT
 @@ -16,7 +16,7 @@
  PATH=/sbin:/bin:/usr/sbin:/usr/bin
@@ -59,6 +63,7 @@ exc patch /etc/init.d/hostapd <<EOT
 EOT
 
 # Setup AP
+save_original "/etc/hostapd/hostapd.conf"
 exc cat <<EOT > /etc/hostapd/hostapd.conf
 interface=wlan0
 driver=nl80211
@@ -79,7 +84,7 @@ ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]
 EOT
 
 # Setup dhcp server
-
+save_original "/etc/dhcp/dhcpd.conf"
 exc cat <<EOT >>/etc/dhcp/dhcpd.conf
 ddns-update-style none;
 ignore client-updates;
@@ -109,6 +114,7 @@ max-lease-time 1814400;
 EOT
 
 # Add Patch for /etc/default/isc-dhcp-server
+save_original "/etc/default/isc-dhcp-server"
 exc patch /etc/default/isc-dhcp-server <<EOT
 @@ -18,4 +18,4 @@
  

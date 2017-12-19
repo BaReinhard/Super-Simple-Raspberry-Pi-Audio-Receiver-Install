@@ -70,10 +70,79 @@ apt_upgrade() {
 
 remove_dir(){
     if [ -d $1 ]; then 
-   if [ -L $1 ]; then 
-      rm $1
-   else 
-      rmdir $1
-   fi
-fi
+        if [ -L $1 ]; then 
+            rm $1
+        else 
+            rmdir $1
+        fi
+    fi
+}
+restore_originals(){
+    log Restoring Original Files...
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        FILE=`echo $line | sed "s/=.*//"`
+        DIR=`echo $line | sed "s/.*=//"`
+        cp $FILE $DIR$FILE
+    done < "$SSPARI_BACKUP_PATH/files"
+}
+save_original(){
+    if [ -d $1 ]; then 
+        if [ -L $1 ]; then 
+            log Saving $1...
+            FILE=`echo $1 | sed "s/.*\///"`
+            DIR=`dirname "$1"`
+            DIR="$DIR/"
+            echo $FILE
+            echo $DIR
+            echo "$FILE=$DIR" >> "$SSPARI_BACKUP_PATH/files"
+            cp $1 "$SSPARI_BACKUP_PATH/$FILE"
+        else 
+            log "$1 is not a file or doesn't exist"
+        fi
+    fi
+    
+}
+UNINSTALL_COMMAND="sudo apt-get remove -y"
+apt_uninstall(){
+    log Uninstalling $1...
+    $UNINSTALL_COMMAND $1 &> /dev/null
+    verify "Installation of package '$1' failed"
+}
+uninstall_bluetooth(){
+    source $SSPARI_PATH/dependencies.sh
+    for _dep in ${BT_DEPS[@]}; do
+        apt_uninstall $_dep;
+    done     
+    sudo update-rc.d pulseaudio remove
+    sudp update-rc.d bluetooth-agent remove
+}
+uninstall_airplay(){
+    source $SSPARI_PATH/dependencies.sh
+    for _dep in ${AIRPLAY_DEPS[@]}; do
+        apt_uninstall $_dep;
+    done     
+}
+uninstall_ap(){
+    source $SSPARI_PATH/dependencies.sh
+    for _dep in ${AP_DEPS[@]}; do
+        apt_uninstall $_dep;
+    done  
+}
+uninstall_gmedia(){
+    source $SSPARI_PATH/dependencies.sh
+    for _dep in ${GMEDIA_DEPS[@]}; do
+        apt_uninstall $_dep;
+    done  
+}
+uninstall_kodi(){
+    source $SSPARI_PATH/dependencies.sh
+    for _dep in ${KODI_DEPS[@]}; do
+        apt_uninstall $_dep;
+    done  
+}
+uninstall_lirc(){
+    source $SSPARI_PATH/dependencies.sh
+    for _dep in ${LIRC_DEPS[@]}; do
+        apt_uninstall $_dep;
+    done  
 }
