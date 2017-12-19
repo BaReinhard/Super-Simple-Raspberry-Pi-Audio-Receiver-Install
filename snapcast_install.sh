@@ -40,8 +40,9 @@ exc remove_dir snapcast
 exc git clone https://github.com/badaix/snapcast.git
 exc cd $SNAP_DIR/externals
 exc git submodule update --init --recursive
-exc sudo apt-get install build-essential -y
-exc sudo apt-get install libasound2-dev libvorbisidec-dev libvorbis-dev libflac-dev alsa-utils libavahi-client-dev avahi-daemon -y
+for _dep in ${SNAP_DEPS[@]}; do
+    apt_install $_dep;
+done
 exc cd $SNAP_DIR
 exc make
 
@@ -55,7 +56,7 @@ then
     echo "sudo shairport-sync -a \"$SNAPNAME to Snapcast\" -o pipe -- /tmp/snapfifo&" >> ~/.profile
 elif [ "$SNAPCAST" = "c" ]
 then
-    tst sudo make installclient
+    exc sudo make installclient
     echo "sudo snapclient &> /dev/null&" | sudo tee -a ~/.profile
     # Add set-default-sink-input here
 elif [ "$SNAPCAST" = "b" ]
