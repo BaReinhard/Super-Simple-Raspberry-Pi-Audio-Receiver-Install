@@ -24,4 +24,5 @@ exc make
 exc make install
 
 # Add line to /etc/rc.local to allow for startup on boot
+save_original "/etc/rc.local"
 sed -i -e "\$i \/usr/local/bin/gmediarender -f $GMediaName&\n" /etc/rc.local

@@ -82,20 +82,25 @@ restore_originals(){
     while IFS='' read -r line || [[ -n "$line" ]]; do
         FILE=`echo $line | sed "s/=.*//"`
         DIR=`echo $line | sed "s/.*=//"`
+        log Restoring $FILE to "$DIR/$FILE"
         cp $FILE $DIR$FILE
     done < "$SSPARI_BACKUP_PATH/files"
 }
 save_original(){
     if [ -d $1 ]; then 
         if [ -L $1 ]; then 
-            log Saving $1...
             FILE=`echo $1 | sed "s/.*\///"`
-            DIR=`dirname "$1"`
-            DIR="$DIR/"
-            echo $FILE
-            echo $DIR
-            echo "$FILE=$DIR" >> "$SSPARI_BACKUP_PATH/files"
-            cp $1 "$SSPARI_BACKUP_PATH/$FILE"
+            if [ -d "$SSPARI_BACKUP_PATH/$FILE" ]
+            then
+                log "File '$FILE' has been previously backed up"
+            else
+                log Saving $1...
+                DIR=`dirname "$1"`
+                DIR="$DIR/"
+                echo $FILE
+                echo $DIR
+                echo "$FILE=$DIR" >> "$SSPARI_BACKUP_PATH/files"
+                cp $1 "$SSPARI_BACKUP_PATH/$FILE"
         else 
             log "$1 is not a file or doesn't exist"
         fi
@@ -108,19 +113,34 @@ apt_uninstall(){
     $UNINSTALL_COMMAND $1 &> /dev/null
     verify "Installation of package '$1' failed"
 }
+rem_files(){
+    log "Removing File $1..."
+    sudo rm $1
+    verify "Removal of file '$1' failed"
+}
+rem_dir(){
+    log "Removing Directory $1..."
+    sudo rm -R $1
+    verify "Removal of directory '$1' failed"
+}
 uninstall_bluetooth(){
     source $SSPARI_PATH/dependencies.sh
     for _dep in ${BT_DEPS[@]}; do
         apt_uninstall $_dep;
     done     
     sudo update-rc.d pulseaudio remove
-    sudp update-rc.d bluetooth-agent remove
+    sudo update-rc.d bluetooth-agent remove
+    sudo rm -R ~/pulseaudio
+    sudo rm -R ~/libsndfile
+    sudo rm -R ~/json-c
+    cd $SSPARI_PATH
 }
 uninstall_airplay(){
     source $SSPARI_PATH/dependencies.sh
     for _dep in ${AIRPLAY_DEPS[@]}; do
         apt_uninstall $_dep;
-    done     
+    done
+    sudo rm -R //root/pulseaudio     
 }
 uninstall_ap(){
     source $SSPARI_PATH/dependencies.sh
@@ -138,11 +158,43 @@ uninstall_kodi(){
     source $SSPARI_PATH/dependencies.sh
     for _dep in ${KODI_DEPS[@]}; do
         apt_uninstall $_dep;
-    done  
+    done
+    rm ~/.hushlogin  
 }
 uninstall_lirc(){
     source $SSPARI_PATH/dependencies.sh
     for _dep in ${LIRC_DEPS[@]}; do
         apt_uninstall $_dep;
     done  
+}
+
+remove_sspari_files(){
+    source $SSPARI_PATH/dependencies.sh
+    for _file in ${SSPARI_FILES[@]}; do
+        if [ -d $_file ]; then 
+            if [ -L $_file ]; then 
+                rem_files $_file
+            else 
+                rem_dir $_file
+            fi
+        fi
+    done 
+    
+}
+full_uninstall(){
+    # Restore Original Files
+    restore_originals
+    # Update Bluetooth to normal system daemon
+    sudo update-rc.d bluetooth remove
+    sudo update-rc.d bluetooth defaults
+    sudo update-rc.d bluetooth enable
+    remove_sspari_files
+
+    # Uninstall Features
+    uninstall_lirc
+    uninstall_kodi
+    uninstall_gmedia
+    uninstall_ap
+    uninstall_airplay
+    uninstall_bluetooth
 }

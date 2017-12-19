@@ -16,4 +16,5 @@ SNAP_DEPS="build-essential libasound2-dev libvorbisidec-dev libvorbis-dev libfla
 
 INSTALL_COMMAND="sudo apt-get install -qq -o=Dpkg::Use-Pty=0 -y"
 
-
+SSPARI_FILES="/usr/local/bin/bluez-udev /usr/local/bin/simple-agent.autotrust /usr/local/bin/shairportstart.sh /usr/local/bin/shairportend.sh /usr/local/bin/bluezutils.py /usr/local/bin/firstrun.sh /usr/local/bin/say.sh /usr/local/bin/updatewifi /usr/local/bin/volume-watcher.py \
+/etc/init.d/bluetooth /etc/init.d/pulseaudio /etc/init.d/bluetooth-agent /lib/systemd/system/volume-watcher.service"
