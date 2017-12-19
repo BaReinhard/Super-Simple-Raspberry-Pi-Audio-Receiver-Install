@@ -67,3 +67,13 @@ apt_upgrade() {
     $*
     verify "'$*' failed"
 }
+
+remove_dir(){
+    if [ -d $1 ]; then 
+   if [ -L $1 ]; then 
+      rm $1
+   else 
+      rmdir $1
+   fi
+fi
+}

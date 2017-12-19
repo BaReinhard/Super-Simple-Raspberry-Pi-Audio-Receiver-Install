@@ -36,6 +36,7 @@ currentDir=$(
   pwd
 ) 
 SNAP_DIR=$currentDir/snapcast
+exc remove_dir snapcast
 exc git clone https://github.com/badaix/snapcast.git
 exc cd $SNAP_DIR/externals
 exc git submodule update --init --recursive

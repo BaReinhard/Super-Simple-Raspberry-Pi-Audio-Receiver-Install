@@ -6,13 +6,14 @@ then
 fi
 if [ -z "$GMediaName" ]
 then
-    read -p "UPnP Device Name: " UPNP_NAME
+    read -p "UPnP Device Name: " GMediaName
 fi
 # Install Dependencies
 for _dep in ${GMEDIA_DEPS[@]}; do
     apt_install $_dep;
 done
 # Download Package
+exc remove_dir gmrender-resurrect
 exc git clone https://github.com/hzeller/gmrender-resurrect.git
 exc cd gmrender-resurrect
 # Setup Package

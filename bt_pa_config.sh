@@ -23,7 +23,7 @@ then
     source dependencies.sh
 fi
 
-exc mkdir /home/pi/pyScripts
+
 exc sudo cp usr/local/bin/volume-watcher.py /usr/local/bin/volume-watcher.py
 exc sudo chmod +x /usr/local/bin/volume-watcher.py
 exc sudo cp lib/systemd/system/volume-watcher.service /lib/systemd/system/volume-watcher.service
@@ -142,9 +142,11 @@ exc sudo mkdir /etc/pulsebackup
 exc sudo cp /etc/pulse/* /etc/pulsebackup/
 
 exc cd ~
+exc remove_dir pulseaudio
 exc git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
 
 exc cd ~
+exc remove_dir json-c
 exc git clone https://github.com/json-c/json-c.git
 exc cd json-c
 exc sh autogen.sh
@@ -152,6 +154,7 @@ exc ./configure
 exc make
 exc sudo make install
 exc cd ~
+exc remove_dir libsndfile
 exc git clone git://github.com/erikd/libsndfile.git
 exc cd libsndfile
 exc ./autogen.sh
