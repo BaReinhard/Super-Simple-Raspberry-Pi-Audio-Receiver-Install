@@ -33,17 +33,17 @@ exc cd `dirname $0`
 sudo echo "PRETTY_HOSTNAME=$BluetoothName" >> /tmp/machine-info
 exc tst sudo cp /tmp/machine-info /etc
 
-save_original "/etc/init.d/pulseaudio"
+save_original /etc/init.d/pulseaudio
 exc sudo cp init.d/pulseaudio /etc/init.d/pulseaudio
 exc sudo chmod +x /etc/init.d/pulseaudio
 exc sudo update-rc.d pulseaudio defaults
 
-save_original "/etc/init.d/bluetooth"
+save_original /etc/init.d/bluetooth
 exc sudo cp init.d/bluetooth /etc/init.d/bluetooth
 exc sudo chmod +x /etc/init.d/bluetooth
 exc sudo update-rc.d bluetooth defaults
 
-save_original "/etc/init.d/bluetooth-agent"
+save_original /etc/init.d/bluetooth-agent
 exc sudo cp init.d/bluetooth-agent /etc/init.d/bluetooth-agent
 exc sudo chmod +x /etc/init.d/bluetooth-agent
 exc sudo update-rc.d bluetooth-agent defaults
@@ -61,7 +61,7 @@ exc sudo cp usr/local/bin/bluezutils.py /usr/local/bin
 
 exc sudo cp etc/pulse/daemon.conf /etc/pulse/daemon.conf
 
-save_original "/boot/config.txt"
+save_original /boot/config.txt
 exc cat << EOT | sudo tee -a /boot/config.txt
  # Enable audio (loads snd_bcm2835)
  dtparam=audio=on
@@ -70,7 +70,7 @@ audio_pwm_mode=2
 EOT
 
 if [ -f /etc/udev/rules.d/99-com.rules ]; then
-save_original "/etc/udev/rules.d/99-com.rules"
+save_original /etc/udev/rules.d/99-com.rules
 exc sudo patch /etc/udev/rules.d/99-com.rules << EOT
 ***************
 *** 1 ****
@@ -80,11 +80,11 @@ exc sudo patch /etc/udev/rules.d/99-com.rules << EOT
 EOT
 
 else
-save_original "/etc/udev/rules.d/99-com.rules"
+save_original /etc/udev/rules.d/99-com.rules
 exc sudo touch /etc/udev/rules.d/99-com.rules
 exc sudo chmod 666 /etc/udev/rules.d/99-com.rules
 
-save_original "/etc/udev/rules.d/99-input.rules"
+save_original /etc/udev/rules.d/99-input.rules
 exc cat  << EOT | sudo tee -a /etc/udev/rules.d/99-input.rules
 SUBSYSTEM=="input", GROUP="input", MODE="0660"
 KERNEL=="input[0-9]*", RUN+="/usr/local/bin/bluez-udev"
@@ -94,7 +94,7 @@ fi
 
 exc sudo chmod 644 /etc/udev/rules.d/99-com.rules
 
-save_original "/etc/bluetooth/main.conf"
+save_original /etc/bluetooth/main.conf
 exc sudo patch /etc/bluetooth/main.conf << EOT
 ***************
 *** 7,8 ****
@@ -118,7 +118,7 @@ exc sudo patch /etc/bluetooth/main.conf << EOT
 ! DiscoverableTimeout = 0
 EOT
 
-save_original "/etc/pulse/system.pa"
+save_original /etc/pulse/system.pa
 exc sudo patch /etc/pulse/system.pa << EOT
 ***************
 *** 23,25 ****

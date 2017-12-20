@@ -42,7 +42,7 @@ then
 		esac
 	done
 fi
-save_original "/etc/asound.conf"
+save_original /etc/asound.conf
 sudo cat << EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
@@ -62,7 +62,7 @@ ctl.!default {
     card 0
 }
 EOT
-save_original "/boot/config.txt"
+save_original /boot/config.txt
 sudo cat <<EOT >> /boot/config.txt
 # Enable HiFiberry Amp
 #dtoverlay=hifiberry-amp
@@ -97,31 +97,31 @@ sudo cat <<EOT >> /boot/config.txt
 EOT
 if [ "$SoundCard" != "0" ]
 then
-	save_original "/boot/config.txt"
+	save_original /boot/config.txt
     sed -i "s/dtparam=audio=on/#dtparam=audio=on/" /boot/config.txt
 fi
 if [ "$SoundCard" = "0" ]
 then
-save_original "/etc/modprobe.d/alsa-base.conf"
+save_original /etc/modprobe.d/alsa-base.conf
 echo "options snd_bcm2835 index=0" | sudo tee -a /etc/modprobe.d/alsa-base.conf
 
 elif [ "$SoundCard" = "1" ]
 then
-save_original "/boot/config.txt"
+save_original /boot/config.txt
 cat << EOT >>/boot/config.txt
 # Enable HiFiberry DAC Light
 dtoverlay=hifiberry-dac
 EOT
 elif [ "$SoundCard" = "2" ]
 then
-save_original "/boot/config.txt"
+save_original /boot/config.txt
 cat <<EOT >>/boot/config.txt
 # Enable HiFiberry DAC Standard/Pro
 dtoverlay=hifiberry-dacplus
 EOT
 elif [ "$SoundCard" = "3" ]
 then
-save_original "/boot/config.txt"
+save_original /boot/config.txt
 cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Digi
 dtoverlay=hifiberry-digi
@@ -129,14 +129,14 @@ EOT
 
 elif [ "$SoundCard" = "4" ]
 then
-save_original "/boot/config.txt"
+save_original /boot/config.txt
 cat <<EOT >>/boot/config.txt
 # Enable HiFiberry Amp
 dtoverlay=hifiberry-amp
 EOT
 elif [ "$SoundCard" = "5" ]
 then
-save_original "/boot/config.txt"
+save_original /boot/config.txt
 cat <<EOT >>/boot/config.txt
 # Enable iqaudio-dac
 dtoverlay=iqaudio-dac
@@ -144,14 +144,14 @@ EOT
 
 elif [ "$SoundCard" = "6" ]
 then
-save_original "/boot/config.txt"
+save_original /boot/config.txt
 cat <<EOT >>/boot/config.txt
 # Enable iqaudio-dac+
 dtoverlay=iqaudio-dacplus
 EOT
 elif [ "$SoundCard" = "7" ]
 then
-save_original "/boot/config.txt"
+save_original /boot/config.txt
 cat <<EOT >>/boot/config.txt
 # Enable iqaudio-DigiAMP+
 dtoverlay=iqaudio-dacplus,unmute_amp
@@ -159,23 +159,23 @@ EOT
 
 elif [ "$SoundCard" = "8" ]
 then
-save_original "/etc/modprobe.d/alsa-base.conf"
+save_original /etc/modprobe.d/alsa-base.conf
 echo "options snd_bcm2835 index=0" | sudo tee -a /etc/modprobe.d/alsa-base.conf
-save_original "/boot/config.txt"
+save_original /boot/config.txt
 cat <<EOT >>/boot/config.txt
 # Enable iqaudio-Digi+
 dtoverlay=iqaudio-digi-wm8804-audio
 EOT
 elif [ "$SoundCard" = "10" ]
 then
-save_original "/boot/config.txt"
+save_original /boot/config.txt
 cat <<EOT >>/boot/config.txt
 # Enable JustBoom DAC and AMP Card
 dtoverlay=justboom-dac
 EOT
 elif [ "$SoundCard" = "11" ]
 then
-save_original "/boot/config.txt"
+save_original /boot/config.txt
 cat <<EOT >>/boot/config.txt
 # Enable JustBoom Digi Cards
 dtoverlay=justboom-digi

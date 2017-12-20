@@ -50,26 +50,26 @@ exc make
 if [ "$SNAPCAST" = "s" ]
 then
     exc sudo make installserver
-    save_original "/etc/pulse/system.pa"
+    save_original /etc/pulse/system.pa
     echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
     exc sudo systemctl disable shairport-sync
-    save_original "~/.profile"
+    save_original $HOME/.profile
     echo "sudo shairport-sync -a \"$SNAPNAME to Snapcast\" -o pipe -- /tmp/snapfifo&" >> ~/.profile
 elif [ "$SNAPCAST" = "c" ]
 then
     exc sudo make installclient
-    save_original "~/.profile"
+    save_original $HOME/.profile
     echo "sudo snapclient &> /dev/null&" | sudo tee -a ~/.profile
     # Add set-default-sink-input here
 elif [ "$SNAPCAST" = "b" ]
 then
     exc sudo make installserver
     exc sudo make installclient
-    save_original "/etc/pulse/system.pa"
+    save_original /etc/pulse/system.pa
     echo "load-module module-pipe-sink file=/tmp/snapfifo sink_name=Snapcast" | sudo tee -a /etc/pulse/system.pa
     echo "set-default-sink Snapcast" | sudo tee -a /etc/pulse/system.pa
-    save_original "~/.profile"
+    save_original $HOME/.profile
     echo "sudo snapclient &> /dev/null&" | sudo tee -a ~/.profile
     echo "sudo shairport-sync -a \"$SNAPNAME to Snapcast\" -o pipe -- /tmp/snapfifo&" >> ~/.profile
 fi

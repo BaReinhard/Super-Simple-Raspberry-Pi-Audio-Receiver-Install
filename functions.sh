@@ -46,7 +46,7 @@ apt_install() {
     log Installing $1...
     if [ -z `dpkg -s $1` ]
     then
-        log Dependency '$1' already met...
+        log Dependency $1 already met...
     else
         $INSTALL_COMMAND $1 &> /dev/null
     fi
@@ -56,7 +56,7 @@ apt_install() {
 run(){
    log Running $*...
    $*
-   verify "'$1' failed"
+   verify "$* failed"
 }
 exc(){
     log Executing $*
@@ -79,7 +79,7 @@ remove_dir(){
         if [ -d "$1" ]; then 
             rm -R $1
         else 
-            rm $1
+            log $1 is not a directory
         fi
     fi
 }
