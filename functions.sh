@@ -51,9 +51,10 @@ apt_install() {
     else
         log Installing $1...    
         $INSTALL_COMMAND $1 &> /dev/null
+        verify "Installation of package '$1' failed"
+        echo $1 >> "$SSPARI_PATH/installed_deps"
+        verify "Adding package '$1'to $SSPARI_PATH/installed_deps failed"        
     fi
-    echo $1 >> "$SSPARI_PATH/installed_deps"
-    verify "Installation of package '$1' failed"
 }
 run(){
    log Running $*...
@@ -97,7 +98,7 @@ restore_originals(){
             DIR=`echo $line | sed "s/.*=//"`
             FINAL="$DIR/$FILE"
             log Restoring $FILE to "$FINAL"
-            sudo cp $FILE $FINAL
+            sudo cp "$SSPARI_BACKUP_PATH/$FILE" $FINAL
             done < "$SSPARI_BACKUP_PATH/files"
         fi
     else
@@ -137,9 +138,15 @@ apt_uninstall(){
     while IFS='' read -r line || [[ -n "$line" ]]; do
         if [ "$line" = "$1" ]
         then
-            log Uninstalling $1...
-            $UNINSTALL_COMMAND $1 &> /dev/null
-            break  
+            INSTALLED=`dpkg -l $1 | grep ii`
+            if [ "$INSTALLED" ]
+            then
+                log Uninstalling $1...
+                $UNINSTALL_COMMAND $1 &> /dev/null
+            else  
+                log Package $1 was not installed, continuing...
+            fi
+            break
         fi
     done < "$SSPARI_PATH/installed_deps"
     verify "Installation of package '$1' failed"
