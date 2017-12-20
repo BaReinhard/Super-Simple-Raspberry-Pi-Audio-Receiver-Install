@@ -59,6 +59,21 @@ exc sudo chmod 755 /usr/local/bin/say.sh
 
 exc sudo cp usr/local/bin/bluezutils.py /usr/local/bin
 
+if [ -d "/etc/pulse" ]
+then
+  PA_FILES=`ls /etc/pulse`
+  for _file in ${PA_FILES[@]}; do
+        if [ -e $_file ]; then 
+            if [ -d $_file ]; then 
+               continue
+            else
+               save_original $_file
+            fi
+        fi
+  done
+else
+  exc sudo mkdir /etc/pulse  
+fi
 exc sudo cp etc/pulse/daemon.conf /etc/pulse/daemon.conf
 
 save_original /boot/config.txt
@@ -146,19 +161,7 @@ EOT
 #sudo service pulseaudio start &
 #sudo service bluetooth-agent start &
 # BT FIX
-if [ -d "/etc/pulse" ]
-then
-  PA_FILES=`ls /etc/pulse`
-  for _file in ${PA_FILES[@]}; do
-        if [ -e $_file ]; then 
-            if [ -d $_file ]; then 
-               continue
-            else
-               save_original $_file
-            fi
-        fi
-  done  
-fi
+
 exc sudo mkdir /etc/pulsebackup
 exc sudo cp /etc/pulse/* /etc/pulsebackup/
 
