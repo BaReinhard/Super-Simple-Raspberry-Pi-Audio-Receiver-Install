@@ -43,12 +43,13 @@ tst() {
 }
 
 apt_install() {
-    log Installing $1...
+    log Checking $1...
     INSTALLED=`dpkg -l $1 | grep ii`
     if [ $INSTALLED ]
     then
         log Dependency $1 already met...
     else
+        log Installing $1...    
         $INSTALL_COMMAND $1 &> /dev/null
     fi
     echo $1 >> "$SSPARI_PATH/installed_deps"
@@ -104,30 +105,29 @@ restore_originals(){
     
 }
 save_original(){
-    if [ -e "$1" ]; then 
-        if [ -d "$1" ]; then 
+    if [ -e "$1" ]; then
+        if [ -d "$1" ]; then
             log "$1 is  a directory"
-        else 
-            
+        else
+
             FILE=`echo $1 | sed "s/.*\///"`
             echo $FILE
-            if [ -e "$SSPARI_BACKUP_PATH/$FILE" ]
+            LOC="$SSPARI_BACKUP_PATH/$FILE"
+            if [ -e "$LOC" ]
             then
                 log "File '$FILE' has been previously backed up"
             else
                 log Saving $1...
                 DIR=`dirname "$1"`
                 DIR="$DIR/"
-                echo $FILE
-                echo $DIR
-                echo "$FILE=$DIR" >> "$SSPARI_BACKUP_PATH/files"
+                echo "$FILE=$DIR" | sudo tee -a "$SSPARI_BACKUP_PATH/files"
                 sudo cp $1 "$SSPARI_BACKUP_PATH/$FILE"
             fi
         fi
     else
         log "$1 does not exist"
     fi
-    
+
 }
 UNINSTALL_COMMAND="sudo apt-get remove -y"
 apt_uninstall(){

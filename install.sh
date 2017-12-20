@@ -9,6 +9,7 @@ currentDir=$(
 
 SSPARI_PATH=$currentDir 
 export SSPARI_PATH
+SSPARI_BACKUP_PATH="$SSPARI_PATH/backup_files"
 if [ $SUDO_USER ]; 
 then 
 	user=$SUDO_USER;echo 
