@@ -44,7 +44,8 @@ tst() {
 
 apt_install() {
     log Installing $1...
-    if [ -z `dpkg -s $1` ]
+    INSTALLED=`dpkg -l $1 | grep ii`
+    if [ $INSTALLED ]
     then
         log Dependency $1 already met...
     else
