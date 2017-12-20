@@ -44,7 +44,13 @@ tst() {
 
 apt_install() {
     log Installing $1...
-    $INSTALL_COMMAND $1 &> /dev/null
+    if [ -z `dpkg -s $1` ]
+    then
+        log Dependency '$1' already met...
+    else
+        $INSTALL_COMMAND $1 &> /dev/null
+    fi
+    echo $1 >> "$SSPARI_PATH/installed_deps"
     verify "Installation of package '$1' failed"
 }
 run(){
