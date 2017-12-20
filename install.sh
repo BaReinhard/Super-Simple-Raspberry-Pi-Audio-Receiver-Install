@@ -10,6 +10,7 @@ currentDir=$(
 SSPARI_PATH=$currentDir 
 export SSPARI_PATH
 SSPARI_BACKUP_PATH="$SSPARI_PATH/backup_files"
+export SSPARI_BACKUP_PATH
 touch "$SSPARI_BACKUP_PATH/files"
 if [ $SUDO_USER ]; 
 then 
