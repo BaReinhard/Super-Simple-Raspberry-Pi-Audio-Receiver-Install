@@ -235,4 +235,6 @@ full_uninstall(){
     uninstall_ap
     uninstall_airplay
     uninstall_bluetooth
+
+    log Uninstall Completed. Reboot to take effect.
 }
