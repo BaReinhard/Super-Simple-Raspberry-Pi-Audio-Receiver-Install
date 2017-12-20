@@ -104,7 +104,7 @@ restore_originals(){
 }
 save_original(){
     if [ -e "$1" ]; then 
-        if [ -D "$1" ]; then 
+        if [ -d "$1" ]; then 
             log "$1 is  a directory"
         else 
             
