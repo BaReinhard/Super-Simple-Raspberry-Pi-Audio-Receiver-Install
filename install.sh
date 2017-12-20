@@ -10,6 +10,7 @@ currentDir=$(
 SSPARI_PATH=$currentDir 
 export SSPARI_PATH
 SSPARI_BACKUP_PATH="$SSPARI_PATH/backup_files"
+touch "$SSPARI_BACKUP_PATH/files"
 if [ $SUDO_USER ]; 
 then 
 	user=$SUDO_USER;echo 
@@ -19,8 +20,8 @@ else
 fi
 
 # Add Environment Variables, used for uninstallation
-echo "export SSPARI_PATH=$SSPARI_PATH" > "/home/$user/.profile"
-echo "export SSPARI_BACKUP_PATH=$SSPARI_PATH/backup_files" > "/home/$user/.profile"
+echo "export SSPARI_PATH=$SSPARI_PATH" >> "/home/$user/.profile"
+echo "export SSPARI_BACKUP_PATH=$SSPARI_PATH/backup_files" >> "/home/$user/.profile"
 
 
 cd "$currentDir"
