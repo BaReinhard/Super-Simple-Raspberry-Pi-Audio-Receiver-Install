@@ -115,8 +115,15 @@ save_original(){
 }
 UNINSTALL_COMMAND="sudo apt-get remove -y"
 apt_uninstall(){
-    log Uninstalling $1...
-    $UNINSTALL_COMMAND $1 &> /dev/null
+    log Checking $1 for system dependency...
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        if [ "$line" = "$1" ]
+        then
+            log Uninstalling $1...
+            $UNINSTALL_COMMAND $1 &> /dev/null
+            break  
+        fi
+    done < "$SSPARI_PATH/installed_deps"
     verify "Installation of package '$1' failed"
 }
 rem_files(){
