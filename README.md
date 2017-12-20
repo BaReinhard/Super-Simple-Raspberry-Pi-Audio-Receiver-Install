@@ -3,11 +3,12 @@
 ![SSPARI](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/blob/master/img/SSRPARI_1080_668.png?raw=true)
 ## SSPARI v2.0
 ***Now Live, includes the following new features:***
-* backing up of original files
-* uninstallation functionality
-* restoring original files
-* updated logging for easier bug testing
-* cleaner install and better support
+* Backing up of original files
+* Uninstallation functionality
+* Restoring original files
+* Updated logging for easier bug testing
+* Cleaner install and better support
+* Ability to disable Wifi on Bluetooth Connection. Needs to be enabled, but solves choppy bluetooth playback if no external wifi card is available.
 
 
 ## *SNAPCAST Support! Please test it out! Requires minor configuration.*
