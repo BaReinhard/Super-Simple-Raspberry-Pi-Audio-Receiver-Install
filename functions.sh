@@ -75,17 +75,20 @@ apt_upgrade() {
 }
 
 remove_dir(){
-    if [ -d $1 ]; then 
-        if [ -L $1 ]; then 
-            rm $1
+    if [ -e "$1" ]; then 
+        if [ -d "$1" ]; then 
+            rm -R $1
         else 
-            rmdir $1
+            rm $1
         fi
     fi
 }
 restore_originals(){
-    if [ -d "$SSPARI_BACKUP_PATH/files" ]; then 
-        if [ -L "$SSPARI_BACKUP_PATH/files" ]; then 
+    if [ -e "$SSPARI_BACKUP_PATH/files" ]; then 
+        if [ -d "$SSPARI_BACKUP_PATH/files" ]; then 
+            log "Unable to Restore Original Files, $SSPARI_BACKUP_PATH/files is a directory" 
+            
+        else 
             log Restoring Original Files...
             while IFS='' read -r line || [[ -n "$line" ]]; do
             FILE=`echo $line | sed "s/=.*//"`
@@ -93,8 +96,6 @@ restore_originals(){
             log Restoring $FILE to "$DIR/$FILE"
             cp $FILE $DIR$FILE
             done < "$SSPARI_BACKUP_PATH/files"
-        else 
-            log "Unable to Restore Original Files, $SSPARI_BACKUP_PATH/files is a directory" 
         fi
     else
         log "Unable to Restore Original Files, $SSPARI_BACKUP_PATH/files doesn't exist" 
@@ -102,11 +103,14 @@ restore_originals(){
     
 }
 save_original(){
-    if [ -d "$1" ]; then 
-        if [ -L "$1" ]; then 
+    if [ -e "$1" ]; then 
+        if [ -D "$1" ]; then 
+            log "$1 is  a directory"
+        else 
+            
             FILE=`echo $1 | sed "s/.*\///"`
             echo $FILE
-            if [ -z "$SSPARI_BACKUP_PATH/$FILE" ]
+            if [ -e "$SSPARI_BACKUP_PATH/$FILE" ]
             then
                 log "File '$FILE' has been previously backed up"
             else
@@ -118,9 +122,9 @@ save_original(){
                 echo "$FILE=$DIR" >> "$SSPARI_BACKUP_PATH/files"
                 cp $1 "$SSPARI_BACKUP_PATH/$FILE"
             fi
-        else 
-            log "$1 is not a file or doesn't exist"
         fi
+    else
+        log "$1 does not exist"
     fi
     
 }
