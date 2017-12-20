@@ -23,6 +23,7 @@ echo "export SSPARI_BACKUP_PATH=$SSPARI_PATH/backup_files" > "/home/$user/.profi
 
 
 cd "$currentDir"
+chmod 777 * -R
 # Set up file-based logging
 exec 1> >(tee install.log)
 source functions.sh
