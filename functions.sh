@@ -94,7 +94,7 @@ restore_originals(){
             FILE=`echo $line | sed "s/=.*//"`
             DIR=`echo $line | sed "s/.*=//"`
             log Restoring $FILE to "$DIR/$FILE"
-            cp $FILE $DIR$FILE
+            sudo cp $FILE $DIR$FILE
             done < "$SSPARI_BACKUP_PATH/files"
         fi
     else
@@ -120,7 +120,7 @@ save_original(){
                 echo $FILE
                 echo $DIR
                 echo "$FILE=$DIR" >> "$SSPARI_BACKUP_PATH/files"
-                cp $1 "$SSPARI_BACKUP_PATH/$FILE"
+                sudo cp $1 "$SSPARI_BACKUP_PATH/$FILE"
             fi
         fi
     else
