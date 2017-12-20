@@ -95,8 +95,9 @@ restore_originals(){
             while IFS='' read -r line || [[ -n "$line" ]]; do
             FILE=`echo $line | sed "s/=.*//"`
             DIR=`echo $line | sed "s/.*=//"`
-            log Restoring $FILE to "$DIR/$FILE"
-            sudo cp $FILE $DIR$FILE
+            FINAL="$DIR/$FILE"
+            log Restoring $FILE to "$FINAL"
+            sudo cp $FILE $FINAL
             done < "$SSPARI_BACKUP_PATH/files"
         fi
     else
@@ -120,8 +121,9 @@ save_original(){
                 log Saving $1...
                 DIR=`dirname "$1"`
                 DIR="$DIR/"
-                echo "$FILE=$DIR" | sudo tee -a "$SSPARI_BACKUP_PATH/files"
-                sudo cp $1 "$SSPARI_BACKUP_PATH/$FILE"
+                DIRFINAL="$SSPARI_BACKUP_PATH/files"
+                echo "$FILE=$DIR" | sudo tee -a "$DIRFINAL"
+                sudo cp $1 "$LOC"
             fi
         fi
     else
