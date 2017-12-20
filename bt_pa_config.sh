@@ -150,9 +150,11 @@ if [ -d "/etc/pulse" ]
 then
   PA_FILES=`ls /etc/pulse`
   for _file in ${PA_FILES[@]}; do
-        if [ -d $_file ]; then 
-            if [ -L $_file ]; then 
-                save_original $_file
+        if [ -e $_file ]; then 
+            if [ -d $_file ]; then 
+               continue
+            else
+               save_original $_file
             fi
         fi
   done  
