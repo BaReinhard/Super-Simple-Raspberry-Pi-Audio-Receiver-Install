@@ -84,19 +84,29 @@ remove_dir(){
     fi
 }
 restore_originals(){
-    log Restoring Original Files...
-    while IFS='' read -r line || [[ -n "$line" ]]; do
-        FILE=`echo $line | sed "s/=.*//"`
-        DIR=`echo $line | sed "s/.*=//"`
-        log Restoring $FILE to "$DIR/$FILE"
-        cp $FILE $DIR$FILE
-    done < "$SSPARI_BACKUP_PATH/files"
+    if [ -d "$SSPARI_BACKUP_PATH/files" ]; then 
+        if [ -L "$SSPARI_BACKUP_PATH/files" ]; then 
+            log Restoring Original Files...
+            while IFS='' read -r line || [[ -n "$line" ]]; do
+            FILE=`echo $line | sed "s/=.*//"`
+            DIR=`echo $line | sed "s/.*=//"`
+            log Restoring $FILE to "$DIR/$FILE"
+            cp $FILE $DIR$FILE
+            done < "$SSPARI_BACKUP_PATH/files"
+        else 
+            log "Unable to Restore Original Files, $SSPARI_BACKUP_PATH/files is a directory" 
+        fi
+    else
+        log "Unable to Restore Original Files, $SSPARI_BACKUP_PATH/files doesn't exist" 
+    fi
+    
 }
 save_original(){
-    if [ -d $1 ]; then 
-        if [ -L $1 ]; then 
+    if [ -d "$1" ]; then 
+        if [ -L "$1" ]; then 
             FILE=`echo $1 | sed "s/.*\///"`
-            if [ -d "$SSPARI_BACKUP_PATH/$FILE" ]
+            echo $FILE
+            if [ -z "$SSPARI_BACKUP_PATH/$FILE" ]
             then
                 log "File '$FILE' has been previously backed up"
             else
@@ -107,6 +117,7 @@ save_original(){
                 echo $DIR
                 echo "$FILE=$DIR" >> "$SSPARI_BACKUP_PATH/files"
                 cp $1 "$SSPARI_BACKUP_PATH/$FILE"
+            fi
         else 
             log "$1 is not a file or doesn't exist"
         fi
