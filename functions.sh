@@ -205,6 +205,14 @@ uninstall_lirc(){
         apt_uninstall $_dep;
     done  
 }
+uninstall_snap(){
+    source $SSPARI_PATH/dependencies.sh
+    for _dep in ${SNAP_DEPS[@]}; do
+        apt_uninstall $_dep;
+    done  
+    sudo systemctl disable snapserver
+    sudo systemctl disable snapclient
+}
 
 remove_sspari_files(){
     source $SSPARI_PATH/dependencies.sh
@@ -235,6 +243,7 @@ full_uninstall(){
     uninstall_ap
     uninstall_airplay
     uninstall_bluetooth
+    uninstall_snap
 
     log Uninstall Completed. Reboot to take effect.
 }

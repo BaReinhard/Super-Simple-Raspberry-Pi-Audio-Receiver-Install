@@ -268,6 +268,7 @@ then
 	export SoundCard
 	export AirPlayPass
 	export AirPlayName
+	export AirPlay
 	run ./airplay_install.sh 
 	run ./airplay_config.sh 
 fi
