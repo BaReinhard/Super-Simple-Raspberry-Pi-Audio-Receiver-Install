@@ -162,6 +162,7 @@ EOT
 #sudo service bluetooth-agent start &
 # BT FIX
 
+exc remove_dir /etc/pulsebackup
 exc sudo mkdir /etc/pulsebackup
 exc sudo cp /etc/pulse/* /etc/pulsebackup/
 
