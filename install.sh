@@ -272,14 +272,7 @@ then
 	run ./airplay_config.sh 
 fi
 
-# If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
-if [ "$AP" = "y" ]
-then
-	export APName
-	export WIFIPASS
-	run ./ap_install.sh 
-	run ./ap_config.sh 
-fi
+
 
 # If Kodi is Chosen, it installs Kodi Dependencies and issues commands for proper configuration
 if [ "$Kodi" = "y" ]
@@ -307,6 +300,15 @@ then
 	export SNAPCAST
 	export SNAPNAME
 	run su ${user} -c ./snapcast_install.sh
+fi
+
+# If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
+if [ "$AP" = "y" ]
+then
+	export APName
+	export WIFIPASS
+	run ./ap_install.sh 
+	run ./ap_config.sh 
 fi
 
 
