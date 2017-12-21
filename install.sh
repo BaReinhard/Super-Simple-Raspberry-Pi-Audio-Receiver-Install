@@ -161,7 +161,7 @@ then
 	BluetoothName=$MYNAME
 	AirPlayName=$MYNAME
 	GMediaName=$MYNAME
-	SnapName=$MYNAME
+	SNAPNAME=$MYNAME
 elif [ "$SameName" = "n" ]
 then
 	# Asks for Bluetooth Device Name
