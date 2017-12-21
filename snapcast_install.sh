@@ -61,7 +61,7 @@ wget https://github.com/badaix/snapcast/releases/download/v0.12.0/snapclient_0.1
 exc sudo dpkg -i snapclient_0.12.0_armhf.deb
 
 save_original /etc/default/snapclient
-sudo sed "s/SNAPCLIENT_OPTS=\"\"/#SNAPCLIENT_OPTS=\"\"" /etc/default/snapclient
+sudo sed "s/SNAPCLIENT_OPTS=\"\"/#SNAPCLIENT_OPTS=\"\"/" /etc/default/snapclient
 echo "SNAPCLIENT_OPTS=\"-h localhost -s 3 -d\"" | sudo tee -a /etc/default/snapclient
 
 curl https://sh.rustup.rs -sSf | sh
