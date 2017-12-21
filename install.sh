@@ -21,6 +21,8 @@ else
 fi
 
 # Add Environment Variables, used for uninstallation
+HOME_PROF="/home/$user/.profile"
+save_original $HOME_PROF
 echo "export SSPARI_PATH=$SSPARI_PATH" >> "/home/$user/.profile"
 echo "export SSPARI_BACKUP_PATH=$SSPARI_PATH/backup_files" >> "/home/$user/.profile"
 
