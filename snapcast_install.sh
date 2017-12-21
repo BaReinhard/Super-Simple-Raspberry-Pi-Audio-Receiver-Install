@@ -79,7 +79,7 @@ then
 	echo "load-module module-pipe-sink file=/tmp/snap_blue sink_name=bluetooth" | sudo tee -a /etc/pulse/system.pa
 	
 	exc sudo sed -i "s/audio_sink=0/audio_sink=1/" /usr/local/bin/bluez-udev
-else if [ "$SNAPCAST" = "c" ]
+elif [ "$SNAPCAST" = "c" ]
 then
 	#   DOWNLOAD, INSTALL AND CONFIGURE SNAPCLIENT
 	exc wget https://github.com/badaix/snapcast/releases/download/v0.12.0/snapclient_0.12.0_armhf.deb
@@ -88,7 +88,7 @@ then
 	exc save_original /etc/default/snapclient
 	exc sudo sed -i "s/SNAPCLIENT_OPTS=\"\"/#SNAPCLIENT_OPTS=\"\"/" /etc/default/snapclient
 	echo "SNAPCLIENT_OPTS=\"-h localhost -s 3 -d\"" | sudo tee -a /etc/default/snapclient
-else if [ "$SNAPCAST" = "b" ]
+elif [ "$SNAPCAST" = "b" ]
 then
 	exc sudo systemctl disable shairport-sync
 	exc wget https://github.com/badaix/snapcast/releases/download/v0.12.0/snapserver_0.12.0_armhf.deb
