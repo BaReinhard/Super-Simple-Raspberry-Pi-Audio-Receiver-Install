@@ -35,6 +35,72 @@ currentDir=$(
   cd $(dirname "$0")
   pwd
 ) 
+
+### SOURCED FROM https://gist.github.com/totti2/41ed90feb1eb5838cc6a789d2b2dd5a7, thanks to totti2
+### Implemented soon!
+#   DOWNLOAD, INSTALL SNAPCAST-SERVER AND CORRECT IT'S DEPENDENCIES
+#wget https://github.com/badaix/snapcast/releases/download/v0.12.0/snapserver_0.12.0_armhf.deb
+#sudo dpkg -i snapserver_0.12.0_armhf.deb
+#sudo apt-get -f install
+
+#   CREATE SNAPCAST-STREAM = NEW PULSEAUDIO-SINK
+#sudo nano /etc/default/snapserver	
+#   EDIT
+#   #SNAPSERVER_OPTS=""
+#   SNAPSERVER_OPTS="-d -b 250 --sampleformat 44100:16:2 -s pipe:///tmp/snap_blue?name=Bluetooth&mode=read"
+#sudo reboot
+
+#   CREATE SYSTEMWIDE PULSEAUDIO-PIPE-SINK
+#sudo nano system.pa
+#   APPEND
+#   load-module module-pipe-sink file=/tmp/snap_blue sink_name=bluetooth
+#sudo reboot
+
+    ######## SINK-INPUT ASSIGMENTS JUMPS BACK TO SINK #0, COULD BE SOLVED BY DEACTIVATING ONBOARD-SOUND IN /boot/config.txt 
+#    sudo pactl list sinks                                #   list pulseaudio sinks
+#    sudo pactl list sink-inputs                          #   list pulseaudio sink-input
+#    sudo pactl move-sink-input 0 1                       #   combine sink-input # with sink #
+    ######## 
+
+# ASSIGN SINK TO BLUETOOTH-DEVICE
+# see https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/issues/6#issuecomment-284573272
+sudo nano /usr/local/bin/bluez-udev
+# edit
+# #audio_sink=0
+# audio_sink=1
+#sudo reboot
+#   DOWNLOAD, INSTALL AND CONFIGURE SNAPCLIENT
+#wget https://github.com/badaix/snapcast/releases/download/v0.12.0/snapclient_0.12.0_armhf.deb
+#sudo dpkg -i snapclient_0.12.0_armhf.deb
+#   LIST SOUNDCARDS
+#snapclient --list
+#   CONFIGURE SNAPCLIENT
+#sudo nano /etc/default/snapclient
+#   EDIT SNAPCLIENT_OPTS=""
+#   -h <HOST> -s <SOUNDCARD> -d <DAEMONIZE>
+#   SNAPCLIENT_OPTS="-h localhost -s 25 -d"
+#sudo systemctl restart snapclient.service
+
+# BUILD LIBRESPOT
+#sudo apt-get install build-essential portaudio19-dev git
+#curl https://sh.rustup.rs -sSf | sh
+#git clone https://github.com/plietar/librespot.git
+#sudo reboot
+#cd librespot/
+#cargo build --release
+#$PATH
+#sudo cp target/release/librespot /usr/bin
+#whereis librespot
+#   CREATE SNAPCAST-STREAM = NEW PULSEAUDIO-SINK
+
+### NEEDS TESTING ###
+#sed -i "s/SNAPSERVER_OPTS=/#SNAPSERVER_OPTS=/" /etc/default/snapserver
+#echo "SNAPSERVER_OPTS="-d -b 250 --sampleformat 44100:16:2 -s pipe:///tmp/snap_blue?name=Bluetooth&mode=read -s spotify:///librespot?name=SpotiPI&username=username&password=yourpassword&devicename=Spotify&bitrate=320" | sudo tee -a /etc/default/snapserver
+#sudo systemctl restart snapserver.service
+
+
+
+## Need to remove after, above is sorted
 SNAP_DIR=$currentDir/snapcast
 exc remove_dir snapcast
 exc git clone https://github.com/badaix/snapcast.git
