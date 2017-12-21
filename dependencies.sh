@@ -12,7 +12,7 @@ GMEDIA_DEPS="libupnp-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer
 
 LIRC_DEPS="lirc"
 
-SNAP_DEPS="build-essential libasound2-dev libvorbisidec-dev libvorbis-dev libflac-dev alsa-utils libavahi-client-dev avahi-daemon"
+SNAP_DEPS="build-essential portaudio19-dev git libasound2-dev libvorbisidec-dev libvorbis-dev libflac-dev alsa-utils libavahi-client-dev avahi-daemon"
 
 INSTALL_COMMAND="sudo apt-get install -qq -o=Dpkg::Use-Pty=0 -y"
 
