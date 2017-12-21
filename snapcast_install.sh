@@ -61,21 +61,24 @@ wget https://github.com/badaix/snapcast/releases/download/v0.12.0/snapclient_0.1
 exc sudo dpkg -i snapclient_0.12.0_armhf.deb
 
 save_original /etc/default/snapclient
-sudo sed "s/SNAPCLIENT_OPTS=\"\"/#SNAPCLIENT_OPTS=\"\"/" /etc/default/snapclient
+sudo sed -i "s/SNAPCLIENT_OPTS=\"\"/#SNAPCLIENT_OPTS=\"\"/" /etc/default/snapclient
 echo "SNAPCLIENT_OPTS=\"-h localhost -s 3 -d\"" | sudo tee -a /etc/default/snapclient
 
-curl https://sh.rustup.rs -sSf | sh
-exc git clone https://github.com/plietar/librespot.git
-exc cd librespot
-exc cargo build --release
 
-exc sudo cp target/release/librespot /usr/bin
+## Removed Librespot Due to Exceedingly Long Install Time, it will be added as an option in future updates.
+#curl https://sh.rustup.rs -sSf | sh
+#remove_dir librespot
+#exc git clone https://github.com/plietar/librespot.git
+#exc cd librespot
+#$HOME/.cargo/bin/cargo build --release
+
+#exc sudo cp target/release/librespot /usr/bin
 #whereis librespot
 #   CREATE SNAPCAST-STREAM = NEW PULSEAUDIO-SINK
 
 ### NEEDS TESTING ###
 #sed -i "s/SNAPSERVER_OPTS=/#SNAPSERVER_OPTS=/" /etc/default/snapserver
-echo "SNAPSERVER_OPTS="-d -b 250 --sampleformat 44100:16:2 -s pipe:///tmp/snap_blue?name=Bluetooth&mode=read -s spotify:///librespot?name=SpotiPI&username=username&password=yourpassword&devicename=Spotify&bitrate=320" | sudo tee -a /etc/default/snapserver
+echo "SNAPSERVER_OPTS=\"-d -b 250 --sampleformat 44100:16:2 -s pipe:///tmp/snap_blue?name=$SNAPNAME&mode=read -s -s airplay:///shairport-sync?name=$SNAPNAME&devicename=Snapcast&port=5000" | sudo tee -a /etc/default/snapserver
 
 
 

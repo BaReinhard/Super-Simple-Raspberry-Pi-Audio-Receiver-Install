@@ -80,7 +80,7 @@ apt_upgrade() {
 remove_dir(){
     if [ -e "$1" ]; then 
         if [ -d "$1" ]; then 
-            rm -R $1
+            sudo rm -R $1
         else 
             log $1 is not a directory
         fi
