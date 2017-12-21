@@ -5,11 +5,12 @@ then
     source functions.sh
     source dependencies.sh
 fi
-exc adduser kodi
-exc adduser kodi pulse-access
-exc usermod -a -G input kodi
-exc usermod -a -G lp kodi
-exc usermod -a -G pulse-access,audio root
+# Remove until fix has been found
+# exc adduser kodi
+# exc adduser kodi pulse-access
+# exc usermod -a -G input kodi
+# exc usermod -a -G lp kodi
+# exc usermod -a -G pulse-access,audio root
 
 save_original /etc/default/kodi
 exc sed -i "s/ENABLED=0/ENABLED=1/" /etc/default/kodi 
