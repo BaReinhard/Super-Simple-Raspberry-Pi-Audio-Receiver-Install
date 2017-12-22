@@ -300,6 +300,7 @@ if [ "$SNAPCAST" != "n" ]
 then
 	export SNAPCAST
 	export SNAPNAME
+	export AirPlay	
 	run su ${user} -c ./snapcast_install.sh
 fi
 

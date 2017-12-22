@@ -4,6 +4,7 @@ then
     source functions.sh
     source dependencies.sh
 fi
+if [ $SUDO_USER ]; then user=$SUDO_USER ; else user=`whoami`; fi
 if [ -z "$AirPlay" ]
 then
 	while true
@@ -38,38 +39,14 @@ then
 fi
 if [ "$SNAPCAST" != "c" ]
 then
+	for _dep in ${SNAP_DEPS[@]}; do
+    apt_install $_dep;
+	done
     if [ -z "$SNAPNAME" ]
     then
     	read -p "SnapCast device name: " SNAPNAME
     fi
-    
-else
-	while true
-    do
-        read -p "Enter SnapServer IP Address: " HOST_IP
-        if [[ $HOST_IP =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-                break;
-        else
-                echo "Please enter valid IP Address"
-        fi
-	done
-fi
-if [ $SUDO_USER ]; then user=$SUDO_USER ; else user=`whoami`; fi
-
-currentDir=$(
-  cd $(dirname "$0")
-  pwd
-) 
-
-
-for _dep in ${SNAP_DEPS[@]}; do
-    apt_install $_dep;
-done
-
-### SOURCED FROM https://gist.github.com/totti2/41ed90feb1eb5838cc6a789d2b2dd5a7, thanks to totti2
-if [ "$SNAPCAST" = "s" ]
-then
-	sudo systemctl enable shairport-sync
+		sudo systemctl enable shairport-sync
 	exc wget https://github.com/badaix/snapcast/releases/download/v0.12.0/snapserver_0.12.0_armhf.deb
 	exc sudo dpkg -i snapserver_0.12.0_armhf.deb
 	exc sudo apt-get -f install
@@ -83,16 +60,28 @@ then
 	fi
 		echo "SNAPSERVER_OPTS=\"-d -b 250 --sampleformat 44100:16:2 -s pipe:///tmp/snap_blue?name=$SNAPNAME&mode=read\"" | sudo tee -a /etc/default/snapserver			
 	
-	#echo "SNAPSERVER_OPTS=\"-d -b 250 --sampleformat 44100:16:2 -s pipe:///tmp/snap_blue?name=Bluetooth&mode=read\"" | sudo tee -a /etc/default/snapserver
-
-	exc save_original /etc/pulse/system.pa
+    excsave_original /etc/pulse/system.pa
 	echo "load-module module-pipe-sink file=/tmp/snap_blue sink_name=bluetooth" | sudo tee -a /etc/pulse/system.pa
-	
 	if [ -e "/usr/local/bin/bluez-udev" ]
 	then
 		exc sudo sed -i "s/audio_sink=0/audio_sink=1/" /usr/local/bin/bluez-udev
 	fi
-elif [ "$SNAPCAST" = "c" ]
+else
+	for _dep in ${SNAP_DEPS[@]}; do
+    apt_install $_dep;
+	done
+	while true
+    do
+        read -p "Enter SnapServer IP Address: " HOST_IP
+        if [[ $HOST_IP =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+                break;
+        else
+                echo "Please enter valid IP Address"
+        fi
+	done
+fi
+### SOURCED FROM https://gist.github.com/totti2/41ed90feb1eb5838cc6a789d2b2dd5a7, thanks to totti2	
+if [ "$SNAPCAST" = "c" ]
 then
 	#   DOWNLOAD, INSTALL AND CONFIGURE SNAPCLIENT
 	exc wget https://github.com/badaix/snapcast/releases/download/v0.12.0/snapclient_0.12.0_armhf.deb
@@ -108,29 +97,6 @@ then
 	fi		
 elif [ "$SNAPCAST" = "b" ]
 then
-	exc sudo systemctl disable shairport-sync
-	exc wget https://github.com/badaix/snapcast/releases/download/v0.12.0/snapserver_0.12.0_armhf.deb
-	exc sudo dpkg -i snapserver_0.12.0_armhf.deb
-	exc sudo apt-get -f install
-
-	## Setup SnapServer
-	exc save_original /etc/default/snapserver
-	exc sudo sed -i "s/SNAPSERVER_OPTS=\"\"/#SNAPSERVER_OPTS=\"\"/" /etc/default/snapserver
-	if [ "$AirPlay" = "y" ]
-	then
-		exc sudo sed -i "s+ExecStart=/usr/local/bin/shairport-sync.*+ExecStart=/usr/local/bin/shairport-sync -o pipe -- /tmp/snap_blue+" /lib/systemd/system/shairport-sync.service 	
-	fi
-		echo "SNAPSERVER_OPTS=\"-d -b 250 --sampleformat 44100:16:2 -s pipe:///tmp/snap_blue?name=$SNAPNAME&mode=read\"" | sudo tee -a /etc/default/snapserver			
-	
-
-	#echo "SNAPSERVER_OPTS=\"-d -b 250 --sampleformat 44100:16:2 -s pipe:///tmp/snap_blue?name=Bluetooth&mode=read\"" | sudo tee -a /etc/default/snapserver
-
-	excsave_original /etc/pulse/system.pa
-	echo "load-module module-pipe-sink file=/tmp/snap_blue sink_name=bluetooth" | sudo tee -a /etc/pulse/system.pa
-	if [ -e "/usr/local/bin/bluez-udev" ]
-	then
-		exc sudo sed -i "s/audio_sink=0/audio_sink=1/" /usr/local/bin/bluez-udev
-	fi
 	#   DOWNLOAD, INSTALL AND CONFIGURE SNAPCLIENT
 	exc wget https://github.com/badaix/snapcast/releases/download/v0.12.0/snapclient_0.12.0_armhf.deb
 	exc sudo dpkg -i snapclient_0.12.0_armhf.deb
