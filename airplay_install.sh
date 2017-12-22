@@ -15,6 +15,7 @@ done
 # Install shairplay-sync from source
 
 exc cd ~
+exc remove_dir shairport-sync
 exc git clone https://github.com/mikebrady/shairport-sync.git
 exc cd shairport-sync
 exc autoreconf -i -f

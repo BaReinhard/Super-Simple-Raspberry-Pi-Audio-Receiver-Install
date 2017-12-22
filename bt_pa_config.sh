@@ -23,7 +23,7 @@ then
     source dependencies.sh
 fi
 
-exc mkdir /home/pi/pyScripts
+
 exc sudo cp usr/local/bin/volume-watcher.py /usr/local/bin/volume-watcher.py
 exc sudo chmod +x /usr/local/bin/volume-watcher.py
 exc sudo cp lib/systemd/system/volume-watcher.service /lib/systemd/system/volume-watcher.service
@@ -33,15 +33,18 @@ exc cd `dirname $0`
 sudo echo "PRETTY_HOSTNAME=$BluetoothName" >> /tmp/machine-info
 exc tst sudo cp /tmp/machine-info /etc
 
-exc sudo cp init.d/pulseaudio /etc/init.d
+save_original /etc/init.d/pulseaudio
+exc sudo cp init.d/pulseaudio /etc/init.d/pulseaudio
 exc sudo chmod +x /etc/init.d/pulseaudio
 exc sudo update-rc.d pulseaudio defaults
 
-exc sudo cp init.d/bluetooth /etc/init.d
+save_original /etc/init.d/bluetooth
+exc sudo cp init.d/bluetooth /etc/init.d/bluetooth
 exc sudo chmod +x /etc/init.d/bluetooth
 exc sudo update-rc.d bluetooth defaults
 
-exc sudo cp init.d/bluetooth-agent /etc/init.d
+save_original /etc/init.d/bluetooth-agent
+exc sudo cp init.d/bluetooth-agent /etc/init.d/bluetooth-agent
 exc sudo chmod +x /etc/init.d/bluetooth-agent
 exc sudo update-rc.d bluetooth-agent defaults
 
@@ -56,8 +59,24 @@ exc sudo chmod 755 /usr/local/bin/say.sh
 
 exc sudo cp usr/local/bin/bluezutils.py /usr/local/bin
 
+if [ -d "/etc/pulse" ]
+then
+  PA_FILES=`ls /etc/pulse`
+  for _file in ${PA_FILES[@]}; do
+        if [ -e $_file ]; then 
+            if [ -d $_file ]; then 
+               continue
+            else
+               save_original $_file
+            fi
+        fi
+  done
+else
+  exc sudo mkdir /etc/pulse  
+fi
 exc sudo cp etc/pulse/daemon.conf /etc/pulse/daemon.conf
 
+save_original /boot/config.txt
 exc cat << EOT | sudo tee -a /boot/config.txt
  # Enable audio (loads snd_bcm2835)
  dtparam=audio=on
@@ -66,7 +85,7 @@ audio_pwm_mode=2
 EOT
 
 if [ -f /etc/udev/rules.d/99-com.rules ]; then
-
+save_original /etc/udev/rules.d/99-com.rules
 exc sudo patch /etc/udev/rules.d/99-com.rules << EOT
 ***************
 *** 1 ****
@@ -76,9 +95,11 @@ exc sudo patch /etc/udev/rules.d/99-com.rules << EOT
 EOT
 
 else
-
+save_original /etc/udev/rules.d/99-com.rules
 exc sudo touch /etc/udev/rules.d/99-com.rules
 exc sudo chmod 666 /etc/udev/rules.d/99-com.rules
+
+save_original /etc/udev/rules.d/99-input.rules
 exc cat  << EOT | sudo tee -a /etc/udev/rules.d/99-input.rules
 SUBSYSTEM=="input", GROUP="input", MODE="0660"
 KERNEL=="input[0-9]*", RUN+="/usr/local/bin/bluez-udev"
@@ -88,6 +109,7 @@ fi
 
 exc sudo chmod 644 /etc/udev/rules.d/99-com.rules
 
+save_original /etc/bluetooth/main.conf
 exc sudo patch /etc/bluetooth/main.conf << EOT
 ***************
 *** 7,8 ****
@@ -111,6 +133,7 @@ exc sudo patch /etc/bluetooth/main.conf << EOT
 ! DiscoverableTimeout = 0
 EOT
 
+save_original /etc/pulse/system.pa
 exc sudo patch /etc/pulse/system.pa << EOT
 ***************
 *** 23,25 ****
@@ -138,13 +161,17 @@ EOT
 #sudo service pulseaudio start &
 #sudo service bluetooth-agent start &
 # BT FIX
+
+exc remove_dir /etc/pulsebackup
 exc sudo mkdir /etc/pulsebackup
 exc sudo cp /etc/pulse/* /etc/pulsebackup/
 
 exc cd ~
+exc remove_dir pulseaudio
 exc git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
 
 exc cd ~
+exc remove_dir json-c
 exc git clone https://github.com/json-c/json-c.git
 exc cd json-c
 exc sh autogen.sh
@@ -152,6 +179,7 @@ exc ./configure
 exc make
 exc sudo make install
 exc cd ~
+exc remove_dir libsndfile
 exc git clone git://github.com/erikd/libsndfile.git
 exc cd libsndfile
 exc ./autogen.sh

@@ -12,7 +12,7 @@ then
 	read -p "AirPlay password: " AirPlayPass
 fi
 
-if [ -z "$AirPlayPass" ]
+if [ "$AirPlayPass" != "" ]
 then
         AirPlayPass="	password = \"$AirPlayPass\"; // leave this commented out if you don't want to require a password"
 else
@@ -23,6 +23,7 @@ fi
 # Configure shairplay
 if [ $SoundCard != "0" ]
 then
+save_original /etc/shairport-sync.conf
 cat <<EOT > /etc/shairport-sync.conf
 // Sample Configuration File for Shairport Sync
 // Commented out settings are generally the defaults, except where noted.
@@ -121,6 +122,7 @@ ao =
 EOT
 elif [ $SoundCard = "0" ]
 then
+	save_original /etc/shairport-sync.conf
 	cat <<EOT > /etc/shairport-sync.conf
 // Sample Configuration File for Shairport Sync
 // Commented out settings are generally the defaults, except where noted.

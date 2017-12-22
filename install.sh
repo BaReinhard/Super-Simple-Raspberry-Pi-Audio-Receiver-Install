@@ -9,6 +9,9 @@ currentDir=$(
 
 SSPARI_PATH=$currentDir 
 export SSPARI_PATH
+SSPARI_BACKUP_PATH="$SSPARI_PATH/backup_files"
+export SSPARI_BACKUP_PATH
+touch "$SSPARI_BACKUP_PATH/files"
 if [ $SUDO_USER ]; 
 then 
 	user=$SUDO_USER;echo 
@@ -17,12 +20,20 @@ else
 	exit 1 
 fi
 
+# Add Environment Variables, used for uninstallation
+HOME_PROF="/home/$user/.profile"
+save_original $HOME_PROF
+echo "export SSPARI_PATH=$SSPARI_PATH" >> "/home/$user/.profile"
+echo "export SSPARI_BACKUP_PATH=$SSPARI_PATH/backup_files" >> "/home/$user/.profile"
+
+
 cd "$currentDir"
+chmod -R 777 .
 # Set up file-based logging
 exec 1> >(tee install.log)
 source functions.sh
 source dependencies.sh
-
+restore_originals
 log "Select Your Install Options"
 # Begins Logging
 
@@ -140,6 +151,18 @@ then
 		;;
 		esac
 	done
+	while true
+	do
+		read -p "Would you like to install Librespot (Warning: No Longer Maintained, install time: long) (y/n): " LIBRESPOT
+		case "$LIBRESPOT" in
+		[yY]*) LIBRESPOT="y"; break;
+		;;
+		[nN]*) LIBRESPOT="n"; break;
+		;;
+		*) echo "Please enter a valid choice";
+		;;
+		esac
+	done
 fi
 # Prompts the User to check whether or not to use individual names for the chosen devices
 SameName="n"
@@ -152,7 +175,7 @@ then
 	BluetoothName=$MYNAME
 	AirPlayName=$MYNAME
 	GMediaName=$MYNAME
-	SnapName=$MYNAME
+	SNAPNAME=$MYNAME
 elif [ "$SameName" = "n" ]
 then
 	# Asks for Bluetooth Device Name
@@ -257,18 +280,12 @@ then
 	export SoundCard
 	export AirPlayPass
 	export AirPlayName
+	export AirPlay
 	run ./airplay_install.sh 
 	run ./airplay_config.sh 
 fi
 
-# If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
-if [ "$AP" = "y" ]
-then
-	export APName
-	export WIFIPASS
-	run ./ap_install.sh 
-	run ./ap_config.sh 
-fi
+
 
 # If Kodi is Chosen, it installs Kodi Dependencies and issues commands for proper configuration
 if [ "$Kodi" = "y" ]
@@ -295,7 +312,18 @@ if [ "$SNAPCAST" != "n" ]
 then
 	export SNAPCAST
 	export SNAPNAME
+	export AirPlay	
+	export LIBRESPOT
 	run su ${user} -c ./snapcast_install.sh
+fi
+
+# If Access Point is Chosen, it installs AP Dependencies and issues commands for proper configuration
+if [ "$AP" = "y" ]
+then
+	export APName
+	export WIFIPASS
+	run ./ap_install.sh 
+	run ./ap_config.sh 
 fi
 
 

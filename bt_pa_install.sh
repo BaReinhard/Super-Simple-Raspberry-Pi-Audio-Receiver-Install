@@ -6,12 +6,7 @@ then
     source dependencies.sh
 fi
 
-# Update
 
-apt_update apt-get update -q=2 -y
-
-# Upgrade the distro
-apt_upgrade apt-get upgrade -q=2 -y
 
 
 for _dep in ${BT_DEPS[@]}; do
