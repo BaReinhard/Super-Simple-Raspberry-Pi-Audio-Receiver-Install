@@ -11,13 +11,7 @@
 * Ability to disable Wifi on Bluetooth Connection. Needs to be enabled, but solves choppy bluetooth playback if no external wifi card is available.
 
 
-## *SNAPCAST Support! Please test it out! Requires minor configuration.*
-#### I Suggest Running a Pi as either a SnapServer or SnapClient, as I haven't had much testing with it. I believe it is possible for both but have yet to find a solid solution to do so.
-* When connecting to Snapcast Server via AirPlay, it will play to /tmp/snapfifo, all snap clients will need to manually move-sink-input from pulseaudio sink-input to soundcard. (In the future this will be automated, somehow...)
-* When connecting to Snapcast Server via Bluetooth, Snapcast server will need to move-sink-input from pulseaudio sink-input to Snapcast sink-out, additionally, all Snapcast servers will need to move-sink-input from pulseaudio sink-input to soundcard. (This will also be automated in the future, somehow...)
-* Snapclients, installed with this repo will have the ability to play via Bluetooth, AirPlay, and Snapclient. There may be some configuration once connected from any input. Airplay should play to soundcard automatically, but bluetooth and snapclient will need to be moved to soundcard output via `sudo pactl move-sink-input $sinkinput $sinkoutput`, eventually this will be controlled via web ui or CLI bin script.
-
-
+## *SNAPCAST Support! Please test it, i have had great success so far.* 
 
 This project has combined several different projects into one, culminating into a plug-and-play Audio Receiver project. It incorporates A2DP Bluetooth, Snapcast, and AirPlay as possible ways to stream music to your Raspberry Pi. When paired with a sound card or HiFi audio DAC, you get high quality stereo audio. 
 ## Changes
