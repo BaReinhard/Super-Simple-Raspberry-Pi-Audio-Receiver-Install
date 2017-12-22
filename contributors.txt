@@ -1,3 +1,4 @@
-Martin Engström (original BitBucket repository)
+Martin Engstrï¿½m (original BitBucket repository)
 Aden Beckitt (2017 Raspbian Jessie rewrite)
 Brett Reinhard (2017 Raspbian Jessie minimal rewrite, added features)
+Totti2 (Snapcast Configuration)

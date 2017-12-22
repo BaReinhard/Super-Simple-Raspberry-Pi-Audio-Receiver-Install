@@ -46,7 +46,7 @@ then
     then
     	read -p "SnapCast device name: " SNAPNAME
     fi
-		sudo systemctl enable shairport-sync
+	sudo systemctl enable shairport-sync
 	exc wget https://github.com/badaix/snapcast/releases/download/v0.12.0/snapserver_0.12.0_armhf.deb
 	exc sudo dpkg -i snapserver_0.12.0_armhf.deb
 	exc sudo apt-get -f install
@@ -56,11 +56,15 @@ then
 	exc sudo sed -i "s/SNAPSERVER_OPTS=\"\"/#SNAPSERVER_OPTS=\"\"/" /etc/default/snapserver
 	if [ "$AirPlay" = "y" ]
 	then
-		sudo sed -i "s+ExecStart=/usr/local/bin/shairport-sync.*+ExecStart=/usr/local/bin/shairport-sync -o pipe -- /tmp/snap_blue+" /lib/systemd/system/shairport-sync.service 	
+		exc sudo sed -i "s+ExecStart=/usr/local/bin/shairport-sync.*+ExecStart=/usr/bin/sudo /usr/local/bin/shairport-sync -o pipe -- /tmp/snap_blue+" /lib/systemd/system/shairport-sync.service
+		exc sudo usermod -aG sudo shairport-sync
+		echo "shairport-sync ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/010_pi-nopasswd 
+		sudo systemctl daemon-reload
+
 	fi
 		echo "SNAPSERVER_OPTS=\"-d -b 250 --sampleformat 44100:16:2 -s pipe:///tmp/snap_blue?name=$SNAPNAME&mode=read\"" | sudo tee -a /etc/default/snapserver			
 	
-    excsave_original /etc/pulse/system.pa
+    exc save_original /etc/pulse/system.pa
 	echo "load-module module-pipe-sink file=/tmp/snap_blue sink_name=bluetooth" | sudo tee -a /etc/pulse/system.pa
 	if [ -e "/usr/local/bin/bluez-udev" ]
 	then
@@ -115,13 +119,19 @@ then
 fi
 
 ## Removed Librespot Due to Exceedingly Long Install Time, it will be added as an option in future updates.
-#curl https://sh.rustup.rs -sSf | sh
-#remove_dir librespot
-#exc git clone https://github.com/plietar/librespot.git
-#exc cd librespot
-#$HOME/.cargo/bin/cargo build --release
+## Needs testing, and need to find a way for no user input
+if [ -z "$LIBRESPOT" ]
+then
+	curl https://sh.rustup.rs -sSf | sh
+	remove_dir librespot
+	exc git clone https://github.com/plietar/librespot.git
+	exc cd librespot
+	$HOME/.cargo/bin/cargo build --release
 
-#exc sudo cp target/release/librespot /usr/bin
-#whereis librespot
-#   CREATE SNAPCAST-STREAM = NEW PULSEAUDIO-SINK
+	exc sudo cp target/release/librespot /usr/bin
+	#whereis librespot
+	#   CREATE SNAPCAST-STREAM = NEW PULSEAUDIO-SINK
+	log "To Enable Librspot, use must use the following in /etc/default/snapserver : -s spotify:///librespot?name=SpotiPI&username=username&password=yourpassword&devicename=Spotify&bitrate=320"
+	log "Or Use this as a walkthrough: https://gist.github.com/totti2/41ed90feb1eb5838cc6a789d2b2dd5a7"
+fi
 log SnapCast Install has Completed!

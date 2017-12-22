@@ -151,6 +151,18 @@ then
 		;;
 		esac
 	done
+	while true
+	do
+		read -p "Would you like to install Librespot (Warning: No Longer Maintained, install time: long) (y/n): " LIBRESPOT
+		case "$LIBRESPOT" in
+		[yY]*) LIBRESPOT="y"; break;
+		;;
+		[nN]*) LIBRESPOT="n"; break;
+		;;
+		*) echo "Please enter a valid choice";
+		;;
+		esac
+	done
 fi
 # Prompts the User to check whether or not to use individual names for the chosen devices
 SameName="n"
@@ -301,6 +313,7 @@ then
 	export SNAPCAST
 	export SNAPNAME
 	export AirPlay	
+	export LIBRESPOT
 	run su ${user} -c ./snapcast_install.sh
 fi
 
