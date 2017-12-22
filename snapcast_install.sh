@@ -97,7 +97,7 @@ then
 	then
 		echo "SNAPCLIENT_OPTS=\"-h $HOST_IP -s 3 -d\"" | sudo tee -a /etc/default/snapclient
 	else
-		echo "SNAPCLIENT_OPTS=\"-h $HOST_IP -s 8 -d\"" | sudo tee -a /etc/default/snapclient
+		echo "SNAPCLIENT_OPTS=\"-h $HOST_IP -s 6 -d\"" | sudo tee -a /etc/default/snapclient
 	fi		
 elif [ "$SNAPCAST" = "b" ]
 then
@@ -114,7 +114,7 @@ then
 	then
 		echo "SNAPCLIENT_OPTS=\"-h localhost -s 3 -d\"" | sudo tee -a /etc/default/snapclient
 	else
-		echo "SNAPCLIENT_OPTS=\"-h localhost -s 8 -d\"" | sudo tee -a /etc/default/snapclient
+		echo "SNAPCLIENT_OPTS=\"-h localhost -s 6 -d\"" | sudo tee -a /etc/default/snapclient
 	fi
 fi
 
