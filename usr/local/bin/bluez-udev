@@ -33,6 +33,11 @@ EOT
     logger "[$(basename $0)] PulseAudio module-loopback returned handle [$handle]"
     logger "$bt_name"
     
+    if [ 'airplay' ]
+    then
+        sudo systemctl stop shairport-sync
+    fi
+    
     
 fi
 
@@ -57,4 +62,8 @@ EOT
     #espeak -s 160 -k 1 "Device, $bt_name Disconnected"
     /usr/local/bin/say.sh "Device, $bt_name Disconnected"
     amixer cset numid=3 80%
+    if [ 'airplay' ]
+    then
+        sudo systemctl start shairport-sync
+    fi
 fi
