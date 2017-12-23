@@ -12,6 +12,8 @@
 
 
 ## *SNAPCAST Support! Please test it, i have had great success so far.* 
+### This type of Multiroom Audio would not be possible without the awesome Repo: 
+***[Snapcast](https://github.com/badaix/snapcast)*** and Badaix. Special Thanks to Totti2 for getting the config just right.
 
 This project has combined several different projects into one, culminating into a plug-and-play Audio Receiver project. It incorporates A2DP Bluetooth, Snapcast, and AirPlay as possible ways to stream music to your Raspberry Pi. When paired with a sound card or HiFi audio DAC, you get high quality stereo audio. 
 ## Changes
