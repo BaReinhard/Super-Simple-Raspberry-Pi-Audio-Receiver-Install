@@ -83,6 +83,9 @@ else
                 echo "Please enter valid IP Address"
         fi
 	done
+	
+	read -p "Enter SnapClient name (i.e. Location it will be): " HOSTNAME
+	
 fi
 ### SOURCED FROM https://gist.github.com/totti2/41ed90feb1eb5838cc6a789d2b2dd5a7, thanks to totti2	
 if [ "$SNAPCAST" = "c" ]
@@ -98,7 +101,9 @@ then
 		echo "SNAPCLIENT_OPTS=\"-h $HOST_IP -s 3 -d\"" | sudo tee -a /etc/default/snapclient
 	else
 		echo "SNAPCLIENT_OPTS=\"-h $HOST_IP -s 6 -d\"" | sudo tee -a /etc/default/snapclient
-	fi		
+	fi
+	sudo sed -i "s/raspberrypi/$HOSTNAME/" /etc/hosts		
+	sudo sed -i "s/raspberrypi/$HOSTNAME/" /etc/hostname
 elif [ "$SNAPCAST" = "b" ]
 then
 	#   DOWNLOAD, INSTALL AND CONFIGURE SNAPCLIENT
