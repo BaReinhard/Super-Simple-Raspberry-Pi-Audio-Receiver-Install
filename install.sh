@@ -335,6 +335,7 @@ Kodi = $Kodi
 Lirc = $Lirc
 SoundCardInstall = $SoundCardInstall
 GMedia = $GMedia
+Snapcast = $SNAPCAST
 EOT
 
 log You should now reboot
