@@ -271,10 +271,13 @@ then
 	if [ "$VOL_USER" = "\"arm\"" ]
 	then
 		vol_groups=`su $user -c groups`
-		exc usermod -aG sudo ${user}
-                echo "$user ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/010_pi-nopasswd
+		exc usermod -aG "sudo" $user
+		list=`groups $user`
+                sed -i "s/volumio ALL=(ALL) ALL/volumio ALL=(ALL) NOPASSWD: ALL/" /etc/sudoers
 		run su ${user} -c ./bt_pa_config.sh
-		exc usermod -G  ${user}
+		sudo usermod -G "" $user
+		for _dep in ${list[@]}; do     sudo usermod -aG "$_dep" volumio; done
+		sed -i "s/volumio ALL=(ALL) NOPASSWD: ALL/volumio ALL=(ALL) ALL/" /etc/sudoers
 		sed -i "s/$user ALL=(ALL) NOPASSWD: ALL//" /etc/sudoers.d/010_pi-nopasswd
 	fi
 	run su ${user} -c ./bt_pa_config.sh
