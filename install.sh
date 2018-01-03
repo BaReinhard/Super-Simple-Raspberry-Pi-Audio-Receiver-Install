@@ -40,7 +40,7 @@ log "Select Your Install Options"
 installlog "1. Install the Raspberry Pi Audio Receiver Car Installation"
 installlog "2. Install the Raspberry Pi Audio Receiver Home Installation"
 installlog "3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)"
-installlog "4. Install the Volumio (Bluetooth Only) Installation"
+installlog "4. Install the Bluetooth Only Installation"
 installlog "5. Install the Snapcast Installation (BETA), choose from Snapcast Server, Client, or Both (Requires Minor Configuration)"
 installlog "6. Install a Custom Raspberry Pi Audio Receiver"
 
@@ -263,9 +263,24 @@ log "Upgrading via Apt-Get"
 apt-get upgrade -y &> /dev/null
 if [ "$Bluetooth" = "y" ]
 then
-	export BluetoothName
+	export BluetoothName	
 	run ./bt_pa_install.sh
-	run su ${user} -c ./bt_pa_config.sh 
+	
+	VOL_USER=`cat /etc/os-release | grep VOLUMIO_ARCH | sed "s/VOLUMIO_ARCH=//"`
+	if [ "$VOL_USER" = "\"arm\"" ]
+	then
+		run su ${user} -c ./vol_bt_pa_config.sh 
+		run ./vol_bt_pa_fix.sh 
+	else
+		run su ${user} -c ./bt_pa_config.sh 
+	fi
+	
+fi
+if [ "$VOLUMIO" = "y" ]
+then
+	export BluetoothName
+	
+	
 fi
 
 if [ "$SoundCardInstall" = "y" ]
