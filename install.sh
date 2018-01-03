@@ -256,25 +256,30 @@ fi
 chmod +x ./*.sh
 # Updates and Upgrades the Raspberry Pi
 
-# If Bluetooth is Chosen, it installs Bluetooth Dependencies and issues commands for proper configuration
 log "Updating via Apt-Get"
 apt-get update -y &> /dev/null
 log "Upgrading via Apt-Get"
 apt-get upgrade -y &> /dev/null
+
+
+# If Bluetooth is Chosen, it installs Bluetooth Dependencies and issues commands for proper configuration
 if [ "$Bluetooth" = "y" ]
 then
-	export BluetoothName	
+	export BluetoothName
 	run ./bt_pa_install.sh
-	
 	VOL_USER=`cat /etc/os-release | grep VOLUMIO_ARCH | sed "s/VOLUMIO_ARCH=//"`
 	if [ "$VOL_USER" = "\"arm\"" ]
 	then
-		run su ${user} -c ./vol_bt_pa_config.sh 
-		run ./vol_bt_pa_fix.sh 
-	else
-		run su ${user} -c ./bt_pa_config.sh 
+		vol_groups=`su $user -c groups`
+		exc usermod -aG sudo ${user}
+                echo "$user ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers.d/010_pi-nopasswd
+		run su ${user} -c ./bt_pa_config.sh
+		exc usermod -G  ${user}
+		sed -i "s/$user ALL=(ALL) NOPASSWD: ALL//" /etc/sudoers.d/010_pi-nopasswd
 	fi
-	
+	run su ${user} -c ./bt_pa_config.sh
+
+
 fi
 if [ "$VOLUMIO" = "y" ]
 then
