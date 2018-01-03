@@ -1,8 +1,12 @@
-# Super Simple Raspberry Pi Audio Receiver Install. 
-***Requires Raspbian Jessie LITE** you can find the lastest Jessie Lite Image [here](http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/)*
+# Super Simple Raspberry Pi Audio Receiver Install.
+
+**\*Requires Raspbian Jessie LITE** you can find the lastest Jessie Lite Image [here](http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/)\*
 ![SSPARI](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/blob/master/img/SSRPARI_1080_668.png?raw=true)
+
 ## SSPARI v2.0
-***Now Live, includes the following new features:***
+
+**_Now Live, includes the following new features:_**
+
 * Backing up of original files
 * Uninstallation functionality
 * Restoring original files
@@ -10,20 +14,25 @@
 * Cleaner install and better support
 * Ability to disable Wifi on Bluetooth Connection. Needs to be enabled, but solves choppy bluetooth playback if no external wifi card is available.
 
+## _SNAPCAST Support! Please test it, i have had great success so far._
 
-## *SNAPCAST Support! Please test it, i have had great success so far.* 
-### This type of Multiroom Audio would not be possible without the awesome Repo: 
-***[Snapcast](https://github.com/badaix/snapcast)*** and Badaix. Special Thanks to Totti2 for getting the config just right.
+### This type of Multiroom Audio would not be possible without the awesome Repo:
+
+**_[Snapcast](https://github.com/badaix/snapcast)_** and Badaix. Special Thanks to Totti2 for getting the config just right.
+
 ### Additional Thanks to the awesome Repo:
-***[Shairport-Sync](https://github.com/mikebrady/shairport-sync/)*** and Mike Brady for making it so easy to use.
 
-This project has combined several different projects into one, culminating into a plug-and-play Audio Receiver project. It incorporates A2DP Bluetooth, Snapcast, and AirPlay as possible ways to stream music to your Raspberry Pi. When paired with a sound card or HiFi audio DAC, you get high quality stereo audio. 
+**_[Shairport-Sync](https://github.com/mikebrady/shairport-sync/)_** and Mike Brady for making it so easy to use.
+
+This project has combined several different projects into one, culminating into a plug-and-play Audio Receiver project. It incorporates A2DP Bluetooth, Snapcast, and AirPlay as possible ways to stream music to your Raspberry Pi. When paired with a sound card or HiFi audio DAC, you get high quality stereo audio.
+
 ## Changes
+
 * Addition and support for SnapCast as Server and Client or Both (Will need some manual configuration, creates a very simple multiroom setup)
 * Use of External Soundcards
 * soxr interpolation with shairport-sync, works well on Raspberry Pi Zero and Raspberry Pi 3, haven't tested on any other boards yet.
 * Works great with Sabrent USB Sound Card, HifiBerry Amp+ (I would not recommend this in a car) and HifiBerry DAC+ Pro, other Hifi DAC's should have no different functionality and should work just as well.
-* Creates Internet-less Wireless Network (Setup as an AP) to allow users to connect to the network and use AirPlay 
+* Creates Internet-less Wireless Network (Setup as an AP) to allow users to connect to the network and use AirPlay
 * Allows for Bluetooth A2DP, AirPlay, and local files played through Kodi.
 * Uses kodi as a GUI, and supports the use of sound cards.
 * Supports Infrared remotes, currently setup for the [Matricom IR Remote.](https://www.amazon.com/Quality-Replacement-Controller-Android-Matricom/dp/B018K0GR12)
@@ -31,19 +40,20 @@ This project has combined several different projects into one, culminating into 
 * Includes boot configurations in the `/boot/config.txt`.
 * Supports All Hifiberry DAC Boards, IQaudIO, JustBoom, and USB sound cards.
 
-
 #### This is a further fixed version with the addition of being able to Deploy the project in car without a Wireless Network from my original Raspberry Pi Audio Receive Install repo which was forked from adenbeckitt, with a few changes made for shairport-sync dependencies and configuration files, which is a general fix from ehsmaes' version. This now works with Raspbian Jessie.
 
 ## Known Issues
 
 * For the time being, I have not been able to get espeak to work with a soundcard. I will be working to get this working either with espeak or another program.
 * Unsure how Android will act on a wireless network without internet, iOS doesn't display the WiFi signals and will use Cellular Data for data requirements. However, iOS devices still can play local music to the Pi without any cellular data.
-* Raspberry Pi Zero W (new Model with Bluetooth and Wireless built-in) is likely supported and will work. Although, some resource intensive processes may suffer. 
+* Raspberry Pi Zero W (new Model with Bluetooth and Wireless built-in) is likely supported and will work. Although, some resource intensive processes may suffer.
 
 ## Install
+
 #### This will install on the latest Raspbian Jessie, with just the following commands.
 
 ```
+pi@raspberrypi:~/ $ sudo apt-get update
 pi@raspberrypi:~/ $ sudo apt-get install git
 pi@raspberrypi:~/ $ git clone https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install.git
 pi@raspberrypi:~/ $ cd Super-Simple-Raspberry-Pi-Audio-Receiver-Install
@@ -79,9 +89,8 @@ Device WiFi Password: Choose Password (Depending on Install)
 9. USB Sound Card
 10. JustBoom DAC and AMP Cards
 11. JustBoom Digi Cards
-	
-Which Sound Card are you using? (0/1/2/3/4/5/6/7/8/9/10/11) :  Sound Card Choice 
+
+Which Sound Card are you using? (0/1/2/3/4/5/6/7/8/9/10/11) :  Sound Card Choice
 ```
 
-
-***Looking for Devs to Help Support/Futher This Project***
+**_Looking for Devs to Help Support/Futher This Project_**
