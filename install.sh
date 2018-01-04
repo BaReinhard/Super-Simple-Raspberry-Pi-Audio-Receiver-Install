@@ -275,7 +275,7 @@ then
 	if [ "$VOL_USER" = "\"arm\"" ]
 	then
 		export VOL_USER
-		apt-get purge bluez
+		apt-get purge bluez -y
 		for _dep in ${VOLUMIO_DEPS[@]}; do
     			apt_install $_dep;
 		done
