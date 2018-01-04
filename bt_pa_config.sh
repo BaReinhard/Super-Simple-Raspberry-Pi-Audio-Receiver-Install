@@ -44,7 +44,12 @@ exc sudo chmod +x /etc/init.d/bluetooth
 exc sudo update-rc.d bluetooth defaults
 
 save_original /etc/init.d/bluetooth-agent
-exc sudo cp init.d/bluetooth-agent /etc/init.d/bluetooth-agent
+if [ "$VOL_USER" = "\"arm\"" ]
+then
+	exc sudo cp init.d/bluetooth-agent-vol /etc/init.d/bluetooth-agent
+else
+	exc sudo cp init.d/bluetooth-agent /etc/init.d/bluetooth-agent
+fi
 exc sudo chmod +x /etc/init.d/bluetooth-agent
 exc sudo update-rc.d bluetooth-agent defaults
 

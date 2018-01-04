@@ -58,6 +58,7 @@ do
 		Lirc="y"
 		SoundCardInstall="y"
 		GMedia="n"
+		SNAPCAST="n"
 		break
 	;;
 	2)
@@ -69,6 +70,7 @@ do
 		Lirc="y"
 		SoundCardInstall="y"
 		GMedia="y"
+		SNAPCAST="n"
 		break
 	;;
 	3)
@@ -79,6 +81,7 @@ do
 		Kodi="n"
 		Lirc="n"
 		GMedia="n"
+		SNAPCAST="n"
 		break
 	;;
 	4)
@@ -88,6 +91,7 @@ do
 		Kodi="n"
 		Lirc="n"
 		GMedia="n"
+		SNAPCAST="n"
 		SoundCardInstall="n"
 		break
 	;;
@@ -270,6 +274,11 @@ then
 	VOL_USER=`cat /etc/os-release | grep VOLUMIO_ARCH | sed "s/VOLUMIO_ARCH=//"`
 	if [ "$VOL_USER" = "\"arm\"" ]
 	then
+		export VOL_USER
+		apt-get purge bluez
+		for _dep in ${VOLUMIO_DEPS[@]}; do
+    			apt_install $_dep;
+		done
 		vol_groups=`su $user -c groups`
 		exc usermod -aG "sudo" $user
 		list=`groups $user`
@@ -278,17 +287,11 @@ then
 		sudo usermod -G "" $user
 		for _dep in ${list[@]}; do     sudo usermod -aG "$_dep" volumio; done
 		sed -i "s/volumio ALL=(ALL) NOPASSWD: ALL/volumio ALL=(ALL) ALL/" /etc/sudoers
-		sed -i "s/$user ALL=(ALL) NOPASSWD: ALL//" /etc/sudoers.d/010_pi-nopasswd
+		#sed -i "s/$user ALL=(ALL) NOPASSWD: ALL//" /etc/sudoers.d/010_pi-nopasswd
+	else
+	        run su ${user} -c ./bt_pa_config.sh
 	fi
-	run su ${user} -c ./bt_pa_config.sh
 
-
-fi
-if [ "$VOLUMIO" = "y" ]
-then
-	export BluetoothName
-	
-	
 fi
 
 if [ "$SoundCardInstall" = "y" ]
@@ -331,7 +334,7 @@ then
 	run ./gmrender_install.sh
 fi
 
-if [ "$SNAPCAST" != "n" ]
+if [ "$SNAPCAST" = "y" ]
 then
 	export SNAPCAST
 	export SNAPNAME
