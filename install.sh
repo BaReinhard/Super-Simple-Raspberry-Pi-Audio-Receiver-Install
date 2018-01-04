@@ -20,13 +20,6 @@ else
 	exit 1 
 fi
 
-# Add Environment Variables, used for uninstallation
-HOME_PROF="/home/$user/.profile"
-save_original $HOME_PROF
-echo "export SSPARI_PATH=$SSPARI_PATH" >> "/home/$user/.profile"
-echo "export SSPARI_BACKUP_PATH=$SSPARI_PATH/backup_files" >> "/home/$user/.profile"
-
-
 cd "$currentDir"
 chmod -R 777 .
 # Set up file-based logging
@@ -34,13 +27,21 @@ exec 1> >(tee install.log)
 source functions.sh
 source dependencies.sh
 restore_originals
+# Add Environment Variables, used for uninstallation
+HOME_PROF="/home/$user/.profile"
+save_original $HOME_PROF
+echo "export SSPARI_PATH=$SSPARI_PATH" >> "/home/$user/.profile"
+echo "export SSPARI_BACKUP_PATH=$SSPARI_PATH/backup_files" >> "/home/$user/.profile"
+
+
+
 log "Select Your Install Options"
 # Begins Logging
 
 installlog "1. Install the Raspberry Pi Audio Receiver Car Installation"
 installlog "2. Install the Raspberry Pi Audio Receiver Home Installation"
 installlog "3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)"
-installlog "4. Install the Volumio (Bluetooth Only) Installation"
+installlog "4. Install the Bluetooth Only Installation"
 installlog "5. Install the Snapcast Installation (BETA), choose from Snapcast Server, Client, or Both (Requires Minor Configuration)"
 installlog "6. Install a Custom Raspberry Pi Audio Receiver"
 
@@ -58,6 +59,7 @@ do
 		Lirc="y"
 		SoundCardInstall="y"
 		GMedia="n"
+		SNAPCAST="n"
 		break
 	;;
 	2)
@@ -69,6 +71,7 @@ do
 		Lirc="y"
 		SoundCardInstall="y"
 		GMedia="y"
+		SNAPCAST="n"
 		break
 	;;
 	3)
@@ -79,6 +82,7 @@ do
 		Kodi="n"
 		Lirc="n"
 		GMedia="n"
+		SNAPCAST="n"
 		break
 	;;
 	4)
@@ -88,6 +92,7 @@ do
 		Kodi="n"
 		Lirc="n"
 		GMedia="n"
+		SNAPCAST="n"
 		SoundCardInstall="n"
 		break
 	;;
@@ -256,17 +261,41 @@ fi
 chmod +x ./*.sh
 # Updates and Upgrades the Raspberry Pi
 
-# If Bluetooth is Chosen, it installs Bluetooth Dependencies and issues commands for proper configuration
 log "Updating via Apt-Get"
 apt-get update -y &> /dev/null
 log "Upgrading via Apt-Get"
 apt-get upgrade -y &> /dev/null
+
+
+# If Bluetooth is Chosen, it installs Bluetooth Dependencies and issues commands for proper configuration
 if [ "$Bluetooth" = "y" ]
 then
 	export BluetoothName
 	run ./bt_pa_install.sh
-	run su ${user} -c ./bt_pa_config.sh 
+	VOL_USER=`cat /etc/os-release | grep VOLUMIO_ARCH | sed "s/VOLUMIO_ARCH=//"`
+	if [ "$VOL_USER" = "\"arm\"" ]
+	then
+		export VOL_USER
+		apt-get purge bluez -y
+		for _dep in ${VOLUMIO_DEPS[@]}; do
+    			apt_install $_dep;
+		done
+		#exc usermod -aG "sudo" $user
+		vol_groups=`groups $user | sed "s/$user : //"`
+                sed -i "s/$user ALL=(ALL) ALL/$user ALL=(ALL) NOPASSWD: ALL/" /etc/sudoers
+		run su ${user} -c ./bt_pa_config.sh
+		sudo usermod -G "" $user
+		sed -i "s/$user ALL=(ALL) NOPASSWD: ALL/$user ALL=(ALL) ALL/" /etc/sudoers
+		for _dep in ${vol_groups[@]}; do     sudo usermod -aG "$_dep" volumio; done
+	else
+	        run su ${user} -c ./bt_pa_config.sh
+		#for _dep in ${vol_groups[@]}; do     usermod -aG "$_dep" $user; done
+		
+
+	fi
+
 fi
+
 
 if [ "$SoundCardInstall" = "y" ]
 then
@@ -308,7 +337,7 @@ then
 	run ./gmrender_install.sh
 fi
 
-if [ "$SNAPCAST" != "n" ]
+if [ "$SNAPCAST" = "y" ]
 then
 	export SNAPCAST
 	export SNAPNAME
