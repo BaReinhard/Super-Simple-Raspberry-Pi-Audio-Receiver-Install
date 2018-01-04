@@ -274,25 +274,42 @@ then
 	VOL_USER=`cat /etc/os-release | grep VOLUMIO_ARCH | sed "s/VOLUMIO_ARCH=//"`
 	if [ "$VOL_USER" = "\"arm\"" ]
 	then
+<<<<<<< HEAD
 		export VOL_USER
 		apt-get purge bluez
 		for _dep in ${VOLUMIO_DEPS[@]}; do
     			apt_install $_dep;
 		done
 		vol_groups=`su $user -c groups`
+=======
+>>>>>>> 932e45b93098ffd778a40104bd88a60497307fc1
 		exc usermod -aG "sudo" $user
-		list=`groups $user`
-                sed -i "s/volumio ALL=(ALL) ALL/volumio ALL=(ALL) NOPASSWD: ALL/" /etc/sudoers
+		vol_groups=`groups $user`
+                sed -i "s/$user ALL=(ALL) ALL/$user ALL=(ALL) NOPASSWD: ALL/" /etc/sudoers
 		run su ${user} -c ./bt_pa_config.sh
 		sudo usermod -G "" $user
+<<<<<<< HEAD
 		for _dep in ${list[@]}; do     sudo usermod -aG "$_dep" volumio; done
 		sed -i "s/volumio ALL=(ALL) NOPASSWD: ALL/volumio ALL=(ALL) ALL/" /etc/sudoers
 		#sed -i "s/$user ALL=(ALL) NOPASSWD: ALL//" /etc/sudoers.d/010_pi-nopasswd
 	else
 	        run su ${user} -c ./bt_pa_config.sh
+=======
+		for _dep in ${vol_groups[@]}; do     usermod -aG "$_dep" $user; done
+		sed -i "s/$user ALL=(ALL) NOPASSWD: ALL/$user ALL=(ALL) ALL/" /etc/sudoers
+>>>>>>> 932e45b93098ffd778a40104bd88a60497307fc1
 	fi
 
 fi
+<<<<<<< HEAD
+=======
+#if [ "$VOLUMIO" = "y" ]
+#then
+#	export BluetoothName
+	
+	
+#fi
+>>>>>>> 932e45b93098ffd778a40104bd88a60497307fc1
 
 if [ "$SoundCardInstall" = "y" ]
 then
