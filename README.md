@@ -7,6 +7,7 @@
 
 **_Now Live, includes the following new features:_**
 
+* Volumio Compatibility for Bluetooth Only - Installs A2DP Bluetooth Streaming to RPI
 * Backing up of original files
 * Uninstallation functionality
 * Restoring original files
@@ -28,6 +29,7 @@ This project has combined several different projects into one, culminating into 
 
 ## Changes
 
+* Volumio users can now install the Bluetooth Only option, for the time being no Meta Data is forwarded to the Web Interface, this is a work in progress.
 * Addition and support for SnapCast as Server and Client or Both (Will need some manual configuration, creates a very simple multiroom setup)
 * Use of External Soundcards
 * soxr interpolation with shairport-sync, works well on Raspberry Pi Zero and Raspberry Pi 3, haven't tested on any other boards yet.
@@ -47,6 +49,7 @@ This project has combined several different projects into one, culminating into 
 * For the time being, I have not been able to get espeak to work with a soundcard. I will be working to get this working either with espeak or another program.
 * Unsure how Android will act on a wireless network without internet, iOS doesn't display the WiFi signals and will use Cellular Data for data requirements. However, iOS devices still can play local music to the Pi without any cellular data.
 * Raspberry Pi Zero W (new Model with Bluetooth and Wireless built-in) is likely supported and will work. Although, some resource intensive processes may suffer.
+* Doesn't work for Raspbian Stretch (NOOBS ships with Stretch, so you will need to use the latest Raspbian Jessie Lite Image)
 
 ## Install
 
@@ -61,7 +64,7 @@ pi@raspberrypi:~/Super-Simple-Raspberry-Pi-Audio-Receiver-Install $ sudo ./insta
 1. Install the Raspberry Pi Audio Receiver Car Installation
 2. Install the Raspberry Pi Audio Receiver Home Installation
 3. Install the Raspberry Pi Network Without Internet Installation (For teaching!)
-4. Install the Volumio (Bluetooth Only) Installation
+4. Install the Bluetooth Only Installation
 5. Install the Snapcast Installation (BETA), choose from Snapcast Server, Client, or Both (Requires Minor Configuration)
 6. Install a Custom Raspberry Pi Audio Receiver
 Which installation would you like to choose? (1/2/3/4/5/6) : Choose 1, 2, 3, 4, 5, or 6

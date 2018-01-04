@@ -20,13 +20,6 @@ else
 	exit 1 
 fi
 
-# Add Environment Variables, used for uninstallation
-HOME_PROF="/home/$user/.profile"
-save_original $HOME_PROF
-echo "export SSPARI_PATH=$SSPARI_PATH" >> "/home/$user/.profile"
-echo "export SSPARI_BACKUP_PATH=$SSPARI_PATH/backup_files" >> "/home/$user/.profile"
-
-
 cd "$currentDir"
 chmod -R 777 .
 # Set up file-based logging
@@ -34,6 +27,14 @@ exec 1> >(tee install.log)
 source functions.sh
 source dependencies.sh
 restore_originals
+# Add Environment Variables, used for uninstallation
+HOME_PROF="/home/$user/.profile"
+save_original $HOME_PROF
+echo "export SSPARI_PATH=$SSPARI_PATH" >> "/home/$user/.profile"
+echo "export SSPARI_BACKUP_PATH=$SSPARI_PATH/backup_files" >> "/home/$user/.profile"
+
+
+
 log "Select Your Install Options"
 # Begins Logging
 
