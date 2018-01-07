@@ -7,8 +7,24 @@ then
 fi
 
 
+VERSION=`cat /etc/os-release | grep VERSION= | sed "s/VERSION=//"`
 
 
+if [ "$VERSION" = "\"8 (jessie)\"" ]
+then
+    log "Raspbian Jessie Found"
+    for _dep in ${JESSIE_BT_DEPS[@]}; do
+        apt_install $_dep;
+    done
+elif [ "$VERSION" = "\"9 (stretch)\"" ]
+then
+    log "Raspbian Stretch Found"
+    for _dep in ${STRETCH_BT_DEPS[@]}; do
+        apt_install $_dep;
+    done
+else
+    log "You are running an unsupported VERSION of RASPBIAN"
+fi
 for _dep in ${BT_DEPS[@]}; do
     apt_install $_dep;
 done
