@@ -4,7 +4,7 @@ BT_DEPS="pulseaudio-module-bluetooth python-dbus libltdl-dev pulseaudio libtool 
 
 JESSIE_BT_DEPS="libjson0-dev"
 
-STRETCH_BT_DEPS="libjson-c-dev"
+STRETCH_BT_DEPS="libjson-c-dev autopoint"
 
 VOLUMIO_DEPS="bluez bluez-firmware libusb-dev libdbus-1-dev libglib2.0-dev libudev-dev libical-dev libreadline-dev libltdl-dev libsamplerate0-dev libsndfile1-dev libasound2-dev libavahi-client-dev libspeexdsp-dev liborc-0.4-dev intltool libtdb-dev libssl-dev libjson0-dev libsbc-dev libcap-dev"
 
