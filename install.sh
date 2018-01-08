@@ -48,7 +48,7 @@ installlog "6. Install a Custom Raspberry Pi Audio Receiver"
 Install="0"
 while true
 do
-	read -p "Which installation would you like to choose? (1/2/3/4/5/6) : " Install
+	Install=$1
 	case "$Install" in
 	1)
 	# Car Installation - Previously Raspberry Pi Audio Receiver Install Car Install
@@ -170,12 +170,12 @@ then
 	done
 fi
 # Prompts the User to check whether or not to use individual names for the chosen devices
-SameName="n"
-YesNo "Do you want all the Devices to use the same name? (y/n) : " && SameName="y"
+SameName="y"
+#YesNo "Do you want all the Devices to use the same name? (y/n) : " && SameName="y"
 if [ "$SameName" = "y" ]
 then
 	# Asks for All Devices Identical Name
-	read -p "Device name: " MYNAME
+	MYNAME=$2
 	APName=$MYNAME
 	BluetoothName=$MYNAME
 	AirPlayName=$MYNAME
