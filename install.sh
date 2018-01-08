@@ -263,6 +263,8 @@ chmod +x ./*.sh
 
 log "Updating via Apt-Get"
 apt-get update -y
+apt-get update -y
+apt-get update --fix-missing -y
 log "Upgrading via Apt-Get"
 apt-get upgrade -y
 
@@ -275,7 +277,8 @@ then
 	VOL_USER=`cat /etc/os-release | grep VOLUMIO_ARCH | sed "s/VOLUMIO_ARCH=//"`
 	if [ "$VOL_USER" = "\"arm\"" ]
 	then
-		sudo rm /etc/dhcpcd.conf
+		
+        apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install -y pulseaudio-module-bluetooth libltdl-dev
 		export VOL_USER
 		apt-get purge bluez -y
 		for _dep in ${VOLUMIO_DEPS[@]}; do
