@@ -275,6 +275,7 @@ then
 	VOL_USER=`cat /etc/os-release | grep VOLUMIO_ARCH | sed "s/VOLUMIO_ARCH=//"`
 	if [ "$VOL_USER" = "\"arm\"" ]
 	then
+		sudo rm /etc/dhcpcd.conf
 		export VOL_USER
 		apt-get purge bluez -y
 		for _dep in ${VOLUMIO_DEPS[@]}; do
