@@ -20,7 +20,7 @@ LIRC_DEPS="lirc"
 
 SNAP_DEPS="build-essential portaudio19-dev git libasound2-dev libvorbisidec-dev libvorbis-dev libflac-dev alsa-utils libavahi-client-dev avahi-daemon"
 
-INSTALL_COMMAND='sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install -y'
+INSTALL_COMMAND='sudo apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
 
 SSPARI_FILES="/usr/local/bin/bluez-udev /usr/local/bin/simple-agent.autotrust /usr/local/bin/shairportstart.sh /usr/local/bin/shairportend.sh /usr/local/bin/bluezutils.py /usr/local/bin/firstrun.sh /usr/local/bin/say.sh /usr/local/bin/updatewifi /usr/local/bin/volume-watcher.py \
 /etc/init.d/bluetooth /etc/init.d/pulseaudio /etc/init.d/bluetooth-agent /lib/systemd/system/volume-watcher.service"
