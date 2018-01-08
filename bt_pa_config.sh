@@ -198,16 +198,16 @@ exc ./autogen.sh
 exc ./configure --enable-werror
 exc make
 exc sudo make install
-if
 exc cd ~
-exc remove_dir /etc/pulsebackup
-exc sudo mkdir /etc/pulsebackup
-exc sudo cp /etc/pulse/* /etc/pulsebackup/
-exc cd ~
+
 if [ "$VERSION" = "\"8 (jessie)\"" ]
   then
       log "Raspbian Jessie Found"
       log "Pulseaudio Version Below v6.0, upgrading from source"
+      exc remove_dir /etc/pulsebackup
+      exc sudo mkdir /etc/pulsebackup
+      exc sudo cp /etc/pulse/* /etc/pulsebackup/
+      exc cd ~
       exc remove_dir pulseaudio
       exc git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
       exc cd pulseaudio
