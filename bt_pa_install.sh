@@ -7,7 +7,7 @@ then
 fi
 
 
-VERSION=`cat /etc/os-release | grep VERSION= | sed "s/VERSION=//"`
+VERSION=`cat /etc/os-release | grep VERSION= | head -1 | sed "s/VERSION=//"`
 
 
 if [ "$VERSION" = "\"8 (jessie)\"" ]
