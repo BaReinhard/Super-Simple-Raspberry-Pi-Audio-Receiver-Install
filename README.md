@@ -1,6 +1,6 @@
 # Super Simple Raspberry Pi Audio Receiver Install.
 
-**\*Requires Raspbian Jessie LITE** you can find the lastest Jessie Lite Image [here](http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/)\*
+**\*Requires Raspbian Jessie or Raspbian Stretch LITE** you can find the lastest Jessie Lite Image [here](http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/)\* and the latest Stretch lite image [here](https://www.raspberrypi.org/downloads/raspbian/)\*
 ![SSPARI](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/blob/master/img/SSRPARI_1080_668.png?raw=true)
 
 ## SSPARI v2.0
