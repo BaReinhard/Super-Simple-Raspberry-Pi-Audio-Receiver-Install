@@ -1,5 +1,5 @@
 # Super Simple Raspberry Pi Audio Receiver Install.
-
+**\*Stretch Users** Scroll to the bottom for Install Instructions or click [here](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install#stretch-install) (This is in the testing phase for the moment, please give feedback [here](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/issues/102)
 **\*Requires Raspbian Jessie LITE** you can find the lastest Jessie Lite Image [here](http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/)\*
 ![SSPARI](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/blob/master/img/SSRPARI_1080_668.png?raw=true)
 
@@ -97,3 +97,12 @@ Which Sound Card are you using? (0/1/2/3/4/5/6/7/8/9/10/11) :  Sound Card Choice
 ```
 
 **_Looking for Devs to Help Support/Futher This Project_**
+
+### Stetch-Install
+
+```
+git clone https://github.com/bareinhard/super-simple-raspberry-pi-audio-receiver-install
+cd super-simple-raspberry-pi-audio-receiver-install
+git checkout stretch-fix
+sudo ./install.sh
+```
