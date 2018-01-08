@@ -24,7 +24,7 @@ then
 fi
 if [ -z "$VERSION" ]
 then
-  VERSION=`cat /etc/os-release | grep VERSION= | sed "s/VERSION=//"`
+  VERSION=`cat /etc/os-release | grep VERSION= | head -1 | sed "s/VERSION=//"`
   export VERSION
 fi
   
