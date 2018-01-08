@@ -22,12 +22,20 @@ then
     source functions.sh
     source dependencies.sh
 fi
+if [ -z "$VERSION" ]
+then
+  VERSION=`cat /etc/os-release | grep VERSION= | sed "s/VERSION=//"`
+  export VERSION
+fi
+  
 
 
 exc sudo cp usr/local/bin/volume-watcher.py /usr/local/bin/volume-watcher.py
 exc sudo chmod +x /usr/local/bin/volume-watcher.py
 exc sudo cp lib/systemd/system/volume-watcher.service /lib/systemd/system/volume-watcher.service
 exc sudo systemctl enable volume-watcher
+exc sudo cp lib/systemd/system/systemd-udevd.service /lib/systemd/system/systemd-udevd.service
+exc sudo systemctl daemon-reload
 exc cd `dirname $0`
 
 sudo echo "PRETTY_HOSTNAME=$BluetoothName" >> /tmp/machine-info
@@ -53,7 +61,13 @@ fi
 exc sudo chmod +x /etc/init.d/bluetooth-agent
 exc sudo update-rc.d bluetooth-agent defaults
 
-exc sudo cp usr/local/bin/bluez-udev /usr/local/bin
+if [ "$VERSION" = "\"8 (jessie)\"" ]
+then
+  exc sudo cp usr/local/bin/bluez-udev /usr/local/bin  
+elif [ "$VERSION" = "\"9 (stretch)\"" ]
+then
+  exc sudo cp usr/local/bin/bluez-udev.stretch /usr/local/bin/bluez-udev
+fi  
 exc sudo chmod 755 /usr/local/bin/bluez-udev
 
 exc sudo cp usr/local/bin/simple-agent.autotrust /usr/local/bin
@@ -167,13 +181,6 @@ EOT
 #sudo service bluetooth-agent start &
 # BT FIX
 
-exc remove_dir /etc/pulsebackup
-exc sudo mkdir /etc/pulsebackup
-exc sudo cp /etc/pulse/* /etc/pulsebackup/
-
-exc cd ~
-exc remove_dir pulseaudio
-exc git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
 
 exc cd ~
 exc remove_dir json-c
@@ -191,10 +198,32 @@ exc ./autogen.sh
 exc ./configure --enable-werror
 exc make
 exc sudo make install
+if
 exc cd ~
-exc cd pulseaudio
-exc sudo ./bootstrap.sh
-exc sudo make
-exc sudo make install
-exc sudo ldconfig
-exc sudo cp /etc/pulsebackup/* /etc/pulse
+exc remove_dir /etc/pulsebackup
+exc sudo mkdir /etc/pulsebackup
+exc sudo cp /etc/pulse/* /etc/pulsebackup/
+exc cd ~
+if [ "$VERSION" = "\"8 (jessie)\"" ]
+  then
+      log "Raspbian Jessie Found"
+      log "Pulseaudio Version Below v6.0, upgrading from source"
+      exc remove_dir pulseaudio
+      exc git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
+      exc cd pulseaudio
+      exc sudo ./bootstrap.sh
+      exc sudo make
+      exc sudo make install
+      exc sudo ldconfig
+      exc sudo cp /etc/pulsebackup/* /etc/pulse
+  elif [ "$VERSION" = "\"9 (stretch)\"" ]
+  then
+      log "Raspbian Stretch Found"
+      log "Pulseaudio Version Already Exceeds v6.0"
+      log "Patching System Daemon"
+      exc sudo sed -i "s+DAEMON=/usr/local/bin/pulseaudio+DAEMON=/usr/bin/pulseaudio+" /etc/init.d/pulseaudio 
+      exc sudo systemctl daemon-reload
+  else
+      log "You are running an unsupported VERSION of RASPBIAN"
+  fi
+
