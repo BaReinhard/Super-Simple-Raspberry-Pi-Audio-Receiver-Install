@@ -50,7 +50,7 @@ apt_install() {
         log Dependency $1 already met...
     else
         log Installing $1...    
-        $INSTALL_COMMAND $1 &> /dev/null
+        $INSTALL_COMMAND $1
         verify "Installation of package '$1' failed"
         echo $1 >> "$SSPARI_PATH/installed_deps"
         verify "Adding package '$1'to $SSPARI_PATH/installed_deps failed"        
