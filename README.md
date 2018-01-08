@@ -7,6 +7,7 @@
 
 **_Now Live, includes the following new features:_**
 
+* Raspbian Stretch Support!
 * Volumio Compatibility for Bluetooth Only - Installs A2DP Bluetooth Streaming to RPI
 * Backing up of original files
 * Uninstallation functionality
