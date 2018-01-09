@@ -15,6 +15,7 @@ then
     log "Raspbian Jessie Found"
     for _dep in ${JESSIE_BT_DEPS[@]}; do
         apt_install $_dep;
+        remove_file /etc/dhcpcd.conf
     done
 elif [ "$VERSION" = "\"9 (stretch)\"" ]
 then
@@ -27,6 +28,7 @@ else
 fi
 for _dep in ${BT_DEPS[@]}; do
     apt_install $_dep;
+     remove_file /etc/dhcpcd.conf
 done
 
 # Create users and priviliges for Bluez-Pulse Audio interaction - most should already exist

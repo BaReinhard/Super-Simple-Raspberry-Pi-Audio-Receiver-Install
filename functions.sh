@@ -86,6 +86,15 @@ remove_dir(){
         fi
     fi
 }
+remove_file(){
+    if [ -e "$1" ]; then 
+        if [ -d "$1" ]; then 
+            sudo rm -R $1
+        else 
+            sudo rm -f $1
+        fi
+    fi
+}
 restore_originals(){
     if [ -e "$SSPARI_BACKUP_PATH/files" ]; then 
         if [ -d "$SSPARI_BACKUP_PATH/files" ]; then 
