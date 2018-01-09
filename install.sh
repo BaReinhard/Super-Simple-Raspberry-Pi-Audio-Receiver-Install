@@ -282,7 +282,7 @@ then
 		export VOL_USER
 		apt-get purge bluez -y
 		for _dep in ${VOLUMIO_DEPS[@]}; do
-    			apt_install $_dep;
+    			apt-get install $_dep -y;
 		done
 		#exc usermod -aG "sudo" $user
 		vol_groups=`groups $user | sed "s/$user : //"`
