@@ -14,7 +14,7 @@ if [ "$VERSION" = "\"8 (jessie)\"" ]
 then
     log "Raspbian Jessie Found"
     for _dep in ${JESSIE_BT_DEPS[@]}; do
-        apt_install $_dep;
+        apt-get install $_dep -y;
         remove_file /etc/dhcpcd.conf
     done
 elif [ "$VERSION" = "\"9 (stretch)\"" ]
