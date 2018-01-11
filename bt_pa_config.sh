@@ -192,7 +192,7 @@ exc make
 exc sudo make install
 exc cd ~
 exc remove_dir libsndfile
-exc git clone git://github.com/erikd/libsndfile.git
+exc git clone https://github.com/erikd/libsndfile.git
 exc cd libsndfile
 exc ./autogen.sh
 exc ./configure --enable-werror
