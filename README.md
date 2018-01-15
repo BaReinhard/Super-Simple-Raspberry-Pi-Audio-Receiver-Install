@@ -1,3 +1,4 @@
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/pools/c/812h247JvP)
 # Super Simple Raspberry Pi Audio Receiver Install.
 **\*Stretch Users** Scroll to the bottom for Install Instructions (This is in the testing phase for the moment, please give feedback [here](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/issues/102)
 
