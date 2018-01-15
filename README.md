@@ -108,3 +108,8 @@ cd super-simple-raspberry-pi-audio-receiver-install
 git checkout stretch-fix
 sudo ./install.sh
 ```
+
+
+**Donation**
+***Now graciously accepting donations. Donations are not required, but donations do help to keep this project alive and up to date***
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/pools/c/812h247JvP)
