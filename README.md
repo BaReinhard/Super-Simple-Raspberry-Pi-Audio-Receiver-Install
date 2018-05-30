@@ -101,7 +101,7 @@ Which Sound Card are you using? (0/1/2/3/4/5/6/7/8/9/10/11) :  Sound Card Choice
 
 **_Looking for Devs to Help Support/Futher This Project_**
 
-### Stetch-Install
+### Stretch-Install
 
 ```
 git clone https://github.com/bareinhard/super-simple-raspberry-pi-audio-receiver-install
