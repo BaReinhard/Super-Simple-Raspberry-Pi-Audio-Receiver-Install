@@ -273,7 +273,7 @@ then
 	export BluetoothName
 	run ./bt_pa_install.sh
 	VOL_USER=`cat /etc/os-release | grep VOLUMIO_ARCH | sed "s/VOLUMIO_ARCH=//"`
-	if [ "$VOL_USER" = "\"arm\"" ]
+	if [ "$VOL_USER" = '"arm"' ] # using '"arm"' instead of "\"arm\"" helps with syntax highlighting
 	then
 		export VOL_USER
 		apt-get purge bluez -y
@@ -288,9 +288,12 @@ then
 		sed -i "s/$user ALL=(ALL) NOPASSWD: ALL/$user ALL=(ALL) ALL/" /etc/sudoers
 		for _dep in ${vol_groups[@]}; do     sudo usermod -aG "$_dep" volumio; done
 	else
-	        run su ${user} -c ./bt_pa_config.sh
+    save_original /etc/sudoers
+    # allow $user everything without password
+    echo "$user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+	  run su ${user} -c ./bt_pa_config.sh
+    restore_original /etc/sudoers
 		#for _dep in ${vol_groups[@]}; do     usermod -aG "$_dep" $user; done
-		
 
 	fi
 

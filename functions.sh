@@ -63,8 +63,9 @@ run(){
 }
 exc(){
     log Executing $*
-    $* &> /dev/null
-    verify "'$*' failed"
+    output=`$* 2>&1`
+    # add additional helpful information in case we run into errors
+    verify "'$*' failed"'\n'"More Information:"'\n'"Current user and dir: `whoami`, `pwd`"'\n'"Output:"'\n'"$output"
 }
 apt_update() {
     log Updating via $*...
@@ -105,6 +106,26 @@ restore_originals(){
         log "Unable to Restore Original Files, $SSPARI_BACKUP_PATH/files doesn't exist" 
     fi
     
+}
+restore_original() {
+  if [ -e "$1" ]; then
+    if [ -d "$1" ]; then
+      log "$1 is a directory"
+    else
+      FILE=`echo $1 | sed "s/.*\///"`
+      echo $FILE
+      LOC="$SSPARI_BACKUP_PATH/$FILE"
+      if [ -e "$LOC" ]; then
+        log "File "$FILE" has been previously backed up, restoring..."
+        LINE=`grep -e "^$FILE=" $SSPARI_BACKUP_PATH/files`
+        DIR=`echo $LINE | sed "s/^$FILE=//"`
+        cp $SSPARI_BACKUP_PATH/$FILE $DIR/$FILE
+        sed -i "/^$FILE=/d" $SSPARI_BACKUP_PATH/files
+      else
+        log "File $FILE is not included in backup!"
+      fi
+    fi
+  fi
 }
 save_original(){
     if [ -e "$1" ]; then
