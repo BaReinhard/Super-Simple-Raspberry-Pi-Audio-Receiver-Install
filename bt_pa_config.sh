@@ -178,9 +178,9 @@ exc git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
 exc cd ~
 exc remove_dir json-c
 exc git clone https://github.com/json-c/json-c.git
-exc cd json-c
-exc sh autogen.sh
-exc ./configure 
+exc mkdir json-c-build
+exc cd json-c-build
+exc cmake ../json-c
 exc make
 exc sudo make install
 exc cd ~
