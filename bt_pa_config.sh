@@ -177,6 +177,7 @@ exc git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
 
 exc cd ~
 exc remove_dir json-c
+exc remove_dir json-c-build
 exc git clone https://github.com/json-c/json-c.git
 exc mkdir json-c-build
 exc cd json-c-build
