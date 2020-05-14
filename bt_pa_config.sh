@@ -173,7 +173,7 @@ exc sudo cp /etc/pulse/* /etc/pulsebackup/
 
 exc cd ~
 exc remove_dir pulseaudio
-exc git clone --branch v6.0 https://github.com/pulseaudio/pulseaudio
+exc git clone --branch v13.0 https://github.com/pulseaudio/pulseaudio
 
 exc cd ~
 exc remove_dir json-c
@@ -198,4 +198,4 @@ exc sudo ./bootstrap.sh
 exc sudo make
 exc sudo make install
 exc sudo ldconfig
-exc sudo cp /etc/pulsebackup/* /etc/pulse
+exc sudo cp -R /etc/pulsebackup/* /etc/pulse
