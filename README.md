@@ -1,5 +1,7 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/pools/c/812h247JvP)
 
+# Project is no longer being actively worked on
+
 # Changes in Progress, but still working on Support!
 
 Hey Guys and Gals, thanks for the interest in the project. Unfortunately, due to time constraints I am unable to address current issues and debugging, maintenance on the shell scripts are hard and inefficient. As such I will be porting over these scripts to ansible playbooks. This will allow for easier choosing of what you want installed, less brittle code base, and better maintenance so that less people experience the errors.
