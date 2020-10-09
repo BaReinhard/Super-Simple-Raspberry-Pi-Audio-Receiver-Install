@@ -1,6 +1,6 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/pools/c/812h247JvP)
 
-# Project is no longer being actively worked on
+# Project is no longer being actively worked on, if someone else would like to pick this up, please do so.
 
 # Changes in Progress, but still working on Support!
 
