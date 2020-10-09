@@ -1,10 +1,4 @@
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/pools/c/812h247JvP)
-
 # Project is no longer being actively worked on, if someone else would like to pick this up, please do so.
-
-# Changes in Progress, but still working on Support!
-
-Hey Guys and Gals, thanks for the interest in the project. Unfortunately, due to time constraints I am unable to address current issues and debugging, maintenance on the shell scripts are hard and inefficient. As such I will be porting over these scripts to ansible playbooks. This will allow for easier choosing of what you want installed, less brittle code base, and better maintenance so that less people experience the errors.
 
 Once I have feature parity I will be addressing documentation on installing with ansible. The goal here is to allow people to setup multiple devices at once by only issuing one command, additionally to allow multiple OS support with less debugging and maintenance, as well as allowing other developers more easily add functionality to this repo with simple yaml files as opposed to obfuscated shell scripts.
 
