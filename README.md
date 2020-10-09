@@ -1,13 +1,9 @@
 # Project is no longer being actively worked on, if someone else would like to pick this up, please do so.
 
-Once I have feature parity I will be addressing documentation on installing with ansible. The goal here is to allow people to setup multiple devices at once by only issuing one command, additionally to allow multiple OS support with less debugging and maintenance, as well as allowing other developers more easily add functionality to this repo with simple yaml files as opposed to obfuscated shell scripts.
 
-Any open issues I will keep open to allow other community members to help solve issues, but currently I don't have the time to do so. I apologize for the lack of support, but once feature parity with ansible is achieved I believe everyone will be happier and better off.
-Thanks for understanding.
-
-![bitmoji](https://render.bitstrips.com/v2/cpanel/27c34645-4e03-42a5-bb21-c48c76fcacfe-15cd827c-4baa-4b09-a22d-0d657c319951-v1.png?transparent=1&palette=1&width=246)
 
 # Super Simple Raspberry Pi Audio Receiver Install.
+**\*This does not work past Raspbian Stretch**
 **\*Stretch Users** Scroll to the bottom for Install Instructions (This is in the testing phase for the moment, please give feedback [here](https://github.com/BaReinhard/Super-Simple-Raspberry-Pi-Audio-Receiver-Install/issues/102)
 
 
