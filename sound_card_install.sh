@@ -46,11 +46,9 @@ save_original /etc/asound.conf
 sudo cat << EOT >> /etc/asound.conf
 pcm.pulse {
     type pulse
-    card 0
 }
 ctl.pulse {
     type pulse
-    card 0
 }
 
 pcm.!default {

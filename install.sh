@@ -54,9 +54,9 @@ do
 	# Car Installation - Previously Raspberry Pi Audio Receiver Install Car Install
 		AirPlay="y"
 		Bluetooth="y"
-		AP="y"
-		Kodi="y"
-		Lirc="y"
+		AP="n"
+		Kodi="n"
+		Lirc="n"
 		SoundCardInstall="y"
 		GMedia="n"
 		SNAPCAST="n"
@@ -67,15 +67,17 @@ do
 		AirPlay="y"
 		Bluetooth="y"
 		AP="n"
-		Kodi="y"
-		Lirc="y"
+		Kodi="n"
+		Lirc="n"
 		SoundCardInstall="y"
-		GMedia="y"
+		GMedia="n"
 		SNAPCAST="n"
 		break
 	;;
 	3)
 	# Access Point Install - Previously Network Without Internet
+		log "AP is not supported yet"
+		exit
 		AirPlay="n"
 		Bluetooth="n"
 		AP="y"
@@ -121,18 +123,18 @@ do
 		# Prompts the User to use the Raspberry Pi as an Access Point to create a network
 		# (needed for AirPlay when no existing network exists)
 		AP="n"
-		YesNo "Do you want to setup as an Access Point? (Necessary for AirPlay, in location without a Wireless Network) (y/n) : " && AP="y"
+		#YesNo "Do you want to setup as an Access Point? (Necessary for AirPlay, in location without a Wireless Network) (y/n) : " && AP="y"
 		# Prompts the User to use Kodi as a GUI for a Media Center
 		Kodi="n"
-		YesNo "Do you want Kodi installed? (y/n) : " && Kodi="y"
+		#YesNo "Do you want Kodi installed? (y/n) : " && Kodi="y"
 		# Prompts the User to use Lirc for Infrared Remote Support
 		# (matricom IR remote already setup for use with Kodi)
 		Lirc="n"
-		YesNo "Do you want to use infrared remotes? (y/n) : " && Lirc="y"
+		#YesNo "Do you want to use infrared remotes? (y/n) : " && Lirc="y"
 		SoundCardInstall="n"
 		YesNo "Do you want to use a Sound Card? (y/n) : " && SoundCardInstall="y"
 		GMedia="n"
-		YesNo "Do you want to setup device as a UPnP Renderer? (y/n) : " && GMedia="y"
+		#YesNo "Do you want to setup device as a UPnP Renderer? (y/n) : " && GMedia="y"
 		break
 	;;
 	*)
@@ -262,9 +264,9 @@ chmod +x ./*.sh
 # Updates and Upgrades the Raspberry Pi
 
 log "Updating via Apt-Get"
-apt-get update -y &> /dev/null
+apt-get update -y
 log "Upgrading via Apt-Get"
-apt-get upgrade -y &> /dev/null
+apt-get upgrade -y
 
 
 # If Bluetooth is Chosen, it installs Bluetooth Dependencies and issues commands for proper configuration

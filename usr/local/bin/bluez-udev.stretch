@@ -1,0 +1,61 @@
+#!/bin/bash
+audio_sink=0
+name=$(sed 's/\"//g' <<< $NAME)
+#exit if not a BT address
+if [[ ! $name =~ ^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$ ]]; then exit 0;  fi
+
+bt_name=`grep Name /var/lib/bluetooth/*/$name/info | awk -F'=' '{print $2}'`
+#sudo pkill arecord		# Uncomment for Audio Line Input
+audio_source=bluez_source.$(sed 's/:/_/g' <<< $name)
+audio_source="$audio_source.a2dp_source"
+action=$(expr "$ACTION" : "\([a-zA-Z]\+\).*")
+logger "Action: $action"
+if [ "$action" = "add" ]; then
+    logger "[$(basename $0)] Bluetooth device is being added [$name] - $bt_name"
+    logger "[$(basename $0)] Patching $audio_source into ALSA sink #$audio_sink"
+    #hciconfig hci0 noscan
+    bluetoothctl << EOT
+discoverable off
+EOT
+    amixer cset numid=3 1
+    amixer cset numid=3 50%
+    #espeak -s 160 -k 1 "Device, $bt_name Connected"
+    /usr/local/bin/say.sh "Device, $bt_name Connected"
+    amixer cset numid=3 90%
+    sleep 1
+    pactl set-sink-volume 0 65537
+    pactl set-source-volume $audio_source 90%
+    	
+	
+
+    # loop back this source to the default sink
+    sleep 2s
+    handle=$(pactl load-module module-loopback source=$audio_source sink=$audio_sink)
+    logger "[$(basename $0)] PulseAudio module-loopback returned handle [$handle]"
+    logger "$bt_name"
+    
+    
+fi
+
+if [ "$action" = "remove" ]; then
+    logger "[$(basename $0)] Bluetooth device is being removed [$name] - $bt_name"
+    #hciconfig hci0 pscan
+
+    bluetoothctl << EOT
+discoverable on
+EOT
+
+    # remove any loopback modules assigned to this source
+    # only required for USB sound cards, which PulseAudio will not automatically remove
+    for handle in $(pactl list short modules | grep module-loopback | grep source=$audio_source | cut -f 1); do
+        logger "[$(basename $0)] Unloading module-loopback with handle [$handle]"
+        pactl unload-module $handle
+    done
+    
+    #arecord -D plughw:1 -f dat | aplay -D plughw:1 -f dat&		# Uncomment for Audio Line Input
+    sleep 5
+    amixer cset numid=3 80%
+    #espeak -s 160 -k 1 "Device, $bt_name Disconnected"
+    /usr/local/bin/say.sh "Device, $bt_name Disconnected"
+    amixer cset numid=3 80%
+fi
