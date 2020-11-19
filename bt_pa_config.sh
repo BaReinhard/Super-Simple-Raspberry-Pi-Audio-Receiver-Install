@@ -44,7 +44,7 @@ exc sudo chmod +x /etc/init.d/bluetooth
 exc sudo update-rc.d bluetooth defaults
 
 save_original /etc/init.d/bluetooth-agent
-if [ "$VOL_USER" = "\"arm\"" ]
+if [ "$VOL_USER" = '"arm"' ] # using '"arm"' instead of "\"arm\"" helps with syntax highlighting
 then
 	exc sudo cp init.d/bluetooth-agent-vol /etc/init.d/bluetooth-agent
 else
@@ -120,7 +120,7 @@ exc sudo patch /etc/bluetooth/main.conf << EOT
 *** 7,8 ****
 --- 7,9 ----
   #Name = %h-%d
-+ Name = ${BT_NAME}
++ Name = ${BluetoothName} # the var is called 'BluetoothName' instead of 'BT_NAME'
 
 ***************
 *** 11,12 ****

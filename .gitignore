@@ -1,2 +1,10 @@
 install.log
 install_choices
+backup_files/
+install
+installed_deps
+
+# following entries are for libs/apps that will be compiled during setup
+json-c/
+libsndfile/
+pulseaudio/
